@@ -730,7 +730,6 @@
 #llVan{left:0;top:803px;width:1431px}
 #llPorch{position:absolute;left:1210px;top:620px;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(255,196,110,.38),rgba(255,196,110,0) 65%);mix-blend-mode:screen;pointer-events:none}
 #llSec .ll-veil{position:absolute;inset:0;background:#F7F6F2;pointer-events:none}
-#llPlane{position:absolute;left:50%;top:50%;width:150vw;max-width:none;pointer-events:none;filter:drop-shadow(5vw 7vw 3vw rgba(0,0,0,.28))}
 #llSec .ll-cloud{position:absolute;width:70vw;top:50%;left:50%;pointer-events:none}
 #llSec .ll-cap{position:absolute;left:7vw;top:15vh;max-width:min(640px,80vw);text-shadow:0 2px 24px rgba(0,0,0,.35);pointer-events:none}
 #llSec .ll-cap span{display:block;overflow:hidden;padding-bottom:.08em}
@@ -908,7 +907,6 @@
         <img id="llVan" src="img/ll/van.webp" alt="">
       </div>
     </div>
-    <img id="llPlane" src="img/lg/plane_top.webp" alt="">
     <img class="ll-cloud" id="llCl1" src="img/ll/cloud.webp" alt="">
     <img class="ll-cloud" id="llCl2" src="img/ll/cloud.webp" alt="" style="scale:-1 1">
     <div class="ll-veil" id="llVeil"></div>
@@ -2098,7 +2096,7 @@ onScroll();
 (()=>{
 const $=id=>document.getElementById(id), clamp=(v,a=0,b=1)=>Math.min(b,Math.max(a,v)), sv=(p,a,b)=>clamp((p-a)/(b-a));
 const ez=t=>t*t*(3-2*t), eo=t=>1-Math.pow(1-t,3), ei=t=>t*t*t;
-const proto=$('llSec'), board=$('llBoard'), air1=$('llAir1'), air2=$('llAir2'), street=$('llStreet'), van=$('llVan'), box=$('llBox'), porch=$('llPorch'), plane=$('llPlane');
+const proto=$('llSec'), board=$('llBoard'), air1=$('llAir1'), air2=$('llAir2'), street=$('llStreet'), van=$('llVan'), box=$('llBox'), porch=$('llPorch');
 const cl1=$('llCl1'), cl2=$('llCl2'), veil=$('llVeil');
 const caps=[['llC1',.08,.15,.22,.27],['llC2',.36,.42,.5,.55],['llC3',.6,.66,.74,.78],['llC4',.88,.93,2,3]].map(([id,a,b,c,d])=>({el:$(id),em:[...$(id).querySelectorAll('em')],a,b,c,d}));
 let P=0,last=performance.now(),T=0;
@@ -2114,9 +2112,6 @@ function draw(p){
   cl1.style.opacity=cl2.style.opacity=1-ez(sv(p,.06,.13));
   const d1=ez(sv(p,.18,.36)), d2=ez(sv(p,.5,.62));
   air1.style.opacity=1-ez(sv(p,.26,.35));
-  const pf=sv(p,.02,.22), px=-120+ez(pf)*250;
-  plane.style.transform=`translate(calc(-50% + ${px}vw),calc(-50% + ${-6+pf*4}vh)) rotate(${-4+pf*3}deg)`;
-  plane.style.opacity=p<.24?1:0;
   air2.style.opacity=ez(sv(p,.22,.33))*(1-ez(sv(p,.56,.63)));
   street.style.opacity=ez(sv(p,.55,.63));
   let z, cx=1280, cy=720;
