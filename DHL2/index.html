@@ -1982,7 +1982,10 @@ onScroll();
 (function(){
   if(/[?&]noap/.test(location.search))return;   // 테스트용: 자동 재생 끄기
   const lg=document.getElementById('logiScene'),LGZ_=2.2,LGS=LG_END;
-  const AP_BOX=26900;           // 택배 히어로 → 컨테이너 문 줌아웃 끝(리치스태커 첫 구도)
+  // 택배 히어로 → 컨테이너 문 줌아웃 끝(리치스태커 첫 구도). [박스 장면 진행(0~1, null=컨테이너 문 줌아웃 끝), 그 구간 재생 시간(ms)]
+  const AP_BOX=[[.218,4950],    // 히어로 → 창고 정면 → 탑뷰로 올라감
+                [.764,10400],   // 탑뷰: 상자가 컨베이어 따라 감 (예전 12.4초 → 10.4초)
+                [null,9560]];   // 아래층 분류 → 암전 → 컨테이너 문 줌아웃
   const AP_KEYS=[[3.6,7000],    // 리치스태커가 컨테이너를 들어 트럭에 올림
                  [4.4,1800],    // 카메라가 멀어짐
                  [8.0,6500],    // 트럭이 달리며 서비스 카드
@@ -1991,7 +1994,8 @@ onScroll();
   const AP_IDLE=0;              // 첫 화면에서 가만히 있으면 자동 시작(ms), 0이면 끔 → 0: 히어로에서 스크롤해야 시작
   const yS=s=>{const t=lg.getBoundingClientRect().top+scrollY,h=lg.offsetHeight-innerHeight;return t+h*(s+LGZ_)/(LGS+LGZ_);};
   // 시간표: [scrollY, 누적 시간]
-  const plan=()=>{const P=[[0,0],[yS(0),AP_BOX]];let T=AP_BOX;for(const [s,ms] of AP_KEYS){T+=ms;P.push([yS(s),T]);}return P;};
+  const bw=document.getElementById('bxWrap'),yB=v=>bw.offsetTop+(bw.offsetHeight-innerHeight)*v;
+  const plan=()=>{const P=[[0,0]];let T=0;for(const [v,ms] of AP_BOX){T+=ms;P.push([v==null?yS(0):yB(v),T]);}for(const [s,ms] of AP_KEYS){T+=ms;P.push([yS(s),T]);}return P;};
   const B=()=>Math.round(yS(AP_KEYS[AP_KEYS.length-1][0]));
   const tAt=(P,y)=>{for(let i=1;i<P.length;i++)if(y<=P[i][0]){const [y0,t0]=P[i-1],[y1,t1]=P[i];return t0+(t1-t0)*Math.max(0,(y-y0)/(y1-y0||1));}return P[P.length-1][1];};
   const yAt=(P,t)=>{for(let i=1;i<P.length;i++)if(t<=P[i][1]){const [y0,t0]=P[i-1],[y1,t1]=P[i];let k=(t-t0)/(t1-t0||1);if(i===P.length-1)k=k*k*(3-2*k)*.5+k*.5;return y0+(y1-y0)*k;}return P[P.length-1][0];};
