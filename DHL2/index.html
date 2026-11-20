@@ -719,6 +719,26 @@
   #lgFade{position:absolute;inset:0;background:#000;z-index:60;pointer-events:none}
   #loading{display:none!important}
   #lgHi{position:absolute;left:59.2%;top:51%;width:18.6%;height:29.8%;opacity:0;pointer-events:none}
+
+/* ===== 마지막 구간 (비행기 다음 → 퀵가이드 전): 마지막구간_프로토타입 이식 ===== */
+#llSec{height:1000vh;position:relative;color:#fff;font-family:'Noto Sans KR',system-ui,sans-serif}
+#llSec .ll-stage{position:sticky;top:0;height:100vh;overflow:hidden;background:#0d0f14}
+#llSec .ll-board{position:absolute;left:50%;top:50%;width:2560px;height:1440px;transform-origin:0 0}
+#llSec .ll-board img{position:absolute;display:block;user-select:none;-webkit-user-drag:none}
+#llSec .ll-full{left:0;top:0;width:2560px;height:1440px}
+#llBox{left:957px;top:1013px;width:252px;opacity:0;transform-origin:50% 100%}
+#llVan{left:0;top:803px;width:1431px}
+#llPorch{position:absolute;left:1210px;top:620px;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(255,196,110,.38),rgba(255,196,110,0) 65%);mix-blend-mode:screen;pointer-events:none}
+#llSec .ll-veil{position:absolute;inset:0;background:#F7F6F2;pointer-events:none}
+#llPlane{position:absolute;left:50%;top:50%;width:150vw;max-width:none;pointer-events:none;filter:drop-shadow(5vw 7vw 3vw rgba(0,0,0,.28))}
+#llSec .ll-cloud{position:absolute;width:70vw;top:50%;left:50%;pointer-events:none}
+#llSec .ll-cap{position:absolute;left:7vw;top:15vh;max-width:min(640px,80vw);text-shadow:0 2px 24px rgba(0,0,0,.35);pointer-events:none}
+#llSec .ll-cap span{display:block;overflow:hidden;padding-bottom:.08em}
+#llSec .ll-cap em{display:block;font-style:normal}
+#llSec .ll-cap .big{font-size:clamp(32px,4vw,64px);font-weight:900;letter-spacing:-.04em;line-height:1.15}
+#llSec .ll-cap .sm{font-size:clamp(14px,1.05vw,17px);font-weight:500;opacity:.85;margin-top:14px;letter-spacing:0}
+#llSec .ll-cap.r{left:auto;right:7vw;text-align:right}
+#llSec .ll-cap.c{left:0;right:0;margin:0 auto;text-align:center;top:9vh;max-width:none}
 </style>
 <link rel="stylesheet" href="footer_ab.css">
 <link rel="stylesheet" href="quickguide.css">
@@ -862,7 +882,7 @@
       <div class="lg-seacopy" id="lgSeaCopy"><div class="sea-intro"><h3><span>바다를 건너는 일도,</span><span>어렵지 않게</span></h3><p>기업의 대량 화물, 급하지 않다면 배에 실어 더 경제적으로 보내세요.<br>선적 예약부터 통관까지, 복잡한 과정은 DHL이 맡을게요.</p></div>
         <ul><li><i class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c.8-3.8 3.8-6 7.5-6s6.7 2.2 7.5 6"/></svg></i><b><em>584,000명이 함께<br>움직이는 네트워크</em></b><span>출발 항구부터 도착지까지, 전 세계 DHL 사람들이 당신의 화물을 이어받아 끝까지 운반해요.</span></li><li><i class="ic"><svg viewBox="0 0 24 24"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="2.8"/></svg></i><b><em>2025년, 829억 유로의 신뢰</em></b><span>한 해 동안 전 세계 고객이 DHL에 맡겨 준 믿음의 크기예요. 그 믿음만큼, 하나하나 책임지고 옮겨요.</span></li><li><i class="ic"><svg viewBox="0 0 24 24"><path d="M12 2.8l7.5 3v5.6c0 4.6-3.2 8.3-7.5 9.8-4.3-1.5-7.5-5.2-7.5-9.8V5.8z"/><path d="M8.6 12.2l2.4 2.4 4.6-4.8"/></svg></i><b><em>매주 2,800편이 넘는 해상 직항</em></b><span>출발하는 배가 많아 오래 기다리지 않고, 중간에 옮겨 싣는 일이 적어 분실·파손 걱정도 줄어요.</span></li><li><i class="ic"><svg viewBox="0 0 24 24"><path d="M13.5 2.5L5 13.5h6l-1 8 8.5-11h-6z"/></svg></i><b><em>필요한 만큼만 싣는 컨테이너</em></b><span>짐이 많으면 컨테이너 한 대를 통째로, 적으면 다른 화물과 나눠 싣고 쓴 공간만큼만 내면 돼요.</span></li>
           <li><i class="ic"><svg viewBox="0 0 24 24"><path d="M4 20C4 9 10 5 21 3c0 11-5 16-13 15M4 21l11-11"/></svg></i><b><em>바다 위에서도, 탄소는 더 적게</em></b><span>지속가능 연료 옵션을 고르면 해상 운송에서 나오는 탄소 배출을 줄일 수 있어요.</span></li></ul></div>
-      <img id="lgPlane" src="img/svc3d-plane.webp" alt="DHL 화물기 (위에서)">
+      <img id="lgPlane" src="img/lg/plane_top.webp" alt="DHL 화물기 (위에서)">
     </div>
     <!-- C. 서비스: 비행기 날개 뒤 흰 화면에서 이어짐 → 트럭 → 손 전달 -->
     <div class="lg-svp" id="svpScene">
@@ -874,6 +894,31 @@
     </div>
   </div>
 </section>
+
+<!-- ⑤ 마지막 구간: 비행기 다음 → 도시 → 동네 → 배송차 → 문 앞 상자 (마지막구간_프로토타입 이식, 이미지 img/ll/) -->
+<section id="llSec" data-theme="dark" aria-label="마지막 구간: 문 앞까지">
+  <div class="ll-stage">
+    <div class="ll-board" id="llBoard">
+      <img class="ll-full" id="llAir1" src="img/ll/air_1.webp" alt="">
+      <img class="ll-full" id="llAir2" src="img/ll/air_2.webp" alt="" style="opacity:0;transform-origin:0 0">
+      <div class="ll-full" id="llStreet" style="position:absolute;opacity:0;transform-origin:0 0">
+        <img class="ll-full" src="img/ll/street_bg.webp" alt="">
+        <div id="llPorch"></div>
+        <img id="llBox" src="img/ll/box.webp" alt="">
+        <img id="llVan" src="img/ll/van.webp" alt="">
+      </div>
+    </div>
+    <img id="llPlane" src="img/lg/plane_top.webp" alt="">
+    <img class="ll-cloud" id="llCl1" src="img/ll/cloud.webp" alt="">
+    <img class="ll-cloud" id="llCl2" src="img/ll/cloud.webp" alt="" style="scale:-1 1">
+    <div class="ll-veil" id="llVeil"></div>
+    <div class="ll-cap" id="llC1"><span><em class="big">하늘을 건너,</em></span><span><em class="sm">220여 개 국가와 지역, 어디서 출발했든</em></span></div>
+    <div class="ll-cap r" id="llC2"><span><em class="big">이제, 당신의 동네로.</em></span><span><em class="sm">도시의 불빛 사이, 단 하나의 주소를 향해</em></span></div>
+    <div class="ll-cap" id="llC3"><span><em class="big">마지막 구간까지<br>같은 노란색으로.</em></span><span><em class="sm">배송차가 문 앞에 멈춰 섭니다</em></span></div>
+    <div class="ll-cap c" id="llC4"><span><em class="big">처음 그 상자가, 당신의 문 앞에.</em></span><span><em class="sm">Connecting People, Improving Lives</em></span></div>
+  </div>
+</section>
+
 
 
 <section class="deliv-sec" id="delivSec" data-theme="light" aria-label="배송 완료" style="display:none">   <!-- 숨김: Delivered. 상자 섹션 (되살리려면 style 삭제) -->
@@ -1809,9 +1854,9 @@ function logi(){
       g.style.transform=`translate3d(${tx.toFixed(2)}vw,${ty.toFixed(2)}vh,0) scale(${(1+c*.18+c2*.1).toFixed(4)})`});
     // 배 장면 구름: 스크롤 값만 넘기고, 움직임은 아래 mistLoop가 매 프레임 부드럽게 따라감
     MS.on=s>MIST_A[0]-.3&&s<18.15; MS.target=s; if(MS.on) mistStart();
-    const pw=W*1.25,ph=pw*1533/1591,pt=sv(s,16.9,18.1),px=lerp(-pw*1.05,W*1.1,pt);
+    const pw=W*1.25,ph=pw*1535/1596,pt=sv(s,16.9,18.1),px=lerp(-pw*1.05,W*1.1,pt);
     lgPlane.style.width=pw+'px';lgPlane.style.transform=`translate3d(${px.toFixed(1)}px,${(-ph*.46).toFixed(1)}px,0)`;
-    const psc=pw/1591,Xc=px+840*psc,Yc=H/2-ph*.46+735*psc,SL=.365;lgWhite.style.opacity=pt>0?1:0;lgWhite.style.clipPath=pt>=1?'none':`polygon(-10px 0,${(Xc-Yc*SL).toFixed(1)}px 0,${Xc.toFixed(1)}px ${Yc.toFixed(1)}px,${(Xc-(H-Yc)*SL).toFixed(1)}px ${H}px,-10px ${H}px)`;
+    const psc=pw/1596,Xc=px+842*psc,Yc=H/2-ph*.46+736*psc,SL=.365;lgWhite.style.opacity=pt>0?1:0;lgWhite.style.clipPath=pt>=1?'none':`polygon(-10px 0,${(Xc-Yc*SL).toFixed(1)}px 0,${Xc.toFixed(1)}px ${Yc.toFixed(1)}px,${(Xc-(H-Yc)*SL).toFixed(1)}px ${H}px,-10px ${H}px)`;
     LG.dataset.theme=s>10.9&&pt<.55?'dark':'light';
   }else{LG.dataset.theme='light';MS.on=false;}
   const sOn=false;SVP.style.visibility='hidden';   // 서비스 장면 숨김 (되살리려면 sOn=s>=18.1 + svp(s-18.1,W,H))
@@ -2046,6 +2091,61 @@ onScroll();
     if(e.target.closest&&e.target.closest('input,textarea,select'))return;
     if(dn.includes(k)||up.includes(k)){if(input(dn.includes(k)?1:-1))e.preventDefault();}});
   if(AP_IDLE&&!location.hash)setTimeout(()=>{if(!started&&scrollY<2)play();},AP_IDLE);
+})();
+</script>
+<script>
+/* ===== 마지막 구간 (llSec) — 프로토타입 index.html의 움직임 그대로. 휠 부드러운 스크롤은 메인 것을 씀 ===== */
+(()=>{
+const $=id=>document.getElementById(id), clamp=(v,a=0,b=1)=>Math.min(b,Math.max(a,v)), sv=(p,a,b)=>clamp((p-a)/(b-a));
+const ez=t=>t*t*(3-2*t), eo=t=>1-Math.pow(1-t,3), ei=t=>t*t*t;
+const proto=$('llSec'), board=$('llBoard'), air1=$('llAir1'), air2=$('llAir2'), street=$('llStreet'), van=$('llVan'), box=$('llBox'), porch=$('llPorch'), plane=$('llPlane');
+const cl1=$('llCl1'), cl2=$('llCl2'), veil=$('llVeil');
+const caps=[['llC1',.08,.15,.22,.27],['llC2',.36,.42,.5,.55],['llC3',.6,.66,.74,.78],['llC4',.88,.93,2,3]].map(([id,a,b,c,d])=>({el:$(id),em:[...$(id).querySelectorAll('em')],a,b,c,d}));
+let P=0,last=performance.now(),T=0;
+function tgt(){const r=proto.getBoundingClientRect();return clamp(-r.top/(proto.offsetHeight-innerHeight));}
+function near(){const r=proto.getBoundingClientRect();return r.bottom>-200&&r.top<innerHeight+200;}
+function cam(z,cx,cy){const W=innerWidth,H=innerHeight,s=Math.max(W/2560,H/1440)*z;
+  board.style.transform=`translate(${-cx*s}px,${-cy*s}px) scale(${s})`;}
+function draw(p){
+  veil.style.opacity=1-ez(sv(p,.0,.07));
+  const op=eo(sv(p,.0,.12));
+  cl1.style.transform=`translate(calc(-50% - ${op*70}vw),calc(-50% + ${-op*8}vh)) scale(${1.2+op*.8})`;
+  cl2.style.transform=`translate(calc(-50% + ${op*70}vw),calc(-50% + ${op*10}vh)) scale(${1.3+op*.8})`;
+  cl1.style.opacity=cl2.style.opacity=1-ez(sv(p,.06,.13));
+  const d1=ez(sv(p,.18,.36)), d2=ez(sv(p,.5,.62));
+  air1.style.opacity=1-ez(sv(p,.26,.35));
+  const pf=sv(p,.02,.22), px=-120+ez(pf)*250;
+  plane.style.transform=`translate(calc(-50% + ${px}vw),calc(-50% + ${-6+pf*4}vh)) rotate(${-4+pf*3}deg)`;
+  plane.style.opacity=p<.24?1:0;
+  air2.style.opacity=ez(sv(p,.22,.33))*(1-ez(sv(p,.56,.63)));
+  street.style.opacity=ez(sv(p,.55,.63));
+  let z, cx=1280, cy=720;
+  const ZD=5.6, DX=1280, DY=720;
+  if(p<.36){ z=1+sv(p,0,.18)*.06+d1*(ZD-1.06); cx=1280+(DX-1280)*d1; cy=720+(DY-720)*d1; }
+  else if(p<.5){ z=1+sv(p,.36,.5)*.12; cy=720+sv(p,.36,.5)*20; }
+  else if(p<.62){ z=1.12+d2*2.4; cy=740; }
+  else { z=1+(1-eo(sv(p,.55,.66)))*.06+ez(sv(p,.9,1))*.08; cx=1280+ez(sv(p,.9,1))*20; cy=720+ez(sv(p,.9,1))*90; }
+  cam(z,cx,cy);
+  air2.style.transform=p<.36?`translate(${DX}px,${DY}px) scale(${1/ZD}) translate(-1280px,-720px)`:'';
+  const zs=1+(1-eo(sv(p,.55,.66)))*.06;
+  street.style.transform=(p>=.36&&p<.62)?`translate(${cx}px,${cy}px) scale(${zs/z}) translate(-1280px,-720px)`:'';
+  air2.style.filter=p>.5?`blur(${ez(sv(p,.53,.62))*6}px)`:'none';
+  street.style.filter=`blur(${(1-ez(sv(p,.56,.64)))*8}px)`;
+  const vin=eo(sv(p,.62,.72)), vout=ei(sv(p,.79,.9));
+  const vx=-1500+vin*1900+vout*2400;
+  const moving=(vin>0&&vin<1)||(vout>0&&vout<1);
+  van.style.transform=`translate(${vx}px,${moving?Math.sin(p*900)*1.5:0}px)`;
+  box.style.opacity=p>.74?1:0;
+  const bounce=sv(p,.74,.77); box.style.transform=`translateY(${-Math.sin(bounce*Math.PI)*(1-bounce)*14}px)`;
+  porch.style.opacity=.75+.25*Math.sin(T*1.7);
+  caps.forEach(c=>{const i=ez(sv(p,c.a,c.b)), o=ez(sv(p,c.c,c.d));
+    c.el.style.opacity=o>0?1-o:1;
+    c.em.forEach((e,k)=>{const ik=ez(sv(p,c.a+k*.015,c.b+k*.015));e.style.transform=`translateY(${(1-ik)*110-o*60}%)`;});});
+}
+function frame(now){const dt=Math.min(50,now-last);last=now;T+=dt/1000;
+  if(near()){const t=tgt();P+=(t-P)*(1-Math.exp(-dt/150));if(Math.abs(t-P)<1e-5)P=t;draw(P);}else P=tgt();
+  requestAnimationFrame(frame);}
+requestAnimationFrame(frame);
 })();
 </script>
 <script src="footer_ab.js"></script>
