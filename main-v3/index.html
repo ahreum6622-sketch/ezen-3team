@@ -542,10 +542,11 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
 .r2-lane.off{opacity:.5;cursor:default}.r2-lane.off .veh{filter:grayscale(1);opacity:.4}
 .r2-hd em{opacity:0;transition:opacity .3s}.r2-lane.done .r2-hd em{opacity:1}
 /* ===== 적재 플래너 B안 (레퍼런스형) ===== */
-.lp-switch{display:flex;justify-content:center;align-items:center;gap:6px;margin:56px auto 0;font:600 12px var(--sans);color:#6a6d64}
+.lp-switch{position:fixed;left:50%;bottom:24px;z-index:60;transform:translate(-50%,140%);opacity:0;transition:.35s;display:flex;align-items:center;gap:6px;padding:8px 8px 8px 18px;background:rgba(29,29,27,.92);backdrop-filter:blur(10px);border-radius:999px;box-shadow:0 12px 30px rgba(0,0,0,.25);font:700 13px var(--sans);color:#fff}
+.lp-switch.show{transform:translate(-50%,0);opacity:1}
 .lp-switch span{margin-right:6px}
-.lp-switch button{border:1px solid #dcddd7;background:#fff;border-radius:20px;padding:7px 14px;font:600 12px var(--sans);cursor:pointer;color:#2a2c26}
-.lp-switch button.on{background:#1d1d1b;color:#fff;border-color:#1d1d1b}
+.lp-switch button{border:0;background:transparent;border-radius:999px;padding:10px 18px;font:700 14px var(--sans);cursor:pointer;color:#cfcfc8}
+.lp-switch button.on{background:#ffcc00;color:#1d1d1b}
 .pb-sec{padding:clamp(64px,9vw,120px) 0;background:#fffdf7}
 .pb-head{display:grid;grid-template-columns:1fr 1fr;align-items:end;gap:40px;margin-bottom:40px}
 .pb-eye{font:700 13px/1 var(--mono);letter-spacing:.2em;color:#c8102e;margin:0 0 18px}
@@ -637,7 +638,7 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
 
 
 <!-- 6. 적재 플래너 (레퍼런스 LOAD PLANNER → DHL 합적) -->
-<div class="lp-switch" id="lpSwitch" role="group" aria-label="적재 플래너 시안 선택"><span>적재 플래너 시안</span><button data-v="A">A안</button><button data-v="B" class="on">B안 (레퍼런스형)</button></div>
+<div class="lp-switch" id="lpSwitch" role="group" aria-label="적재 플래너 시안 선택"><span>상자 적재 섹션</span><button data-v="A" class="on">A안 · 기존</button><button data-v="B">B안 · 레퍼런스형</button></div>
 <section class="sec ed" id="planner"><div class="wrap ed-two">
   <div class="ed-stick">
     <div class="ed-cap rv"><b>08</b><span>LOAD PLANNER</span></div>
@@ -1365,7 +1366,9 @@ meter();
 /* 적재 플래너 A/B 시안 전환 (기본 B) */
 (()=>{const sw=document.getElementById('lpSwitch'),A=document.getElementById('planner'),B=document.getElementById('plannerB');
 function set(v){A.style.display=v==='A'?'':'none';B.style.display=v==='B'?'':'none';sw.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));dispatchEvent(new Event('resize'));}
-sw.querySelectorAll('button').forEach(b=>b.onclick=()=>set(b.dataset.v));set('B');})();
+sw.querySelectorAll('button').forEach(b=>b.onclick=()=>set(b.dataset.v));set('A');
+document.body.appendChild(sw);   // 화면 아래에 떠 있는 전환 버튼: 상자 적재 섹션이 보일 때만 나타남
+const vis=new Set();const io=new IntersectionObserver(es=>{es.forEach(e=>e.isIntersecting?vis.add(e.target):vis.delete(e.target));sw.classList.toggle('show',vis.size>0)},{threshold:.15});io.observe(A);io.observe(B);})();
 </script>
 </body>
 </html>
