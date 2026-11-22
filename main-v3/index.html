@@ -545,13 +545,13 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
 <!-- 3~4. 히어로 + 스크롤 스토리 -->
 <section id="story">
   <div class="pin">
-    <div id="map"><img src="img/v3/map3.webp" alt="DHL 물류 네트워크 지도">
+    <div id="map"><img src="img/v3/map5.webp" alt="DHL 물류 네트워크 지도">
       <div id="veh" aria-hidden="true"><div class="wake" id="vWake"></div><img class="vh" id="vShip" src="img/v3/ship_ul.webp" alt=""><img class="vh" id="vRS" src="img/v3/rs_dr.webp" alt=""><img class="vh" id="vTA" src="img/v3/truck_000.webp" alt=""><img class="vh" id="vTB" src="img/v3/truck_000.webp" alt=""><img class="vh" id="vPS" src="img/v3/plane_shadow.webp" alt=""><img class="vh" id="vPB" src="img/v3/plane_ground.webp" alt=""></div>
-      <div class="pinpt" data-s="PICKUP" style="left:1100px;top:742px"><i></i><em></em><b>PICKUP · 방문 픽업</b></div>
-      <div class="pinpt" data-s="HUB" style="left:2252px;top:947px"><i></i><em></em><b>HUB · 분류</b></div>
-      <div class="pinpt" data-s="AIR" style="left:3328px;top:2099px"><i></i><em></em><b>AIR · 항공 운송</b></div>
-      <div class="pinpt" data-s="CUSTOMS" style="left:3123px;top:435px"><i></i><em></em><b>CUSTOMS · 통관</b></div>
-      <div class="pinpt" data-s="DELIVERED" style="left:1536px;top:1638px"><i></i><em></em><b>DELIVERED · 문 앞 도착</b></div>
+      <div class="pinpt" data-s="PICKUP" style="left:1075px;top:550px"><i></i><em></em><b>PICKUP · 방문 픽업</b></div>
+      <div class="pinpt" data-s="HUB" style="left:2534px;top:998px"><i></i><em></em><b>HUB · 분류</b></div>
+      <div class="pinpt" data-s="AIR" style="left:3328px;top:2457px"><i></i><em></em><b>AIR · 항공 운송</b></div>
+      <div class="pinpt" data-s="CUSTOMS" style="left:3507px;top:307px"><i></i><em></em><b>CUSTOMS · 통관</b></div>
+      <div class="pinpt" data-s="DELIVERED" style="left:1433px;top:2099px"><i></i><em></em><b>DELIVERED · 문 앞 도착</b></div>
     </div>
     <div id="clouds"></div>
     <div class="ship"><div class="t">운송장 12 3456 7890 · 이동 거리 (예시)</div><div class="n"><b id="km">000</b><span>km</span><span class="s" id="stg">OVERVIEW</span></div></div>
@@ -754,7 +754,7 @@ function count(root){root.querySelectorAll('[data-to]').forEach(b=>{const to=+b.
 /* 3~4. 미니어처 지도: 스크롤 위치(p)에 따라 카메라가 지도 위 구역을 차례로 비춤 */
 const story=$('#story'), map=$('#map'), nav=$('#nav'), cue=$('#cue'), IW=4096, IH=2731;
 // [p, 지도 x, 지도 y, 줌, 장면] — 지도 좌표는 img/map.webp(2896×2172) 기준. 구역을 바꾸려면 여기 숫자만 고치면 됨
-const KEY=[[0,2048,1364,1,'OVERVIEW'],[0.07,2048,1364,1.06,'OVERVIEW'],[0.17,1203,844,2,'PICKUP'],[0.24,1152,1049,2.1,'PICKUP'],[0.34,2252,972,2,'HUB'],[0.41,2304,1011,2.1,'HUB'],[0.5,3200,2099,1.8,'AIR'],[0.58,3584,1996,1.7,'AIR'],[0.67,2944,512,2,'CUSTOMS'],[0.73,2969,537,2.1,'CUSTOMS'],[0.83,1433,2099,1.55,'DELIVERED'],[0.9,1075,2048,1.6,'DELIVERED'],[1,2048,1364,1,'OVERVIEW']];
+const KEY=[[0,2048,1364,1,'OVERVIEW'],[0.07,2048,1364,1.06,'OVERVIEW'],[0.17,1075,768,2,'PICKUP'],[0.24,1024,1126,2,'PICKUP'],[0.33,2508,1024,1.9,'HUB'],[0.41,2457,1152,1.8,'HUB'],[0.5,3328,2099,1.8,'AIR'],[0.58,3712,2201,1.7,'AIR'],[0.67,3507,435,2,'CUSTOMS'],[0.73,3532,460,2.1,'CUSTOMS'],[0.83,1075,2201,1.35,'DELIVERED'],[0.9,845,2252,1.35,'DELIVERED'],[1,2048,1364,1,'OVERVIEW']];
 const CH=[[0,.11],[.11,.29],[.29,.46],[.46,.63],[.63,.78],[.78,.94],[.94,1.01]];   // 카드 01~06 + 마지막 안내가 나오는 구간
 const cards=$$('.card .c'), chips=$$('#chips span'), pins=$$('.pinpt');
 // 구름 [x, y(화면 비율), 너비(화면 비율)]
@@ -790,23 +790,23 @@ function at(pa,t){t=clamp(t);const d=t*pa.T;let i=1;while(i<pa.L.length-1&&pa.L[
   return{x:a[0]+(b[0]-a[0])*f,y:a[1]+(b[1]-a[1])*f,dx:b[0]-a[0],dy:b[1]-a[1]};}
 const TN=['000','022','045','068','090','112','135','158','180','202','225','248','270','292','315','338'];
 function truckImg(dx,dy){let yw=Math.atan2(-dy/SE,dx)*180/Math.PI;yw=(yw+360)%360;return 'img/v3/truck_'+TN[Math.round(yw/22.5)%16]+'.webp';}
-const PA=mkPath([[350,312],[358,330],[375,355],[420,372],[500,383],[580,390],[605,410],[608,442],[585,462],[500,476],[380,488],[310,502],[286,530],[292,568],[325,588],[372,594],[420,606]]);
-const PB=mkPath([[640,178],[700,190],[820,190],[1000,152],[1130,122],[1185,137],[1200,165]]);
-const PR=mkPath([[790,335],[868,372],[945,410]],4), PG=mkPath([[1120,862],[1430,788]],2), PC=mkPath([[1430,788],[1720,720]],2), PS=mkPath([[1120,1160],[-280,780]],2);
+const PA=mkPath([[400,238],[330,290],[275,318],[270,345],[285,375],[330,390],[400,397],[490,413],[552,428],[576,452],[570,480],[540,505],[490,515],[390,522],[290,535],[215,555],[195,580],[196,610],[207,640],[240,660],[300,668]]);
+const PB=mkPath([[620,225],[655,258],[693,298],[738,336],[782,382],[825,432],[870,472],[915,509],[962,545],[1008,572],[1060,594],[1120,606],[1180,612]]);
+const PR=mkPath([[920,340],[980,380],[1020,450]],4), PG=mkPath([[1300,995],[1480,945]],2), PC=mkPath([[1480,945],[1720,880]],2), PS=mkPath([[600,1062],[-380,800]],2);
 const V={ta:$('#vTA'),tb:$('#vTB'),rs:$('#vRS'),ps:$('#vPS'),pb:$('#vPB'),sh:$('#vShip'),wk:$('#vWake')};
 function put(el,x,y,w,extra=''){el.style.width=w+'px';el.style.transform=`translate(${(x-w/2).toFixed(1)}px,${(y-w/2).toFixed(1)}px)${extra}`;}
 function setSrc(el,src){if(!el.src.endsWith(src))el.src=src;}
 function vehicles(p){
   let q=at(PA,sv(p,.12,.40));put(V.ta,q.x,q.y,183);setSrc(V.ta,truckImg(q.dx,q.dy));
-  q=at(PB,sv(p,.58,.74));put(V.tb,q.x,q.y,183);setSrc(V.tb,truckImg(q.dx,q.dy));
+  q=at(PB,sv(p,.42,.56));put(V.tb,q.x,q.y,183);setSrc(V.tb,truckImg(q.dx,q.dy));
   const rt=ez(sv(p,.28,.44));q=at(PR,rt);put(V.rs,q.x,q.y,290);
   const g=sv(p,.46,.555),c=sv(p,.555,.66);
   if(c<=0){q=at(PG,g*g);put(V.pb,q.x,q.y,330);put(V.ps,q.x,q.y,330);setSrc(V.pb,'img/v3/plane_ground.webp');V.ps.style.opacity=.5;V.pb.style.opacity=1;}
   else{q=at(PC,c);const alt=Math.pow(c,1.4)*420,sc=1+c*.4;put(V.ps,q.x+alt*.35,q.y+alt*.18,330);V.ps.style.opacity=(.45*(1-c)).toFixed(3);
     put(V.pb,q.x,q.y-alt,330,` scale(${sc.toFixed(3)})`);setSrc(V.pb,'img/v3/plane_climb.webp');V.pb.style.opacity=(1-sv(c,.85,1)).toFixed(3);}
-  const st=sv(p,.60,1);q=at(PS,st);put(V.sh,q.x,q.y,1360);
+  const st=sv(p,.76,1);q=at(PS,st);put(V.sh,q.x,q.y,1360);V.sh.style.opacity=(sv(p,.74,.78)*(1-sv(st,.9,1))).toFixed(3);   // 배는 DELIVERED 구간에서만 나타나 출항
   const ang=Math.atan2(q.dy,q.dx)*180/Math.PI+180;V.wk.style.transform=`translate(${q.x.toFixed(1)}px,${q.y.toFixed(1)}px) rotate(${ang.toFixed(2)}deg) translate(380px,-50%)`;
-  V.wk.style.opacity=(st>0&&st<1?.85:0);
+  V.wk.style.opacity=(st>0&&st<.9?.85:0);
 }
 requestAnimationFrame(frame);
 /* 7. 도착 시간 레이스 — 시간축: 0=오늘 18:00 픽업, 1칸=…(아래 T) */
