@@ -673,11 +673,7 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
 </div></section>
 
 
-<!-- 감성: 떠다니는 그림 + 스크롤 따라 차오르는 문단 -->
-<section class="ed-float" id="edFloat">
-  <div class="txt"><span class="mono-s">SINCE 1969</span>
-    <p id="edFill" class="editorial-copy">1969년, 서류를 비행기로 먼저 보내는 것부터 시작했어요. 지금은 220여 개 국가와 지역의 문 앞까지, 상자 하나하나를 사람이 이어 줍니다.</p></div>
-</section>
+
 
 <!-- 6-2. 운송장·발송 -->
 <section class="sec ed" id="ship"><div class="wrap">
@@ -736,6 +732,7 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
 
 <!-- 11. 퀵가이드 (팀 푸터 시안 A/B의 메뉴를 카드로 · FAQ 자리를 대체) -->
 <!-- 감성: 바로가기 목록 + 고객센터 (퀵가이드 카드는 아래에 숨김) -->
+<div class="lp-switch" id="ixSwitch" role="group" aria-label="바로가기 섹션 시안 선택"><span>바로가기 섹션</span><button data-v="A" class="on">A안 · 인덱스</button><button data-v="B">B안 · 퀵가이드</button></div>
 <section class="sec ed" id="index"><div class="wrap">
   <div class="ed-cap rv"><b>10</b><span>INDEX</span></div>
   <div class="ed-idx">
@@ -753,8 +750,8 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
   </div>
 </div></section>
 
-<section class="sec" id="quick" hidden><div class="wrap">
-  <div class="sec-head"><div><div class="tag rv"><b>11</b> QUICK GUIDE</div><h2 class="rv d1">필요한 곳으로,<br><span class="hl">바로</span>.</h2></div><p class="lead rv d2">찾는 게 있다면 여기서 바로 가세요. 그래도 모르겠으면 고객센터 <b class="qg-tel">1588-0001</b>로 전화 주세요. (월–금 08:30–19:30 · 토 09:00–16:00)</p></div>
+<section class="sec" id="quick"><div class="wrap">
+  <div class="sec-head"><div><div class="tag rv"><b>10</b> QUICK GUIDE</div><h2 class="rv d1">필요한 곳으로,<br><span class="hl">바로</span>.</h2></div><p class="lead rv d2">찾는 게 있다면 여기서 바로 가세요. 그래도 모르겠으면 고객센터 <b class="qg-tel">1588-0001</b>로 전화 주세요. (월–금 08:30–19:30 · 토 09:00–16:00)</p></div>
   <div class="qg">
     <article class="qg-c rv d1">
       <div class="qg-h"><b>01</b><svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg></div>
@@ -1368,11 +1365,13 @@ meter();
 </script>
 <script>
 /* 적재 플래너 A/B 시안 전환 (기본 B) */
-(()=>{const sw=document.getElementById('lpSwitch'),A=document.getElementById('planner'),B=document.getElementById('plannerB');
-function set(v){A.style.display=v==='A'?'':'none';B.style.display=v==='B'?'':'none';sw.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));dispatchEvent(new Event('resize'));}
-sw.querySelectorAll('button').forEach(b=>b.onclick=()=>set(b.dataset.v));set('A');
-document.body.appendChild(sw);   // 화면 아래에 떠 있는 전환 버튼: 상자 적재 섹션이 보일 때만 나타남
-const vis=new Set();const io=new IntersectionObserver(es=>{es.forEach(e=>e.isIntersecting?vis.add(e.target):vis.delete(e.target));sw.classList.toggle('show',vis.size>0)},{threshold:.15});io.observe(A);io.observe(B);})();
+function abSwitch(id,a,b){const sw=document.getElementById(id),A=document.getElementById(a),B=document.getElementById(b);if(!sw||!A||!B)return;
+function set(v){A.style.display=v==='A'?'':'none';B.style.display=v==='B'?'':'none';sw.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x.dataset.v===v));if(v==='B')B.querySelectorAll('.rv').forEach(e=>e.classList.add('in'));dispatchEvent(new Event('resize'));}
+sw.querySelectorAll('button').forEach(x=>x.onclick=()=>set(x.dataset.v));set('A');
+document.body.appendChild(sw);   // 화면 아래에 떠 있는 전환 버튼: 해당 섹션이 보일 때만 나타남
+const vis=new Set();const io=new IntersectionObserver(es=>{es.forEach(e=>e.isIntersecting?vis.add(e.target):vis.delete(e.target));sw.classList.toggle('show',vis.size>0)},{threshold:.15});io.observe(A);io.observe(B);}
+abSwitch('lpSwitch','planner','plannerB');   // 상자 적재: A 기존 / B 레퍼런스형
+abSwitch('ixSwitch','index','quick');        // 바로가기: A 인덱스 / B 퀵가이드
 </script>
 </body>
 </html>
