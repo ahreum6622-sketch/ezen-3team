@@ -548,12 +548,12 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
 .lp-switch button{border:0;background:transparent;border-radius:999px;padding:10px 18px;font:700 14px var(--sans);cursor:pointer;color:#cfcfc8}
 .lp-switch button.on{background:#ffcc00;color:#1d1d1b}
 .pb-sec{padding:clamp(64px,9vw,120px) 0;background:#fffdf7}
-.pb-head{display:grid;grid-template-columns:1fr 1fr;align-items:end;gap:40px;margin-bottom:40px}
+.pb-head{display:grid;grid-template-columns:1.1fr 1fr;align-items:end;gap:48px;margin-bottom:48px}
 .pb-eye{font:700 13px/1 var(--mono);letter-spacing:.2em;color:#c8102e;margin:0 0 18px}
-.pb-title{font-size:clamp(36px,4.2vw,60px);letter-spacing:-.045em;line-height:1.05;color:#24251f;margin:0}
+.pb-title{font-size:clamp(40px,4.7vw,68px);letter-spacing:-.045em;line-height:1.05;color:#24251f;margin:0}
 .pb-lede{font-size:17px;line-height:1.65;color:#5d6056;margin:0;max-width:520px}
-.pb-card{background:#fff;border:1px solid #f0e7cf;border-radius:22px;overflow:hidden;box-shadow:0 1px 2px #2a31420d,0 10px 28px -10px rgba(200,140,0,.28)}
-.pb-stage{position:relative;height:min(62vh,600px);background:radial-gradient(80% 70% at 50% 35%,#fff,#fff6dc 85%)}
+.pb-card{display:grid;grid-template-columns:minmax(0,1fr) 320px;background:#fff;border:1px solid #f0e7cf;border-radius:22px;overflow:hidden;box-shadow:0 1px 2px #2a31420d,0 10px 28px -10px rgba(200,140,0,.28)}
+.pb-stage{position:relative;height:462px;background:radial-gradient(80% 70% at 50% 35%,#fff,#fff6dc 85%)}
 .pb-stage canvas{width:100%;height:100%;display:block;touch-action:none}
 .pb-stage.over{box-shadow:inset 0 0 0 3px #ffcc00}
 .pb-meter{position:absolute;left:14px;top:14px;display:grid;grid-template-columns:auto 1fr;align-items:center;column-gap:10px;row-gap:8px;padding:16px 18px;background:rgba(255,255,255,.9);border-radius:16px;box-shadow:0 1px 2px #2a31420d,0 10px 28px -10px rgba(200,140,0,.3);min-width:170px}
@@ -562,20 +562,20 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
 .pb-bar{grid-column:1/-1;height:6px;border-radius:6px;background:#f5ecd2;overflow:hidden}
 .pb-bar i{display:block;height:100%;width:100%;background:linear-gradient(90deg,#ffcc00,#d40511);transform-origin:0 50%;transform:scaleX(0);transition:transform .5s cubic-bezier(.2,.8,.2,1)}
 .pb-count{grid-column:1/-1;font:500 12px var(--mono);color:#7d8076}
-.pb-dock{background:#fffcf2;padding:18px 18px 22px;border-top:1px solid #f3ead2}
-.pb-dock-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:16px;flex-wrap:wrap}
-.pb-hint{font:600 12px var(--mono);letter-spacing:.06em;color:#8a8d82}
-.pb-actions{display:flex;gap:8px}
+.pb-dock{display:flex;flex-direction:column;background:#fffcf2;padding:18px;border-left:1px solid #f3ead2}
+.pb-dock-head{display:grid;gap:12px;margin-bottom:14px}
+.pb-hint{font:600 11.5px var(--mono);letter-spacing:.08em;color:#8a8d82;text-transform:uppercase}
+.pb-actions{display:flex;gap:8px}.pb-actions .pb-btn{flex:1;padding:9px 14px}
 .pb-btn{border:0;border-radius:999px;padding:10px 22px;font:700 14px var(--sans);cursor:pointer}
 .pb-btn.ghost{background:#fff3c4;color:#5a4300}
 .pb-btn.pri{background:#d40511;color:#fff;box-shadow:0 10px 24px -12px rgba(212,5,17,.9)}
-.pb-parcels{display:flex;flex-wrap:wrap;gap:10px;list-style:none;margin:0;padding:0}
-.pb-parcel{--u:26px;width:calc(var(--w)*var(--u)*1.1);height:calc(var(--h)*var(--u));border:1px solid rgba(160,110,0,.22);border-radius:6px;background:var(--c);position:relative;cursor:grab;touch-action:none;transition:opacity .3s,transform .2s}
+.pb-parcels{display:flex;flex-wrap:wrap;align-content:flex-start;gap:8px;list-style:none;margin:0;padding:0}
+.pb-parcel{--u:27px;box-shadow:0 2px 0 rgba(160,110,0,.12);width:calc(var(--w)*var(--u)*1.1);height:calc(var(--h)*var(--u));border:1px solid rgba(160,110,0,.22);border-radius:6px;background:var(--c);position:relative;cursor:grab;touch-action:none;transition:opacity .3s,transform .2s}
 .pb-parcel i{position:absolute;left:50%;top:0;bottom:0;width:6px;margin-left:-3px;background:#e2574c;opacity:.85}
 .pb-parcel:hover{transform:translateY(-2px)}
 .pb-parcel.used{opacity:.25;pointer-events:none}
-.pb-ghost{position:fixed;z-index:9999;pointer-events:none;opacity:.85;transform:translate(-50%,-50%) scale(1.15);box-shadow:0 12px 28px rgba(0,0,0,.2)}
-@media(max-width:900px){.pb-head{grid-template-columns:1fr}}
+.pb-ghost{position:fixed;z-index:9999;pointer-events:none;opacity:.95;transform:translate(-50%,-50%) rotate(-8deg) scale(1.1);box-shadow:0 14px 30px rgba(0,0,0,.22);border-radius:8px}
+@media(max-width:900px){.pb-head,.pb-card{grid-template-columns:1fr}.pb-dock{border-left:0;border-top:1px solid #f3ead2}}
 </style>
 </head>
 <body>
@@ -666,7 +666,7 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
   <div class="pb-card">
     <div class="pb-stage" id="pbStage"><canvas id="pbCanvas" aria-label="3D 컨테이너 적재 계획" role="img"></canvas>
       <div class="pb-meter" aria-live="polite"><span class="pb-pct" id="pbPct">0%</span><span class="pb-cap">공간 사용</span><span class="pb-bar"><i id="pbBar"></i></span><span class="pb-count" id="pbCount">0/16 상자 실림</span></div></div>
-    <div class="pb-dock"><div class="pb-dock-head"><span class="pb-hint">상자를 컨테이너로 끌어다 놓으세요 · 누르면 자동으로 들어가요</span>
+    <div class="pb-dock"><div class="pb-dock-head"><span class="pb-hint">상자를 컨테이너로 끌어다 놓으세요</span>
       <div class="pb-actions"><button class="pb-btn ghost" id="pbUnload">모두 내리기</button><button class="pb-btn pri" id="pbAuto">자동 적재</button></div></div>
       <ul class="pb-parcels" id="pbParcels"></ul></div>
   </div>
@@ -1296,7 +1296,7 @@ const PAR=SZ.map(([w,h],i)=>({i,w,h,c:COL[i],at:null,mesh:null}));
 const cv=$('#pbCanvas'),stg=$('#pbStage');
 const r=new THREE.WebGLRenderer({canvas:cv,antialias:true,alpha:true});r.setPixelRatio(Math.min(2,devicePixelRatio));r.shadowMap.enabled=true;r.shadowMap.type=THREE.PCFSoftShadowMap;
 const sc=new THREE.Scene(),cam=new THREE.PerspectiveCamera(26,1,.1,100);
-cam.position.set(9.2,5.4,16);cam.lookAt(5,1.8,-D/2);
+cam.position.set(3.2,5.6,15.5);cam.lookAt(5.4,1.7,-D/2);
 sc.add(new THREE.HemisphereLight(0xffffff,0xf1e3bf,1.5));
 const sun=new THREE.DirectionalLight(0xffffff,1.7);sun.position.set(-4,10,8);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);
 Object.assign(sun.shadow.camera,{left:-4,right:14,top:10,bottom:-4});sc.add(sun);
@@ -1338,6 +1338,11 @@ function meter(){const used=PAR.filter(p=>p.at),a=used.reduce((s,p)=>s+p.w*p.h,0
 // 도크
 const ul=$('#pbParcels');ul.innerHTML=PAR.map(p=>`<li><button class="pb-parcel" style="--w:${p.w};--h:${p.h};--c:${p.c}" aria-label="상자 ${p.w}×${p.h}" data-i="${p.i}"><i></i></button></li>`).join('');
 const dock=[...ul.querySelectorAll('.pb-parcel')];
+const pv=new THREE.Group();pv.visible=false;sc.add(pv);   // 끌어다 놓을 때 들어갈 자리 미리보기 (반투명 상자 + 빨간 테두리)
+const pvFill=new THREE.Mesh(new THREE.BoxGeometry(1,1,1),new THREE.MeshBasicMaterial({color:0xffcc00,transparent:true,opacity:.22,depthWrite:false}));
+const pvEdge=new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(1,1,1)),new THREE.LineBasicMaterial({color:0xd40511}));pv.add(pvFill,pvEdge);
+function preview(p,c,y){if(c==null||y<0){pv.visible=false;return;}pv.visible=true;pv.scale.set(p.w-.04,p.h-.04,D-.12);pv.position.set(c+p.w/2,y+p.h/2,-D/2);}
+function target(p,cx,cy){const h=cellAt(cx,cy);if(!h)return null;let c=Math.round(h.x-p.w/2);c=Math.max(0,Math.min(CW-p.w,c));const y=settle(p,c);return y<0?null:[c,y];}
 const ray=new THREE.Raycaster(),front=new THREE.Plane(new THREE.Vector3(0,0,1),0),tmp=new THREE.Vector3();
 function cellAt(cx,cy){const b=cv.getBoundingClientRect();if(cx<b.left||cx>b.right||cy<b.top||cy>b.bottom)return null;
   ray.setFromCamera({x:(cx-b.left)/b.width*2-1,y:-(cy-b.top)/b.height*2+1},cam);return ray.ray.intersectPlane(front,tmp)?tmp.clone():null;}
@@ -1345,17 +1350,16 @@ dock.forEach(el=>{el.addEventListener('pointerdown',e=>{const p=PAR[+el.dataset.
   const sx=e.clientX,sy=e.clientY;let gh=null,moved=false;
   const mv=ev=>{if(!moved&&Math.hypot(ev.clientX-sx,ev.clientY-sy)<6)return;moved=true;
     if(!gh){gh=el.cloneNode(true);gh.classList.add('pb-ghost');document.body.appendChild(gh);}
-    gh.style.left=ev.clientX+'px';gh.style.top=ev.clientY+'px';stg.classList.toggle('over',!!cellAt(ev.clientX,ev.clientY));};
-  const up=ev=>{removeEventListener('pointermove',mv);removeEventListener('pointerup',up);stg.classList.remove('over');if(gh)gh.remove();
+    gh.style.left=ev.clientX+'px';gh.style.top=ev.clientY+'px';const tg=target(p,ev.clientX,ev.clientY);stg.classList.toggle('over',!!tg);preview(p,tg&&tg[0],tg?tg[1]:-1);};
+  const up=ev=>{removeEventListener('pointermove',mv);removeEventListener('pointerup',up);stg.classList.remove('over');pv.visible=false;if(gh)gh.remove();
     if(!moved){const f=firstFit(p);if(f)place(p,f[0],f[1]);return;}
-    const h=cellAt(ev.clientX,ev.clientY);if(!h)return;let c=Math.round(h.x-p.w/2);c=Math.max(0,Math.min(CW-p.w,c));
-    let y=settle(p,c);if(y<0){const f=firstFit(p);if(f)place(p,f[0],f[1]);return;}place(p,c,y);};
+    if(!cellAt(ev.clientX,ev.clientY))return;const tg=target(p,ev.clientX,ev.clientY);if(tg)place(p,tg[0],tg[1]);};
   addEventListener('pointermove',mv);addEventListener('pointerup',up);});});
 cv.addEventListener('click',e=>{const b=cv.getBoundingClientRect();ray.setFromCamera({x:(e.clientX-b.left)/b.width*2-1,y:-(e.clientY-b.top)/b.height*2+1},cam);
   const hit=ray.intersectObjects(PAR.filter(p=>p.mesh).map(p=>p.mesh),false)[0];if(hit)unplace(hit.object.userData.p);});
 $('#pbUnload').onclick=()=>PAR.filter(p=>p.at).forEach(unplace);
 $('#pbAuto').onclick=()=>{PAR.filter(p=>p.at).forEach(unplace);let k=0;PAR.slice().sort((a,b)=>b.w*b.h-a.w*a.h||b.h-a.h).forEach(p=>{setTimeout(()=>{const f=firstFit(p);if(f)place(p,f[0],f[1]);},k++*110);});};
-function size(){const w=stg.clientWidth,h=stg.clientHeight;if(!w)return;r.setSize(w,h,false);cam.aspect=w/h;cam.fov=w/h<1.4?34:26;cam.updateProjectionMatrix();}
+function size(){const w=stg.clientWidth,h=stg.clientHeight;if(!w)return;r.setSize(w,h,false);cam.aspect=w/h;cam.fov=w/h<1.4?36:27;cam.updateProjectionMatrix();}
 addEventListener('resize',size);size();
 let vis=true;new IntersectionObserver(es=>es.forEach(e=>vis=e.isIntersecting)).observe(stg);
 (function loop(){requestAnimationFrame(loop);if(!vis||!stg.clientWidth)return;if(r.domElement.width!==Math.round(stg.clientWidth*r.getPixelRatio()))size();
