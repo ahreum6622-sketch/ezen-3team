@@ -784,7 +784,7 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
   <div class="roll-stage" id="rollStage">
     <div class="roll-road" aria-hidden="true"></div>
     <div class="roll-dock" aria-hidden="true"><div class="roll-pile" id="rollPile"></div></div>
-    <div class="roll-truck" id="rollTruck" data-fx="drive"><img src="img/svc3d-truck.webp" alt="상자를 기다리는 DHL 트럭" draggable="false"><a class="btn pri roll-cta" href="#ship">발송하기 →</a></div>
+    <div class="roll-truck" id="rollTruck" data-fx="drive"><img src="img/svc3d-truck.webp" alt="상자를 기다리는 DHL 트럭" draggable="false"></div>
   </div>
 </section>
 </main>
@@ -1316,7 +1316,10 @@ const lowest=(p,c)=>{for(let y=0;y+p.h<=CH;y++){if(fits(p,c,y)){let ok=true;for(
 function settle(p,c){ // 위에서 떨어뜨려 처음 막히는 곳에 놓음
   let y=CH-p.h;if(!fits(p,c,y))return -1;while(y>0&&fits(p,c,y-1))y--;return y;}
 function firstFit(p){for(let y=0;y+p.h<=CH;y++)for(let x=0;x+p.w<=CW;x++)if(fits(p,x,y)&&settle(p,x)===y)return[x,y];return null;}
-function tapeMesh(p){const m=new THREE.Mesh(new THREE.BoxGeometry(.22,Math.min(.5,p.h*.4),.02),new THREE.MeshStandardMaterial({color:0xe2574c,roughness:.6}));m.position.set(0,p.h/2-Math.min(.5,p.h*.4)/2+.001,(D-.16)/2+.011);return m;}
+function tapeMesh(p){const mt=new THREE.MeshStandardMaterial({color:0xe2574c,roughness:.6}),g=new THREE.Group(),th=Math.min(.5,p.h*.4);
+  const f=new THREE.Mesh(new THREE.BoxGeometry(.22,th,.02),mt);f.position.set(0,(p.h-.06)/2-th/2+.001,(D-.16)/2+.011);   // 앞면에서 내려오는 테이프
+  const t=new THREE.Mesh(new THREE.BoxGeometry(.22,.02,D-.16+.02),mt);t.position.set(0,(p.h-.06)/2+.011,0);              // 윗면을 가로지르는 테이프
+  g.add(f,t);return g;}
 function place(p,x,y){
   for(let yy=y;yy<y+p.h;yy++)for(let xx=x;xx<x+p.w;xx++)grid[yy][xx]=p.i;
   p.at=[x,y];const g=new THREE.Mesh(new THREE.BoxGeometry(p.w-.06,p.h-.06,D-.16),new THREE.MeshStandardMaterial({color:p.c,roughness:.85}));
@@ -1364,7 +1367,7 @@ meter();
 /* 적재 플래너 A/B 시안 전환 (기본 B) */
 function abSwitch(id,a,b){const sw=document.getElementById(id),A=document.getElementById(a),B=document.getElementById(b);if(!sw||!A||!B)return;
 function set(v){A.style.display=v==='A'?'':'none';B.style.display=v==='B'?'':'none';sw.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x.dataset.v===v));if(v==='B')B.querySelectorAll('.rv').forEach(e=>e.classList.add('in'));dispatchEvent(new Event('resize'));}
-sw.querySelectorAll('button').forEach(x=>x.onclick=()=>set(x.dataset.v));set('A');
+sw.querySelectorAll('button').forEach(x=>x.onclick=()=>set(x.dataset.v));set('B');
 document.body.appendChild(sw);   // 화면 아래에 떠 있는 전환 버튼: 해당 섹션이 보일 때만 나타남
 const vis=new Set();const io=new IntersectionObserver(es=>{es.forEach(e=>e.isIntersecting?vis.add(e.target):vis.delete(e.target));sw.classList.toggle('show',vis.size>0)},{threshold:.15});io.observe(A);io.observe(B);}
 abSwitch('lpSwitch','planner','plannerB');   // 상자 적재: A 기존 / B 레퍼런스형
