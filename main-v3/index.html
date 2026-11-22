@@ -50,7 +50,7 @@ section{position:relative}
 .nav{position:fixed;left:0;right:0;top:0;z-index:50;transition:background .3s,box-shadow .3s}
 .nav.solid{background:rgba(244,243,239,.88);backdrop-filter:blur(12px);box-shadow:0 1px 0 var(--line)}
 .nav .wrap{display:flex;align-items:center;gap:34px;height:72px}
-.nav .logo img{height:22px}
+.nav .logo img{height:17px}
 .nav ul{display:flex;gap:26px;list-style:none;font-weight:700;font-size:15px}
 .nav ul a{opacity:.75}.nav ul a:hover,.nav ul a.on{opacity:1}
 .nav .sp{flex:1}
@@ -118,7 +118,7 @@ section{position:relative}
 .panel label{font:700 11px/1 var(--mono);letter-spacing:.12em;color:var(--mute);display:block;margin-bottom:14px}
 .label{background:#fff;border:1.5px solid var(--ink);border-radius:6px;position:relative;box-shadow:12px 12px 0 var(--y)}
 .label .lh{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:1.5px solid var(--ink)}
-.label .lh img{height:16px}
+.label .lh img{height:12px}
 .label .prio{background:var(--r);color:#fff;font:800 11px/1 var(--mono);letter-spacing:.14em;padding:7px 10px;border-radius:3px}
 .label .grid{display:grid;grid-template-columns:1fr 1fr}
 .label .f{padding:14px 20px;border-bottom:1.5px solid var(--ink)}
@@ -292,7 +292,7 @@ footer .cols{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr 1.6fr;gap:30px
 footer h4{font:700 11px/1 var(--mono);letter-spacing:.14em;color:var(--mute);margin-bottom:18px}
 footer ul{list-style:none;display:grid;gap:12px;font-size:15px;color:#3a3a3a}
 footer ul a{color:inherit;text-decoration:none}footer ul a:hover{color:var(--r)}
-footer .brand img{height:22px;margin-bottom:16px}
+footer .brand img{height:17px;margin-bottom:16px}
 footer .brand p{color:var(--sub);line-height:1.7;font-size:15px}
 footer .nl{display:flex;background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px}
 footer .nl input{flex:1;min-width:0;background:transparent;border:0;outline:0;color:var(--ink);padding:0 14px;font:500 14px var(--sans)}
@@ -585,7 +585,7 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
 
 <!-- 2. 내비 -->
 <header class="nav" id="nav"><div class="wrap">
-  <a class="logo" href="#top"><img src="img/dhl-logo.png" alt="DHL"></a>
+  <a class="logo" href="#top"><img src="img/dhl-logo-red.png" alt="DHL"></a>
   <ul><li><a href="track.html">배송조회</a></li><li><a href="quote.html">요금산출</a></li><li><a href="guide.html">가이드</a></li><li><a href="#support">고객지원</a></li></ul>
   <div class="sp"></div>
   <details><summary aria-label="전체 메뉴"></summary><nav class="glass-menu" aria-label="전체 메뉴"><a href="track.html">배송조회</a><a href="quote.html">요금산출</a><a href="guide.html">가이드</a><a href="#support">고객지원</a><a href="#ship">발송하기</a><a href="#">로그인</a><a href="#">KR</a></nav></details></div></header>
@@ -690,7 +690,7 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
       <div class="links"><a href="#services">← 서비스 다시 고르기</a></div>
     </div>
     <div class="label" id="wb">
-      <div class="lh"><img src="img/dhl-logo.png" alt="DHL"><span class="prio" id="wPrio">EXPRESS</span></div>
+      <div class="lh"><img src="img/dhl-logo-red.png" alt="DHL"><span class="prio" id="wPrio">EXPRESS</span></div>
       <div class="grid">
         <div class="f"><label>보내는 곳</label><div class="v">대한민국 · 서울</div></div>
         <div class="f"><label>받는 곳</label><div class="v" id="wTo">일본</div></div>
@@ -792,7 +792,7 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
 <!-- 11. 푸터 -->
 <footer><div class="wrap">
   <div class="cols">
-    <div class="brand"><img src="img/dhl-logo.png" alt="DHL"><p>보이는 물류, 이어지는 사람.<br>Connecting People, Improving Lives</p></div>
+    <div class="brand"><img src="img/dhl-logo-red.png" alt="DHL"><p>보이는 물류, 이어지는 사람.<br>Connecting People, Improving Lives</p></div>
     <nav><h4>서비스</h4><ul><li><a href="track.html">배송 조회</a></li><li><a href="#ship">발송하기</a></li><li><a href="quote.html">요금산출</a></li><li><a href="#services">서비스 비교</a></li><li><a href="#planner">적재 체험</a></li><li><a href="guide.html#g3">통관 안내</a></li></ul></nav>
     <nav><h4>회사</h4><ul><li><a href="#top">회사 소개</a></li><li><a href="#top">지속가능경영</a></li><li><a href="#top">채용</a></li><li><a href="#support">문의</a></li></ul></nav>
     <nav><h4>도움말</h4><ul><li><a href="#index">퀵가이드</a></li><li id="support"><a href="tel:15880001">고객센터 1588-0001</a></li><li><a href="guide.html">보내기 전 가이드</a></li></ul></nav>
