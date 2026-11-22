@@ -527,6 +527,54 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
 .r2-st .key{background:#fff3c4}
 .r2-note{margin-top:16px;font-size:12px;color:#7a7d74}
 @media(max-width:980px){.r2-lane{grid-template-columns:1fr}}
+
+/* ===== v3.1 경주: 레퍼런스 크기·토글 ===== */
+.r2-dist{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:700;color:#565950}
+.r2-dist b{font:700 13px var(--mono);color:var(--r);min-width:72px}
+.r2-dist input{width:200px;accent-color:var(--r);--fill:14%}
+.r2-tog{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:#565950;cursor:pointer}
+.r2-tog input{position:absolute;opacity:0;pointer-events:none}
+.r2-tog .sw{width:40px;height:22px;border-radius:20px;background:#dcddd7;position:relative;transition:.25s}
+.r2-tog .sw::after{content:'';position:absolute;left:3px;top:3px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 3px #0003;transition:.25s}
+.r2-tog input:checked+.sw{background:var(--r)}.r2-tog input:checked+.sw::after{left:21px}
+.r2-trk .veh,.r2-lane[data-k="air"] .r2-trk .veh,.r2-lane[data-k="sea"] .r2-trk .veh{width:120px;height:auto;bottom:10px}
+.r2-trk{height:64px}
+.r2-lane.off{opacity:.5;cursor:default}.r2-lane.off .veh{filter:grayscale(1);opacity:.4}
+.r2-hd em{opacity:0;transition:opacity .3s}.r2-lane.done .r2-hd em{opacity:1}
+/* ===== 적재 플래너 B안 (레퍼런스형) ===== */
+.lp-switch{display:flex;justify-content:center;align-items:center;gap:6px;margin:56px auto 0;font:600 12px var(--sans);color:#6a6d64}
+.lp-switch span{margin-right:6px}
+.lp-switch button{border:1px solid #dcddd7;background:#fff;border-radius:20px;padding:7px 14px;font:600 12px var(--sans);cursor:pointer;color:#2a2c26}
+.lp-switch button.on{background:#1d1d1b;color:#fff;border-color:#1d1d1b}
+.pb-sec{padding:clamp(64px,9vw,120px) 0;background:#fffdf7}
+.pb-head{display:grid;grid-template-columns:1fr 1fr;align-items:end;gap:40px;margin-bottom:40px}
+.pb-eye{font:700 13px/1 var(--mono);letter-spacing:.2em;color:#c8102e;margin:0 0 18px}
+.pb-title{font-size:clamp(36px,4.2vw,60px);letter-spacing:-.045em;line-height:1.05;color:#24251f;margin:0}
+.pb-lede{font-size:17px;line-height:1.65;color:#5d6056;margin:0;max-width:520px}
+.pb-card{background:#fff;border:1px solid #f0e7cf;border-radius:22px;overflow:hidden;box-shadow:0 1px 2px #2a31420d,0 10px 28px -10px rgba(200,140,0,.28)}
+.pb-stage{position:relative;height:min(62vh,600px);background:radial-gradient(80% 70% at 50% 35%,#fff,#fff6dc 85%)}
+.pb-stage canvas{width:100%;height:100%;display:block;touch-action:none}
+.pb-stage.over{box-shadow:inset 0 0 0 3px #ffcc00}
+.pb-meter{position:absolute;left:14px;top:14px;display:grid;grid-template-columns:auto 1fr;align-items:center;column-gap:10px;row-gap:8px;padding:16px 18px;background:rgba(255,255,255,.9);border-radius:16px;box-shadow:0 1px 2px #2a31420d,0 10px 28px -10px rgba(200,140,0,.3);min-width:170px}
+.pb-pct{font:800 28px/1 var(--sans);letter-spacing:-.04em;color:#d40511}
+.pb-cap{font-size:13px;color:#5d6056}
+.pb-bar{grid-column:1/-1;height:6px;border-radius:6px;background:#f5ecd2;overflow:hidden}
+.pb-bar i{display:block;height:100%;width:100%;background:linear-gradient(90deg,#ffcc00,#d40511);transform-origin:0 50%;transform:scaleX(0);transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.pb-count{grid-column:1/-1;font:500 12px var(--mono);color:#7d8076}
+.pb-dock{background:#fffcf2;padding:18px 18px 22px;border-top:1px solid #f3ead2}
+.pb-dock-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:16px;flex-wrap:wrap}
+.pb-hint{font:600 12px var(--mono);letter-spacing:.06em;color:#8a8d82}
+.pb-actions{display:flex;gap:8px}
+.pb-btn{border:0;border-radius:999px;padding:10px 22px;font:700 14px var(--sans);cursor:pointer}
+.pb-btn.ghost{background:#fff3c4;color:#5a4300}
+.pb-btn.pri{background:#d40511;color:#fff;box-shadow:0 10px 24px -12px rgba(212,5,17,.9)}
+.pb-parcels{display:flex;flex-wrap:wrap;gap:10px;list-style:none;margin:0;padding:0}
+.pb-parcel{--u:26px;width:calc(var(--w)*var(--u)*1.1);height:calc(var(--h)*var(--u));border:1px solid rgba(160,110,0,.22);border-radius:6px;background:var(--c);position:relative;cursor:grab;touch-action:none;transition:opacity .3s,transform .2s}
+.pb-parcel i{position:absolute;left:50%;top:0;bottom:0;width:6px;margin-left:-3px;background:#e2574c;opacity:.85}
+.pb-parcel:hover{transform:translateY(-2px)}
+.pb-parcel.used{opacity:.25;pointer-events:none}
+.pb-ghost{position:fixed;z-index:9999;pointer-events:none;opacity:.85;transform:translate(-50%,-50%) scale(1.15);box-shadow:0 12px 28px rgba(0,0,0,.2)}
+@media(max-width:900px){.pb-head{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -573,19 +621,23 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
 
 <!-- 5. 도착 시간 레이스 (레퍼런스 MODES를 DHL식으로) -->
 <section class="sec ed" id="services"><div class="wrap">
-  <header id="dispatch"><div class="ed-cap"><b>07</b><span>SERVICE</span></div><h2>같은 상자, 누가 먼저<br>도착할까?</h2><p>도착지와 우선순위를 고르면 비행기·배·트럭이 같은 상자를 싣고 경주해요.</p></header><div class="race2" id="race">
-    <div class="r2-tools"><label>도착지 <select id="rDest"><option value="JP">일본</option><option value="US">미국</option><option value="EU">유럽</option></select></label><div class="seg" id="rPrio" aria-label="우선순위"><button class="on" data-p="fast">가장 빠르게</button><button data-p="cheap">가장 경제적으로</button><button data-p="bal">빠르고 저렴하게</button></div><button id="raceAgain">다시 경주 ↻</button></div>
+  <header id="dispatch"><div class="ed-cap"><b>07</b><span>SERVICE</span></div><h2>같은 상자, 누가 먼저<br>도착할까?</h2><p>거리와 바다를 건너는지, 무엇이 중요한지 고르면 트럭·배·비행기가 같은 상자를 싣고 경주해요.</p></header><div class="race2" id="race">
+    <div class="r2-tools">
+      <label class="r2-dist">거리 <b id="rKm">1,800 km</b><input type="range" id="rRange" min="100" max="12000" step="100" value="1800"></label>
+      <label class="r2-tog"><input type="checkbox" id="rOcean"><span class="sw" aria-hidden="true"></span>바다를 건너요</label>
+      <div class="seg" id="rPrio" aria-label="우선순위"><button class="on" data-p="fast">가장 빠르게</button><button data-p="cheap">가장 경제적으로</button><button data-p="green">탄소를 적게</button></div>
+      <button id="raceAgain">다시 경주 ↻</button></div>
     <div id="lanes" class="r2"></div>
-    <p class="r2-note">※ 같은 날 같은 상자 1kg가 출발했을 때의 예시 수치예요. 실제 소요 기간과 요금은 출발·도착 지역과 화물에 따라 달라져요. 줄을 누르면 그 운송 방법으로 운송장 카드가 바뀌어요.</p>
+    <p class="r2-note">※ 같은 상자 1kg를 같은 시각에 보냈을 때의 예시 수치예요(양쪽 끝 처리 시간 포함). 실제 소요 기간과 요금은 지역과 화물에 따라 달라져요. 줄을 누르면 그 운송 방법으로 운송장 카드가 바뀌어요.</p>
   </div>
   <div class="again"></div>
 </div></section>
 
 <!-- 감성: 화면 꽉 찬 그림 한 장 -->
-<section class="ed-breath" id="hub-scene"><div class="hub-scene" data-fx="zoom"><img src="img/map.webp" alt="미니어처 지도 속 화물 분류 허브"></div>
-  <div class="ed-over"><p class="hub-caption"><span>빈자리 하나가,</span> <span>트럭 한 대가 됩니다.</span></p></div></section>
+
 
 <!-- 6. 적재 플래너 (레퍼런스 LOAD PLANNER → DHL 합적) -->
+<div class="lp-switch" id="lpSwitch" role="group" aria-label="적재 플래너 시안 선택"><span>적재 플래너 시안</span><button data-v="A">A안</button><button data-v="B" class="on">B안 (레퍼런스형)</button></div>
 <section class="sec ed" id="planner"><div class="wrap ed-two">
   <div class="ed-stick">
     <div class="ed-cap rv"><b>08</b><span>LOAD PLANNER</span></div>
@@ -607,6 +659,18 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
   </div>
   </div>
 </div></section>
+<section class="pb-sec" id="plannerB"><div class="wrap">
+  <header class="pb-head"><div><p class="pb-eye">LOAD PLANNER</p><h2 class="pb-title">DHL처럼, 빈틈없이.</h2></div>
+    <p class="pb-lede">상자를 컨테이너로 끌어다 놓거나, DHL에게 맡겨 보세요. 비어 있는 칸 하나가 곧 길 위의 비용이에요.</p></header>
+  <div class="pb-card">
+    <div class="pb-stage" id="pbStage"><canvas id="pbCanvas" aria-label="3D 컨테이너 적재 계획" role="img"></canvas>
+      <div class="pb-meter" aria-live="polite"><span class="pb-pct" id="pbPct">0%</span><span class="pb-cap">공간 사용</span><span class="pb-bar"><i id="pbBar"></i></span><span class="pb-count" id="pbCount">0/16 상자 실림</span></div></div>
+    <div class="pb-dock"><div class="pb-dock-head"><span class="pb-hint">상자를 컨테이너로 끌어다 놓으세요 · 누르면 자동으로 들어가요</span>
+      <div class="pb-actions"><button class="pb-btn ghost" id="pbUnload">모두 내리기</button><button class="pb-btn pri" id="pbAuto">자동 적재</button></div></div>
+      <ul class="pb-parcels" id="pbParcels"></ul></div>
+  </div>
+</div></section>
+
 
 <!-- 감성: 떠다니는 그림 + 스크롤 따라 차오르는 문단 -->
 <section class="ed-float" id="edFloat">
@@ -841,37 +905,47 @@ requestAnimationFrame(frame);
 /* 7. 도착 시간 레이스 — 시간축: 0=오늘 18:00 픽업, 1칸=…(아래 T) */
 // 축: [픽업, 내일09, 내일12, 내일18, +2일, +3일] → 0~5 칸 (화면 너비 비율)
 const RS=[
-  {k:'road',n:'해상+육상 복합',sub:'배로 건너고 트럭으로 문 앞까지',img:'truck_side',d:{JP:3,US:14,EU:22},px:.34,co2:.08},
-  {k:'sea',n:'해상 운송',sub:'대량 화물을 가장 경제적으로',img:'ship_side2',d:{JP:5,US:18,EU:30},px:.2,co2:.03},
-  {k:'air',n:'항공 특송 · Express',sub:'급한 상자는 하늘길로',img:'plane_side',d:{JP:1,US:2,EU:2},px:1,co2:1.1}];
+  {k:'road',n:'육상 운송',sub:'트럭으로 길이 이어진 곳까지',img:'truck_side',land:1,time:km=>km/65+8,px:.28,co2:.062},     // 시간(h), 요금 지수, CO₂ g/kg·km
+  {k:'sea',n:'해상 운송',sub:'대량 화물을 가장 경제적으로',img:'ship_side2',land:0,time:km=>km/30+96,px:.16,co2:.008},
+  {k:'air',n:'항공 특송 · Express',sub:'급한 상자는 하늘길로',img:'plane_side',land:0,time:km=>km/750+14,px:1,co2:.6}];
 const DN={JP:'일본',US:'미국',EU:'유럽'};
-let rDest='JP',rPrio='fast',svcSel=null;
+let rDest='JP',rPrio='fast',svcSel=null,KM=1800,OCEAN=false;
+const fmtT=h=>h<48?Math.round(h)+'시간':(h/24).toFixed(1)+'일';
+const fmtG=g=>g>=1000?(g/1000).toFixed(1)+' kg':Math.round(g)+' g';
 function buildLanes(){
   $('#lanes').innerHTML=RS.map(r=>`<button type="button" class="r2-lane" data-k="${r.k}"><span class="r2-badge">추천</span><div class="r2-hd"><b>${r.n}<em></em></b><small>${r.sub}</small></div><div class="r2-trk" aria-hidden="true"><i class="road"></i><i class="fin"></i><img class="veh" src="img/v3/${r.img}.webp" alt=""></div><dl class="r2-st"><div class="t"><dt>예상 소요</dt><dd></dd></div><div class="c"><dt>요금 지수</dt><dd></dd></div><div class="g"><dt>CO₂ / kg</dt><dd></dd></div></dl></button>`).join('');
-  $$('.r2-lane').forEach(l=>l.onclick=()=>{svcSel=l.dataset.k;markSel();toShip()});
+  $$('.r2-lane').forEach(l=>l.onclick=()=>{if(l.classList.contains('off'))return;svcSel=l.dataset.k;markSel();toShip()});
 }
-function score(r){const t=r.d[rDest],mt=Math.min(...RS.map(x=>x.d[rDest])),mp=Math.min(...RS.map(x=>x.px));
-  return rPrio==='fast'?t:rPrio==='cheap'?r.px:(t/mt)+(r.px/mp)*1.2;}   // 빠르고 저렴하게: 소요일·요금을 함께 봄
-function bestKey(){return RS.slice().sort((a,b)=>score(a)-score(b))[0].k;}
+const ok=r=>!(OCEAN&&r.land);
+function score(r){return rPrio==='fast'?r.time(KM):rPrio==='cheap'?r.px:r.co2;}
+function ranked(){return RS.filter(ok).sort((a,b)=>score(a)-score(b));}
+function bestKey(){return ranked()[0].k;}
 function markSel(){$$('.r2-lane').forEach(l=>{const on=l.dataset.k===svcSel;l.classList.toggle('sel',on);l.setAttribute('aria-pressed',on)})}
-let raceT=0;
+let raceT=[];
 function race(){
-  const best=bestKey(),rank=RS.slice().sort((a,b)=>score(a)-score(b)).map(r=>r.k),mt=Math.min(...RS.map(x=>x.d[rDest]));
-  if(!svcSel)svcSel=best;clearTimeout(raceT);
-  $$('.r2-lane').forEach((l,i)=>{const r=RS[i],t=r.d[rDest];
-    l.classList.toggle('best',r.k===best);l.querySelector('em').textContent='#'+(rank.indexOf(r.k)+1);
-    l.querySelector('.t dd').textContent=r.k==='air'?`${t} 영업일`:`약 ${t}일`;
-    l.querySelector('.c dd').textContent=r.px.toFixed(2)+'배';
-    l.querySelector('.g dd').textContent=r.co2>=1?r.co2.toFixed(1)+' kg':Math.round(r.co2*1000)+' g';
-    ['t','c','g'].forEach(k=>l.querySelector('.'+k).classList.toggle('key',(rPrio==='fast'&&k==='t')||(rPrio==='cheap'&&k==='c')||(rPrio==='bal'&&k!=='g')));
-    const v=l.querySelector('.veh');v.classList.add('wait');v.style.left='0px';
-    l.dataset.p=Math.pow(mt/t,.32).toFixed(3);});
+  raceT.forEach(clearTimeout);raceT=[];
+  const av=RS.filter(ok),best=bestKey(),byTime=av.slice().sort((a,b)=>a.time(KM)-b.time(KM)),tmax=Math.max(...av.map(r=>r.time(KM))),tmin=Math.min(...av.map(r=>r.time(KM)));
+  if(!svcSel||!av.some(r=>r.k===svcSel))svcSel=best;
+  $$('.r2-lane').forEach((l,i)=>{const r=RS[i],on=ok(r),t=r.time(KM),v=l.querySelector('.veh');
+    l.classList.toggle('off',!on);l.classList.remove('best','done');
+    l.querySelector('em').textContent='';
+    l.querySelector('small').textContent=on?r.sub:'바다는 건널 수 없어요';
+    l.querySelector('.t dd').textContent=on?fmtT(t):'—';
+    l.querySelector('.c dd').textContent=on?r.px.toFixed(2)+'배':'—';
+    l.querySelector('.g dd').textContent=on?fmtG(r.co2*KM):'—';
+    ['t','c','g'].forEach(k=>l.querySelector('.'+k).classList.toggle('key',on&&((rPrio==='fast'&&k==='t')||(rPrio==='cheap'&&k==='c')||(rPrio==='green'&&k==='g'))));
+    v.style.transition='none';v.style.left='0px';
+    if(!on)return;
+    const dur=1.4+3.6*Math.sqrt((t-tmin)/((tmax-tmin)||1));   // 모두 결승선까지 달림. 오래 걸리는 수단일수록 늦게 도착
+    raceT.push(setTimeout(()=>{const tr=l.querySelector('.r2-trk');v.style.transition=`left ${dur}s cubic-bezier(.35,.1,.45,1)`;v.style.left=(tr.clientWidth-v.clientWidth-14)+'px';},120));
+    raceT.push(setTimeout(()=>{l.classList.add('done');l.querySelector('em').textContent='#'+(byTime.indexOf(r)+1);if(r.k===best)l.classList.add('best');},120+dur*1000));
+  });
   markSel();toShip();
-  raceT=setTimeout(()=>$$('.r2-lane').forEach(l=>{const v=l.querySelector('.veh'),tr=l.querySelector('.r2-trk');v.classList.remove('wait');
-    v.style.left=((tr.clientWidth-v.clientWidth-16)*+l.dataset.p).toFixed(0)+'px';}),120);
 }
 buildLanes();
-$('#rDest').onchange=e=>{rDest=e.target.value;svcSel=null;race()};
+const rr=$('#rRange');const syncKm=()=>{KM=+rr.value;$('#rKm').textContent=KM.toLocaleString()+' km';rr.style.setProperty('--fill',((KM-100)/(11900)*100).toFixed(1)+'%');};
+rr.oninput=()=>{syncKm()};rr.onchange=()=>{svcSel=null;race()};syncKm();
+$('#rOcean').onchange=e=>{OCEAN=e.target.checked;svcSel=null;race()};
 $$('#rPrio button').forEach(b=>b.onclick=()=>{rPrio=b.dataset.p;svcSel=null;$$('#rPrio button').forEach(x=>x.classList.toggle('on',x===b));race();});
 $('#raceAgain').onclick=race;
 new IntersectionObserver((es,o)=>es.forEach(e=>{if(e.isIntersecting){race();o.disconnect();}}),{threshold:.3}).observe($('#race'));
@@ -929,7 +1003,7 @@ function toShip(){if(!$('#sSvc'))return;
   $('#kgv').textContent=kg.toFixed(1)+' kg'; $('#wA').textContent=kg.toFixed(1)+' kg'; $('#wV').textContent=vw.toFixed(1)+' kg'; $('#wC').textContent=ch.toFixed(1)+' kg';
   $('#sSvc').textContent=$('#wSvc').textContent=r.n; $('#sDest').textContent=$('#wTo').textContent=DN[rDest];
   $('#wBox').textContent=`${b.k} · ${b.d.join('×')}cm`; $('#wKg').textContent=ch.toFixed(1)+' kg';
-  $('#wPrio').textContent=r.k==='air'?'EXPRESS':'FREIGHT';
+  $('#wPrio').textContent=r.k==='air'?'EXPRESS':r.k==='sea'?'OCEAN FREIGHT':'ROAD FREIGHT';
   $('#price').textContent='₩'+(Math.round((38000+ch*14500)*ZN[rDest]*r.px/100)*100).toLocaleString();}
 toShip();
 /* 10. 마무리: 하역장 상자를 트럭에 싣기 → 3개면 출발, 새 트럭이 들어옴
@@ -1172,7 +1246,7 @@ requestAnimationFrame(tick)})();
 /* 스크롤 인터랙션 — 각 항목이 화면에 들어오는 만큼 진행 (0 → 1) */
 (()=>{if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
 const cl=(x,a=0,b=1)=>Math.min(b,Math.max(a,x)),ez=t=>1-Math.pow(1-t,3),back=t=>{const c=1.6;return 1+(c+1)*Math.pow(t-1,3)+c*Math.pow(t-1,2)};
-const caption=document.querySelector('.hub-caption');caption.classList.add('motion');caption.dataset.fx='caption';
+const caption=document.querySelector('.hub-caption');if(caption){caption.classList.add('motion');caption.dataset.fx='caption';}
 const els=[...document.querySelectorAll('[data-fx]')];
 // 글자를 단어 단위로 나눠서 아래에서 위로 올라오게
 els.filter(e=>e.dataset.fx==='words').forEach(h=>{const out=[];
@@ -1210,5 +1284,88 @@ document.addEventListener('click',event=>{
 document.addEventListener('keydown',event=>{
   if(event.key==='Escape'&&glassMenu.open){glassMenu.open=false;glassMenu.querySelector('summary').focus()}
 });
-</script></body>
+</script><script type="module">
+/* 적재 플래너 B안: 레퍼런스처럼 앞에서 본 컨테이너(10×4칸)에 상자를 끌어다 쌓기. 아래로 떨어져 쌓임, 누르면 자동, 실린 상자 누르면 빠짐 */
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js';
+const $=s=>document.querySelector(s);
+const CW=10,CH=4,D=2.4;
+const COL=['#ffffff','#fff0b5','#ffd9a8','#cdebdc','#ffffff','#ffe1dc','#ffffff','#fff0b5','#ffd9a8','#cdebdc','#ffffff','#ffe1dc','#ffffff','#fff0b5','#ffd9a8','#cdebdc'];
+const SZ=[[3,2],[2,2],[2,2],[3,1],[2,1],[2,1],[1,2],[2,2],[1,1],[2,1],[1,2],[1,1],[3,1],[1,1],[2,1],[1,1]];
+const PAR=SZ.map(([w,h],i)=>({i,w,h,c:COL[i],at:null,mesh:null}));
+const cv=$('#pbCanvas'),stg=$('#pbStage');
+const r=new THREE.WebGLRenderer({canvas:cv,antialias:true,alpha:true});r.setPixelRatio(Math.min(2,devicePixelRatio));r.shadowMap.enabled=true;r.shadowMap.type=THREE.PCFSoftShadowMap;
+const sc=new THREE.Scene(),cam=new THREE.PerspectiveCamera(26,1,.1,100);
+cam.position.set(9.2,5.4,16);cam.lookAt(5,1.8,-D/2);
+sc.add(new THREE.HemisphereLight(0xffffff,0xf1e3bf,1.5));
+const sun=new THREE.DirectionalLight(0xffffff,1.7);sun.position.set(-4,10,8);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);
+Object.assign(sun.shadow.camera,{left:-4,right:14,top:10,bottom:-4});sc.add(sun);
+const gnd=new THREE.Mesh(new THREE.PlaneGeometry(60,60),new THREE.ShadowMaterial({opacity:.12}));gnd.rotation.x=-Math.PI/2;gnd.position.y=-.16;gnd.receiveShadow=true;sc.add(gnd);
+// 컨테이너
+const Y=new THREE.MeshStandardMaterial({color:0xffcc00,roughness:.5,metalness:.1});
+const beam=(w,h,d,x,y,z)=>{const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),Y);m.position.set(x,y,z);m.castShadow=true;sc.add(m);return m;};
+const t=.16;
+[[0,0],[CW,0],[0,-D],[CW,-D]].forEach(([x,z])=>beam(t,CH+t,t,x,CH/2,z));
+[[0],[-D]].forEach(([z])=>{beam(CW+t,t,t,CW/2,CH+t/2,z);beam(CW+t,t,t,CW/2,-t/2,z);});
+[0,CW].forEach(x=>{beam(t,t,D,x,CH+t/2,-D/2);beam(t,t,D,x,-t/2,-D/2);});
+const glass=new THREE.MeshStandardMaterial({color:0xfff4d1,transparent:true,opacity:.45,side:THREE.DoubleSide,roughness:1});
+const back=new THREE.Mesh(new THREE.PlaneGeometry(CW,CH),glass);back.position.set(CW/2,CH/2,-D);sc.add(back);
+const side=new THREE.Mesh(new THREE.PlaneGeometry(D,CH),glass);side.rotation.y=Math.PI/2;side.position.set(CW,CH/2,-D/2);sc.add(side);
+const lineM=new THREE.LineBasicMaterial({color:0xe9d9a8,transparent:true,opacity:.7});
+for(let x=.25;x<CW;x+=.25){const g=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(x,0,-D+.01),new THREE.Vector3(x,CH,-D+.01)]);sc.add(new THREE.Line(g,lineM));}
+const floor=new THREE.Mesh(new THREE.BoxGeometry(CW,.06,D),new THREE.MeshStandardMaterial({color:0xfaf3df,roughness:.9}));floor.position.set(CW/2,-.03,-D/2);floor.receiveShadow=true;sc.add(floor);
+for(let x=1;x<CW;x++){const g=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(x,.005,0),new THREE.Vector3(x,.005,-D)]);sc.add(new THREE.Line(g,new THREE.LineBasicMaterial({color:0xd9ccaa})));}
+// 칸 상태
+const grid=[...Array(CH)].map(()=>Array(CW).fill(-1));
+const fits=(p,c,rw)=>{if(c<0||rw<0||c+p.w>CW||rw+p.h>CH)return false;for(let y=rw;y<rw+p.h;y++)for(let x=c;x<c+p.w;x++)if(grid[y][x]>=0)return false;return true;};
+const lowest=(p,c)=>{for(let y=0;y+p.h<=CH;y++){if(fits(p,c,y)){let ok=true;for(let yy=0;yy<y;yy++){}return y;}}return -1;};
+function settle(p,c){ // 위에서 떨어뜨려 처음 막히는 곳에 놓음
+  let y=CH-p.h;if(!fits(p,c,y))return -1;while(y>0&&fits(p,c,y-1))y--;return y;}
+function firstFit(p){for(let y=0;y+p.h<=CH;y++)for(let x=0;x+p.w<=CW;x++)if(fits(p,x,y)&&settle(p,x)===y)return[x,y];return null;}
+function tapeMesh(p){const m=new THREE.Mesh(new THREE.BoxGeometry(.22,Math.min(.5,p.h*.4),.02),new THREE.MeshStandardMaterial({color:0xe2574c,roughness:.6}));m.position.set(0,p.h/2-Math.min(.5,p.h*.4)/2+.001,(D-.16)/2+.011);return m;}
+function place(p,x,y){
+  for(let yy=y;yy<y+p.h;yy++)for(let xx=x;xx<x+p.w;xx++)grid[yy][xx]=p.i;
+  p.at=[x,y];const g=new THREE.Mesh(new THREE.BoxGeometry(p.w-.06,p.h-.06,D-.16),new THREE.MeshStandardMaterial({color:p.c,roughness:.85}));
+  g.castShadow=g.receiveShadow=true;g.add(tapeMesh(p));g.userData.p=p;g.position.set(x+p.w/2,y+p.h/2+3.2,-D/2);g.userData.ty=y+p.h/2;sc.add(g);p.mesh=g;
+  dock[p.i].classList.add('used');meter();}
+function unplace(p){if(!p.at)return;for(let yy=0;yy<CH;yy++)for(let xx=0;xx<CW;xx++)if(grid[yy][xx]===p.i)grid[yy][xx]=-1;sc.remove(p.mesh);p.mesh=null;p.at=null;dock[p.i].classList.remove('used');
+  // 위에 있던 상자들은 다시 아래로 떨어짐
+  let moved=true;while(moved){moved=false;PAR.filter(q=>q.at).sort((a,b)=>a.at[1]-b.at[1]).forEach(q=>{const[x,y]=q.at;for(let yy=y;yy<y+q.h;yy++)for(let xx=x;xx<x+q.w;xx++)grid[yy][xx]=-1;
+    let ny=y;while(ny>0&&fits(q,x,ny-1))ny--;for(let yy=ny;yy<ny+q.h;yy++)for(let xx=x;xx<x+q.w;xx++)grid[yy][xx]=q.i;if(ny!==y){q.at=[x,ny];q.mesh.userData.ty=ny+q.h/2;moved=true;}});}
+  meter();}
+function meter(){const used=PAR.filter(p=>p.at),a=used.reduce((s,p)=>s+p.w*p.h,0),pc=Math.round(a/(CW*CH)*100);
+  $('#pbPct').textContent=pc+'%';$('#pbBar').style.transform=`scaleX(${pc/100})`;$('#pbCount').textContent=`${used.length}/16 상자 실림`;}
+// 도크
+const ul=$('#pbParcels');ul.innerHTML=PAR.map(p=>`<li><button class="pb-parcel" style="--w:${p.w};--h:${p.h};--c:${p.c}" aria-label="상자 ${p.w}×${p.h}" data-i="${p.i}"><i></i></button></li>`).join('');
+const dock=[...ul.querySelectorAll('.pb-parcel')];
+const ray=new THREE.Raycaster(),front=new THREE.Plane(new THREE.Vector3(0,0,1),0),tmp=new THREE.Vector3();
+function cellAt(cx,cy){const b=cv.getBoundingClientRect();if(cx<b.left||cx>b.right||cy<b.top||cy>b.bottom)return null;
+  ray.setFromCamera({x:(cx-b.left)/b.width*2-1,y:-(cy-b.top)/b.height*2+1},cam);return ray.ray.intersectPlane(front,tmp)?tmp.clone():null;}
+dock.forEach(el=>{el.addEventListener('pointerdown',e=>{const p=PAR[+el.dataset.i];if(p.at)return;e.preventDefault();
+  const sx=e.clientX,sy=e.clientY;let gh=null,moved=false;
+  const mv=ev=>{if(!moved&&Math.hypot(ev.clientX-sx,ev.clientY-sy)<6)return;moved=true;
+    if(!gh){gh=el.cloneNode(true);gh.classList.add('pb-ghost');document.body.appendChild(gh);}
+    gh.style.left=ev.clientX+'px';gh.style.top=ev.clientY+'px';stg.classList.toggle('over',!!cellAt(ev.clientX,ev.clientY));};
+  const up=ev=>{removeEventListener('pointermove',mv);removeEventListener('pointerup',up);stg.classList.remove('over');if(gh)gh.remove();
+    if(!moved){const f=firstFit(p);if(f)place(p,f[0],f[1]);return;}
+    const h=cellAt(ev.clientX,ev.clientY);if(!h)return;let c=Math.round(h.x-p.w/2);c=Math.max(0,Math.min(CW-p.w,c));
+    let y=settle(p,c);if(y<0){const f=firstFit(p);if(f)place(p,f[0],f[1]);return;}place(p,c,y);};
+  addEventListener('pointermove',mv);addEventListener('pointerup',up);});});
+cv.addEventListener('click',e=>{const b=cv.getBoundingClientRect();ray.setFromCamera({x:(e.clientX-b.left)/b.width*2-1,y:-(e.clientY-b.top)/b.height*2+1},cam);
+  const hit=ray.intersectObjects(PAR.filter(p=>p.mesh).map(p=>p.mesh),false)[0];if(hit)unplace(hit.object.userData.p);});
+$('#pbUnload').onclick=()=>PAR.filter(p=>p.at).forEach(unplace);
+$('#pbAuto').onclick=()=>{PAR.filter(p=>p.at).forEach(unplace);let k=0;PAR.slice().sort((a,b)=>b.w*b.h-a.w*a.h||b.h-a.h).forEach(p=>{setTimeout(()=>{const f=firstFit(p);if(f)place(p,f[0],f[1]);},k++*110);});};
+function size(){const w=stg.clientWidth,h=stg.clientHeight;if(!w)return;r.setSize(w,h,false);cam.aspect=w/h;cam.fov=w/h<1.4?34:26;cam.updateProjectionMatrix();}
+addEventListener('resize',size);size();
+let vis=true;new IntersectionObserver(es=>es.forEach(e=>vis=e.isIntersecting)).observe(stg);
+(function loop(){requestAnimationFrame(loop);if(!vis||!stg.clientWidth)return;if(r.domElement.width!==Math.round(stg.clientWidth*r.getPixelRatio()))size();
+  PAR.forEach(p=>{if(p.mesh){const m=p.mesh;m.position.y+=(m.userData.ty-m.position.y)*.18;}});r.render(sc,cam);})();
+meter();
+</script>
+<script>
+/* 적재 플래너 A/B 시안 전환 (기본 B) */
+(()=>{const sw=document.getElementById('lpSwitch'),A=document.getElementById('planner'),B=document.getElementById('plannerB');
+function set(v){A.style.display=v==='A'?'':'none';B.style.display=v==='B'?'':'none';sw.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));dispatchEvent(new Event('resize'));}
+sw.querySelectorAll('button').forEach(b=>b.onclick=()=>set(b.dataset.v));set('B');})();
+</script>
+</body>
 </html>
