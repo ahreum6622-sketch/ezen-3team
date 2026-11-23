@@ -628,6 +628,18 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
 @media (max-width:820px){.sc2-link{display:none}.sc2-it .t .sr{visibility:visible;color:var(--r)}.sc2-it{color:var(--ink)}.rd{--ts:110px}.rd-col.c0{left:-70px}.rd-col.c3{right:-70px}.rd-col.c1{left:6%}.rd-col.c2{right:6%}.rd-lab,.rd-copy{font-size:18px}
  .sc2{height:auto;padding:80px 0}.sc2-wrap{flex-direction:column}.sc2-l,.sc2-r{max-width:none;height:auto}.sc2-stick{position:relative;height:auto}
  .sc2-head{height:auto}.sc2-list{position:relative;height:auto;margin-top:32px}.sc2-it{opacity:1}.sc2-it .d{grid-template-rows:1fr;opacity:1}.sc2-it .d>p{padding-top:12px}}
+
+/* 헤더 운송장 조회 */
+.nav-track{display:flex;align-items:center;gap:8px;height:40px;padding:0 4px 0 14px;border-radius:999px;background:rgba(255,255,255,.72);border:1px solid rgba(18,18,18,.08);color:#6b6862;transition:border-color .2s,background .2s}
+.nav-track:focus-within{background:#fff;border-color:var(--y);box-shadow:0 0 0 3px rgba(255,204,0,.28)}
+.nav-track input{width:150px;border:0;background:none;outline:none;font:500 14px var(--sans);color:var(--ink)}
+.nav-track input::placeholder{color:#8d8a83}
+.nav-track button{height:32px;padding:0 14px;border:0;border-radius:999px;background:var(--r);color:#fff;font:700 13px var(--sans);cursor:pointer}
+.nav-track button:hover{background:#b0040e}
+@media (max-width:980px){.nav-track{display:none}}
+/* 마지막 섹션이 올라가며 트럭+푸터가 드러남 (conwest식) */
+#quick,#index{position:relative;z-index:2;background:var(--bg);border-radius:0 0 clamp(24px,3vw,48px) clamp(24px,3vw,48px);box-shadow:0 30px 60px -30px rgba(40,32,10,.25)}
+#tail{position:relative;z-index:1;will-change:transform}
 </style>
 </head>
 <body>
@@ -638,6 +650,7 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
 <!-- 2. 내비 -->
 <header class="nav" id="nav"><div class="wrap">
   <a class="logo" href="#top"><img src="img/dhl-logo-red.png" alt="DHL"></a>
+  <form class="nav-track" action="track.html" method="get" role="search"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input name="awb" inputmode="numeric" placeholder="운송장 번호 조회" aria-label="운송장 번호"><button type="submit">조회</button></form>
   <ul><li><a href="track.html">배송조회</a></li><li><a href="quote.html">요금산출</a></li><li><a href="guide.html">가이드</a></li><li><a href="#support">고객지원</a></li></ul>
   <div class="sp"></div>
   <details><summary aria-label="전체 메뉴"></summary><nav class="glass-menu" aria-label="전체 메뉴"><a href="track.html">배송조회</a><a href="quote.html">요금산출</a><a href="guide.html">가이드</a><a href="#support">고객지원</a><a href="#ship">발송하기</a><a href="#">로그인</a><a href="#">KR</a></nav></details></div></header>
@@ -666,7 +679,6 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
       <div class="c off" data-c="5"><div class="tag"><b>06</b> ONE TEAM</div><h2>문 앞까지,<br><span class="hl">한 팀</span>이 책임져요</h2><p class="lead">픽업부터 하역, 통관, 배송까지 DHL은 모든 구간을 직접 연결합니다.</p></div>
       <div class="c off" data-c="6"><div class="tag"><b>→</b> YOUR TURN</div><h2>지금 보낼<br>상자가 <span class="hl">있나요</span>?</h2><p class="lead">도착 시간만 정하면 서비스와 예상 요금을 바로 알려드려요.</p><div class="cta"><a class="btn y" href="#services">서비스 고르기</a><a class="btn ghost" href="#ship">발송하기</a></div></div>
     </div></div>
-    <div class="chips" id="chips"><span>01 NETWORK</span><span>02 PICKUP</span><span>03 SEA</span><span>04 AIR</span><span>05 HUB</span><span>06 ONE TEAM</span></div>
   </div>
 </section>
 
@@ -861,6 +873,7 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
 </div></section>
 
 <!-- 10. 마무리 (레퍼런스 READY TO ROLL → 트럭에 상자 싣고 출발) -->
+<div id="tail">
 <section class="roll ed-roll" id="roll">
   <div class="wrap">
     <div class="ed-cap rv"><b>11</b><span>READY TO ROLL</span></div>
@@ -886,6 +899,7 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
   </div>
   <div class="legal"><span>이젠 3조 · 물류 웹 리뉴얼 포트폴리오 시안 (비공식 학습용 데모 · 실제 서비스 아님)</span><span><a href="#top">개인정보처리방침</a><a href="#top">이용약관</a></span></div>
 </div><div class="wordmark" aria-hidden="true">DHL EXPRESS</div></footer>
+</div>
 
 <script>
 (()=>{
@@ -1502,6 +1516,12 @@ function frame(){mobile=innerWidth<=820;const vh=innerHeight,sy=scrollY;
   }
   placeLink();requestAnimationFrame(frame);}
 setAct(0);requestAnimationFrame(frame);})();
+
+/* 마지막 섹션이 위로 올라가는 동안 트럭+푸터는 화면에 고정된 듯 아래에서 드러남 */
+(()=>{const tail=document.getElementById('tail');if(!tail)return;
+function f(){const last=[document.getElementById('quick'),document.getElementById('index')].find(e=>e&&getComputedStyle(e).display!=='none');
+  if(last){const b=last.getBoundingClientRect().bottom,vh=innerHeight;tail.style.transform=b>0&&b<vh?`translateY(${-b}px)`:'';}
+  requestAnimationFrame(f);}requestAnimationFrame(f);})();
 </script>
 </body>
 </html>
