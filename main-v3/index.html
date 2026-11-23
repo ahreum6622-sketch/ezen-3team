@@ -276,13 +276,13 @@ input[type=range]{width:100%;accent-color:var(--r)}
 .roll-pile i.dhl::after{background:var(--r);opacity:.85}
 .roll-pile i:hover{transform:translateY(-4px)}
 .roll-pile i{touch-action:none;cursor:grab}.roll-fly.hold{box-shadow:0 14px 26px rgba(0,0,0,.22),inset 0 -4px 0 rgba(0,0,0,.1);cursor:grabbing}
-.roll-truck img{transition:filter .25s}.roll-truck.want img{filter:saturate(1.3) brightness(1.13) contrast(1.02) drop-shadow(0 0 14px rgba(255,204,0,.9))}
+.roll-truck img{transition:filter .25s}.roll-truck.want img{filter:drop-shadow(0 0 14px rgba(255,204,0,.9))}
 .roll-fly{position:absolute;z-index:3;border-radius:4px;pointer-events:none;box-shadow:inset 0 -4px 0 rgba(0,0,0,.1)}
 .roll-fly::after{content:'';position:absolute;left:50%;top:0;bottom:0;width:5px;transform:translateX(-50%);background:#C95B52}
 .roll-fly.dhl::after{background:var(--r);opacity:.85}
 .roll-cv{position:absolute;left:0;top:-260px;width:100%;height:calc(100% + 260px);z-index:3;pointer-events:none}
 .roll-truck{position:absolute;bottom:40px;left:calc(50% - var(--tw)*.46);width:var(--tw);will-change:transform;z-index:4}
-.roll-truck img{width:100%;display:block;user-select:none;filter:saturate(1.3) brightness(1.13) contrast(1.02)}
+.roll-truck img{width:100%;display:block;user-select:none}
 .roll-cta{position:absolute;left:15%;top:33%;transform:translate(-50%,-50%);white-space:nowrap;box-shadow:0 10px 24px rgba(212,5,17,.3)}
 @media (max-width:600px){.roll-stage{--tw:290px}.roll-cta{padding:8px 12px;font-size:12px}.roll-pile{--ps:.55;right:4px}}
 
@@ -1076,7 +1076,7 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
   <div class="roll-stage" id="rollStage">
     <div class="roll-road" aria-hidden="true"></div>
     <div class="roll-dock" aria-hidden="true"><div class="roll-pile" id="rollPile"></div></div>
-    <div class="roll-truck" id="rollTruck" data-fx="drive"><img src="img/svc3d-truck.webp" alt="상자를 기다리는 DHL 트럭" draggable="false"></div>
+    <div class="roll-truck" id="rollTruck" data-fx="drive"><img src="img/roll-truck2.webp" alt="상자를 기다리는 DHL 트럭" draggable="false"></div>
   </div>
 </section>
 
