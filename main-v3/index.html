@@ -283,6 +283,7 @@ input[type=range]{width:100%;accent-color:var(--r)}
 .roll-cv{position:absolute;left:0;top:-260px;width:100%;height:calc(100% + 260px);z-index:3;pointer-events:none}
 .roll-truck{position:absolute;bottom:40px;left:calc(50% - var(--tw)*.46);width:var(--tw);will-change:transform;z-index:4}
 .roll-truck img{width:100%;display:block;user-select:none}
+.roll-truck img.rw{position:absolute;width:7.190%;transform:rotate(var(--rot,0deg))}
 .roll-cta{position:absolute;left:15%;top:33%;transform:translate(-50%,-50%);white-space:nowrap;box-shadow:0 10px 24px rgba(212,5,17,.3)}
 @media (max-width:600px){.roll-stage{--tw:290px}.roll-cta{padding:8px 12px;font-size:12px}.roll-pile{--ps:.55;right:4px}}
 
@@ -1076,7 +1077,7 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
   <div class="roll-stage" id="rollStage">
     <div class="roll-road" aria-hidden="true"></div>
     <div class="roll-dock" aria-hidden="true"><div class="roll-pile" id="rollPile"></div></div>
-    <div class="roll-truck" id="rollTruck" data-fx="drive"><img src="img/roll-truck2.webp" alt="상자를 기다리는 DHL 트럭" draggable="false"></div>
+    <div class="roll-truck" id="rollTruck" data-fx="drive"><img src="img/roll-truck-body.webp" alt="상자를 기다리는 DHL 트럭" draggable="false"><img class="rw" src="img/hd/wh0.webp" alt="" draggable="false" style="left:10.621%;top:73.700%"><img class="rw" src="img/hd/wh1.webp" alt="" draggable="false" style="left:17.974%;top:73.700%"><img class="rw" src="img/hd/wh2.webp" alt="" draggable="false" style="left:25.327%;top:73.700%"><img class="rw" src="img/hd/wh3.webp" alt="" draggable="false" style="left:59.641%;top:73.700%"><img class="rw" src="img/hd/wh4.webp" alt="" draggable="false" style="left:85.458%;top:73.700%"></div>
   </div>
 </section>
 
@@ -1327,7 +1328,7 @@ toShip();
     if(overTruck(e.clientX,e.clientY)){busy=true;d.el.remove();flyIn(d.o,30,()=>busy=false)}else flyBack(d.o,d.el)});
   function go(){driving=true;setN();const W=stg.clientWidth,r=trk.getBoundingClientRect(),s=SR(),out=W-(r.left-s.left)+40;
     const run=(from,to,T,ease)=>new Promise(res=>{const t0=performance.now();(function st(now){const k=Math.min(1,(now-t0)/T);tx=from+(to-from)*ease(k);
-      const tilt=from===0?-Math.sin(Math.min(1,k*3)*Math.PI)*.9:Math.sin(Math.max(0,k-.7)/.3*Math.PI)*.8;trk.style.transformOrigin='70% 100%';trk.style.transform=`translateX(${tx}px) translateY(${Math.sin(now/45)*1.1*(1-Math.abs(.5-k)*2)}px) rotate(${tilt}deg)`;k<1?requestAnimationFrame(st):res()})(t0)});
+      const tilt=from===0?-Math.sin(Math.min(1,k*3)*Math.PI)*.9:Math.sin(Math.max(0,k-.7)/.3*Math.PI)*.8;trk.style.transformOrigin='70% 100%';trk.style.setProperty('--rot',(tx/(Math.PI*trk.offsetWidth*0.0719))*360+'deg');trk.style.transform=`translateX(${tx}px) translateY(${Math.sin(now/45)*1.1*(1-Math.abs(.5-k)*2)}px) rotate(${tilt}deg)`;k<1?requestAnimationFrame(st):res()})(t0)});
     run(0,out,1500,k=>k*k*k).then(()=>{fillPile();return run(-(r.right-s.left)-60,0,1700,k=>1-Math.pow(1-k,3))}).then(()=>{tx=0;trk.style.transform='';n=0;driving=false;setN()})}
   fillPile();setN();
   if($('#rollBtn'))$('#rollBtn').onclick=()=>toss();
