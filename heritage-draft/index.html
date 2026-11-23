@@ -6,7 +6,7 @@
 <title>시안 · OUR HERITAGE (트럭 주행형) · 이젠 3조 (비공식 학습용)</title>
 <style>
 @font-face{font-family:'Pretendard';src:url('img/PretendardVariable.woff2') format('woff2');font-weight:100 900;font-display:swap}
-:root{--y:#FFCC00;--r:#D40511;--ink:#121212;--bg:#f7f6f2;--ground:.66}
+:root{--y:#FFCC00;--r:#D40511;--ink:#121212;--bg:#fff;--ground:.66}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Pretendard',system-ui,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;word-break:keep-all}
 .note{position:fixed;left:12px;bottom:12px;z-index:99;font:500 11px/1.5 system-ui,sans-serif;background:rgba(0,0,0,.75);color:#fff;padding:6px 10px;border-radius:6px}
@@ -16,7 +16,7 @@ body{font-family:'Pretendard',system-ui,sans-serif;background:var(--bg);color:va
 .hd{position:relative;height:520vh}
 .hd-stage{position:sticky;top:0;height:100vh;overflow:hidden;background:var(--bg)}
 /* 뒤로 흐르는 큰 글자 */
-.hd-out{position:absolute;left:0;bottom:calc(100% - var(--ground)*100vh - 3.2vw);white-space:nowrap;font-size:24vw;line-height:.8;font-weight:800;letter-spacing:-.04em;color:#e9e7e1;will-change:transform;user-select:none}
+.hd-out{position:absolute;left:0;bottom:calc(100% - var(--ground)*100vh - 3.2vw);white-space:nowrap;font-size:24vw;line-height:.8;font-weight:800;letter-spacing:-.04em;color:#f0efeb;will-change:transform;user-select:none}
 /* 땅(검은 도로) */
 .hd-ground{position:absolute;left:0;right:0;top:calc(var(--ground)*100vh);bottom:0;background:#111}
 .hd-ground::before{content:'';position:absolute;left:0;right:0;top:0;height:6px;background:#1d1d1d}
