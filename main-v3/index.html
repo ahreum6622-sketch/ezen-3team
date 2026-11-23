@@ -576,6 +576,53 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
 .pb-parcel.used{opacity:.25;pointer-events:none}
 .pb-ghost{position:fixed;z-index:9999;pointer-events:none;opacity:.95;transform:translate(-50%,-50%) rotate(-8deg) scale(1.1);box-shadow:0 14px 30px rgba(0,0,0,.22);border-radius:8px}
 @media(max-width:900px){.pb-head,.pb-card{grid-template-columns:1fr}.pb-dock{border-left:0;border-top:1px solid #f3ead2}}
+
+/* ===== 길을 만든 사람들 (waabi 사진 기둥) ===== */
+.rd{--ts:calc(133/1440*100vw);position:relative;height:150vh;background:#fff;overflow:clip;z-index:1}
+.rd-col{position:absolute;top:0;height:150vh;display:flex;flex-direction:column;justify-content:space-between;will-change:transform}
+.rd-col.c0{left:24px}.rd-col.c1{left:16.667%}.rd-col.c2{right:16.667%}.rd-col.c3{right:24px}
+.rd-t{position:relative;width:var(--ts);height:var(--ts);border-radius:12px;overflow:hidden;background:#f6efdc}
+.rd-t img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.rd-ph{visibility:hidden}
+.rd-mid{position:absolute;left:50%;top:17.7vh;margin-left:calc(var(--ts)/-2)}
+.rd-txt{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.rd-in{position:relative;display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center;max-width:min(600px,calc(100vw - 48px));will-change:transform}
+.rd-glow{position:absolute;left:0;right:0;top:50%;aspect-ratio:1;transform:translateY(-50%);border-radius:50%;background:#fff;filter:blur(40px)}
+.rd-lab,.rd-copy{position:relative;font-size:24px;line-height:1.38;letter-spacing:-.03em;font-weight:500;margin:0}
+.rd-lab{color:rgba(18,18,18,.5)}
+.rd-copy{color:var(--ink)}
+.rd-copy span{opacity:.12;transition:opacity .25s linear}
+/* ===== 현실의 거리 (waabi Safe/Scalable/Practical) ===== */
+.sc2{position:relative;height:200vh;background:#fff;z-index:2}
+.sc2-wrap{height:100%;max-width:calc(100vw - 2*max(24px,calc(103/1440*100vw)));margin:0 auto;padding:0 calc(90/1440*100vw);display:flex;justify-content:space-between;gap:40px}
+.sc2-l{flex:1;max-width:527px;height:100%}
+.sc2-stick{position:sticky;top:0;height:100vh;display:flex;align-items:center}
+.sc2-media{position:relative;width:100%;aspect-ratio:1}
+.sc2-a{position:absolute;inset:0;transform-origin:center;will-change:transform;z-index:1}
+.sc2-ai{position:absolute;inset:0;border-radius:16px;overflow:hidden;transition:transform .9s cubic-bezier(.7,0,.2,1),opacity .9s}
+.sc2-ai.off{transform:scale(.6);opacity:0}
+.sc2-ai img,.sc2-ly img{width:100%;height:100%;object-fit:cover;display:block}
+.sc2-ly{position:absolute;inset:0;border-radius:16px;overflow:hidden;transform:translateY(100vh) scale(1.05);transition:transform 1s cubic-bezier(.7,0,.2,1)}
+.sc2-ly[data-i="0"]{z-index:2}.sc2-ly[data-i="1"]{z-index:3}.sc2-ly[data-i="2"]{z-index:4}
+.sc2-ly img{animation:scKen 16s ease-in-out infinite alternate}
+@keyframes scKen{from{transform:scale(1)}to{transform:scale(1.12) translate(-2%,1%)}}
+.sc2-ly i{position:absolute;inset:0;background:rgba(0,0,0,.5);opacity:0;transition:opacity 1s}
+.sc2-ly.cur{transform:none}.sc2-ly.past{transform:translateY(-3vh) scale(.95)}.sc2-ly.past i{opacity:1}
+.sc2-ly.drag{transition:none}
+.sc2-r{flex:1;max-width:370px;height:200vh;display:flex;flex-direction:column}
+.sc2-head{height:100vh;display:flex;align-items:center}
+.sc2-head h2{font-size:clamp(40px,4.17vw,60px);line-height:1.08;letter-spacing:-.04em;font-weight:600;margin:0 0 24px}
+.sc2-head p{font-size:16px;line-height:1.4;color:rgba(0,0,0,.55);margin:0}
+.sc2-list{position:sticky;top:0;height:100vh;margin-top:-50vh;display:flex;flex-direction:column;justify-content:center;gap:20px;pointer-events:none}
+.sc2-it{pointer-events:auto;cursor:pointer;opacity:.46;transition:opacity .4s}
+.sc2-it.on,.sc2-it:hover{opacity:1}
+.sc2-it .t{font-size:40px;line-height:1.1;letter-spacing:-.03em;font-weight:600;margin:0}
+.sc2-it .d{display:grid;grid-template-rows:0fr;opacity:0;transition:grid-template-rows .6s cubic-bezier(.7,0,.2,1),opacity .5s}
+.sc2-it .d>p{overflow:hidden;margin:0;font-size:16px;line-height:1.4;color:rgba(0,0,0,.55)}
+.sc2-it.on .d{grid-template-rows:1fr;opacity:1}.sc2-it.on .d>p{padding-top:20px}
+@media (max-width:820px){.rd{--ts:110px}.rd-col.c0{left:-70px}.rd-col.c3{right:-70px}.rd-col.c1{left:6%}.rd-col.c2{right:6%}.rd-lab,.rd-copy{font-size:18px}
+ .sc2{height:auto;padding:80px 0}.sc2-wrap{flex-direction:column}.sc2-l,.sc2-r{max-width:none;height:auto}.sc2-stick{position:relative;height:auto}
+ .sc2-head{height:auto}.sc2-list{position:relative;height:auto;margin-top:32px}.sc2-it{opacity:1}.sc2-it .d{grid-template-rows:1fr;opacity:1}.sc2-it .d>p{padding-top:12px}}
 </style>
 </head>
 <body>
@@ -615,6 +662,39 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
       <div class="c off" data-c="6"><div class="tag"><b>→</b> YOUR TURN</div><h2>지금 보낼<br>상자가 <span class="hl">있나요</span>?</h2><p class="lead">도착 시간만 정하면 서비스와 예상 요금을 바로 알려드려요.</p><div class="cta"><a class="btn y" href="#services">서비스 고르기</a><a class="btn ghost" href="#ship">발송하기</a></div></div>
     </div></div>
     <div class="chips" id="chips"><span>01 NETWORK</span><span>02 PICKUP</span><span>03 SEA</span><span>04 AIR</span><span>05 HUB</span><span>06 ONE TEAM</span></div>
+  </div>
+</section>
+
+<!-- 길을 만든 사람들 (레퍼런스 waabi: 사진 기둥 + 어절 하나씩 차오르는 문단) -->
+<section class="rd" id="road">
+  <div class="rd-col c0" data-par="1"><div class="rd-t"><img src="img/road/t01.webp" alt="" loading="lazy" decoding="async"></div><div class="rd-t"><img src="img/road/t08.webp" alt="" loading="lazy" decoding="async"></div><div class="rd-t"><img src="img/road/t04.webp" alt="" loading="lazy" decoding="async"></div><div class="rd-t"><img src="img/road/t11.webp" alt="" loading="lazy" decoding="async"></div></div>
+  <div class="rd-col c1"><div class="rd-t"><img src="img/road/t03.webp" alt="" loading="lazy" decoding="async"></div><div class="rd-t"><img src="img/road/t10.webp" alt="" loading="lazy" decoding="async"></div><div class="rd-t"><img src="img/road/t06.webp" alt="" loading="lazy" decoding="async"></div><div class="rd-t rd-ph"></div></div>
+  <div class="rd-col c2"><div class="rd-t"><img src="img/road/t02.webp" alt="" loading="lazy" decoding="async"></div><div class="rd-t"><img src="img/road/t09.webp" alt="" loading="lazy" decoding="async"></div><div class="rd-t"><img src="img/road/t13.webp" alt="" loading="lazy" decoding="async"></div><div class="rd-t"><img src="img/road/t05.webp" alt="" loading="lazy" decoding="async"></div></div>
+  <div class="rd-col c3" data-par="1"><div class="rd-t"><img src="img/road/t07.webp" alt="" loading="lazy" decoding="async"></div><div class="rd-t"><img src="img/road/t12.webp" alt="" loading="lazy" decoding="async"></div><div class="rd-t"><img src="img/road/t01.webp" alt="" loading="lazy" decoding="async"></div><div class="rd-t"><img src="img/road/t09.webp" alt="" loading="lazy" decoding="async"></div></div>
+  <div class="rd-t rd-mid"><img src="img/road/t04.webp" alt="" loading="lazy" decoding="async"></div>
+  <div class="rd-txt"><div class="rd-in" id="rdIn"><i class="rd-glow" aria-hidden="true"></i>
+    <p class="rd-lab">우리는 길을 먼저 냈어요.</p>
+    <p class="rd-copy" id="rdCopy"><span>1969년,</span> <span>서류</span> <span>한</span> <span>통을</span> <span>비행기에</span> <span>싣는</span> <span>것에서</span> <span>시작한</span> <span>길이</span> <span>이제</span> <span>220여</span> <span>개</span> <span>국가와</span> <span>지역을</span> <span>잇습니다.</span> <span>하늘과</span> <span>바다,</span> <span>도로를</span> <span>하나의</span> <span>네트워크로</span> <span>묶어</span> <span>어떤</span> <span>상자든</span> <span>같은</span> <span>책임으로</span> <span>문</span> <span>앞까지</span> <span>전합니다.</span></p></div></div>
+</section>
+
+<!-- 현실의 거리 (레퍼런스 waabi: 타일이 커지며 왼쪽 큰 그림으로, 오른쪽 목록 누르면 장면 전환) -->
+<section class="sc2" id="scale">
+  <div class="sc2-wrap">
+    <div class="sc2-l"><div class="sc2-stick"><div class="sc2-media" id="scMedia">
+      <div class="sc2-a" id="scA"><div class="sc2-ai" id="scAi"><img src="img/road/sc0.webp" alt="DHL 네트워크 전체 지도"></div></div>
+      <div class="sc2-ly" data-i="0"><img src="img/road/sc1.webp" alt="DHL 허브 야적장"><i></i></div>
+      <div class="sc2-ly" data-i="1"><img src="img/road/sc2.webp" alt="DHL 공항 화물 터미널"><i></i></div>
+      <div class="sc2-ly" data-i="2"><img src="img/road/sc3.webp" alt="DHL 항만과 컨테이너선"><i></i></div>
+    </div></div></div>
+    <div class="sc2-r">
+      <div class="sc2-head"><div><h2>현실의 거리를,<br>하나의 네트워크로.</h2>
+        <p>더 빠르고, 더 안전하고, 더 멀리. 상자 하나를 위해 하늘과 바다와 도로가 한 팀처럼 움직여요.</p></div></div>
+      <div class="sc2-list" id="scList">
+        <div class="sc2-it on" data-i="0"><p class="t">안전하게</p><div class="d"><p>허브에서 상자마다 위치를 기록하고, 통관 서류까지 전문가가 끝까지 챙겨요.</p></div></div>
+        <div class="sc2-it" data-i="1"><p class="t">빠르게</p><div class="d"><p>자체 항공기와 전용 터미널로, 국경을 넘어도 다음 영업일 도착을 목표로 움직여요.</p></div></div>
+        <div class="sc2-it" data-i="2"><p class="t">어디든</p><div class="d"><p>바다 건너 220여 개 국가와 지역까지, 문 앞에서 문 앞으로 한 번에 이어 드려요.</p></div></div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -1372,6 +1452,36 @@ document.body.appendChild(sw);   // 화면 아래에 떠 있는 전환 버튼: �
 const vis=new Set();const io=new IntersectionObserver(es=>{es.forEach(e=>e.isIntersecting?vis.add(e.target):vis.delete(e.target));sw.classList.toggle('show',vis.size>0)},{threshold:.15});io.observe(A);io.observe(B);}
 abSwitch('lpSwitch','planner','plannerB');   // 상자 적재: A 기존 / B 레퍼런스형
 abSwitch('ixSwitch','index','quick');        // 바로가기: A 인덱스 / B 퀵가이드
+
+/* ===== 길을 만든 사람들 + 현실의 거리 (waabi 스크롤 연출) ===== */
+(()=>{const rd=document.getElementById('road'),sc=document.getElementById('scale');if(!rd||!sc)return;
+const par=[...rd.querySelectorAll('.rd-col[data-par]')],tin=document.getElementById('rdIn'),words=[...document.querySelectorAll('#rdCopy span')];
+const ph=rd.querySelector('.rd-ph'),media=document.getElementById('scMedia'),A=document.getElementById('scA'),Ai=document.getElementById('scAi');
+const ly=[...sc.querySelectorAll('.sc2-ly')],its=[...sc.querySelectorAll('.sc2-it')];
+const cl=(v,a=0,b=1)=>Math.min(b,Math.max(a,v)),ss=t=>t*t*(3-2*t);
+let P=0,act=0,mobile=false;
+function setAct(i){act=i;its.forEach((e,k)=>e.classList.toggle('on',k===i));ly.forEach((l,k)=>{l.classList.remove('drag');l.style.transform='';l.classList.toggle('cur',k===i);l.classList.toggle('past',k<i)});}
+its.forEach((e,k)=>e.addEventListener('click',()=>{if(k===act)return;setAct(k);Ai.classList.add('off');}));
+function frame(){mobile=innerWidth<=820;const vh=innerHeight,sy=scrollY;
+  /* 1) 사진 기둥: 바깥 두 줄은 스크롤보다 빠르게 올라감 */
+  const rt=rd.getBoundingClientRect().top+sy,d=(sy-rt)*900/vh;
+  par.forEach(c=>c.style.transform=`translateY(${(120-0.5333*d)*vh/900}px)`);
+  tin.style.transform=`translateY(${cl(-66.7+0.593*d,-200,200)*vh/900}px)`;
+  /* 2) 문단: 어절 하나씩 진해짐 (부드럽게 따라감) */
+  const tgt=cl((d+525)/420);P+=(tgt-P)*.12;const N=words.length;
+  words.forEach((w,i)=>w.style.opacity=(.12+.88*cl(P*(N+2)-i)).toFixed(3));
+  /* 3) 기둥의 마지막 타일이 커지며 왼쪽 큰 그림 자리로 */
+  const st=sc.getBoundingClientRect().top+sy,e=(sy-st)*900/vh;
+  if(mobile){A.style.transform='';ph.style.visibility='visible';}
+  else{ph.style.visibility='hidden';const p=ss(cl((e+650)/650)),m=media.getBoundingClientRect(),t=ph.getBoundingClientRect();
+    const s0=t.width/m.width,dx=(t.left+t.width/2)-(m.left+m.width/2),dy=(t.top+t.height/2)-(m.top+m.height/2);
+    A.style.transform=`translate(${dx*(1-p)}px,${dy*(1-p)}px) scale(${s0+(1-s0)*p})`;
+    /* 4) 첫 장면은 스크롤로 밀려 올라옴, 그다음은 목록을 눌러 전환 */
+    if(act===0){const q=ss(cl((e-150)/300));ly[0].classList.add('drag');ly[0].style.transform=q>=1?'none':`translateY(${(1-q)*100}vh) scale(${1.05-.05*q})`;Ai.classList.toggle('off',q>.55);}
+    else if(e<120){setAct(0);}
+  }
+  requestAnimationFrame(frame);}
+setAct(0);requestAnimationFrame(frame);})();
 </script>
 </body>
 </html>
