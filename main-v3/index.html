@@ -256,7 +256,7 @@ input[type=range]{width:100%;accent-color:var(--r)}
 .qg-c li a[aria-disabled="true"]{color:var(--mute);pointer-events:none}.qg-c li a[aria-disabled="true"]::after{content:''}
 .qg-tel{color:var(--ink);font-family:var(--mono);white-space:nowrap}
 /* ───────── 10. 마무리: 트럭 싣기 ───────── */
-.roll{margin-top:clamp(120px,16vh,180px);padding-top:clamp(80px,12vh,140px);background:linear-gradient(180deg,var(--bg) 0%,#f7efcf 100%);overflow:hidden;position:relative}
+.roll{margin-top:0;padding-top:clamp(60px,9vh,110px);background:linear-gradient(180deg,var(--bg) 0%,#f7efcf 100%);overflow:hidden;position:relative}
 .roll-in{text-align:center;display:flex;flex-direction:column;align-items:center}
 .roll h2{font-size:clamp(44px,6.4vw,96px);line-height:1.02;letter-spacing:-.04em;margin-top:22px}
 .roll-in>p{margin-top:24px;color:var(--sub);font-size:clamp(15px,1.3vw,18px);line-height:1.75}
@@ -453,7 +453,7 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
 #ship.ed{padding-bottom:calc(var(--ed-space) / 2)}#index.ed{padding-top:calc(var(--ed-space) / 2)}
 #nav{inset:clamp(10px,1.3vw,20px) clamp(12px,1.65vw,32px) auto;border:1px solid rgba(255,255,255,.72);border-radius:10px;background:rgba(244,243,239,.78);-webkit-backdrop-filter:blur(20px) saturate(125%);backdrop-filter:blur(20px) saturate(125%);box-shadow:0 3px 18px #24201612}
 #nav .wrap{max-width:none;width:100%;height:clamp(56px,4.3vw,72px);gap:clamp(14px,1.8vw,30px);padding:0 clamp(16px,1.5vw,28px)}
-#nav .logo{margin-right:auto}#nav .sp,#nav .mini{display:none}
+#nav .logo{margin-right:clamp(10px,1.4vw,24px)}#nav .sp,#nav .mini{display:none}
 #nav ul{font-weight:500;gap:clamp(16px,1.7vw,30px)}#nav ul a{opacity:1;color:#46443f}#nav ul a:hover{text-decoration:underline;text-underline-offset:5px}
 #nav details{position:relative}#nav summary{display:grid;place-content:center;gap:5px;cursor:pointer;list-style:none;width:42px;height:42px;color:var(--ink)}
 #nav summary::-webkit-details-marker{display:none}#nav summary::before,#nav summary::after{content:'';width:20px;height:2px;background:currentColor}
@@ -650,10 +650,9 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
 <!-- 2. 내비 -->
 <header class="nav" id="nav"><div class="wrap">
   <a class="logo" href="#top"><img src="img/dhl-logo-red.png" alt="DHL"></a>
-  <form class="nav-track" action="track.html" method="get" role="search"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input name="awb" inputmode="numeric" placeholder="운송장 번호 조회" aria-label="운송장 번호"><button type="submit">조회</button></form>
   <ul><li><a href="track.html">배송조회</a></li><li><a href="quote.html">요금산출</a></li><li><a href="guide.html">가이드</a></li><li><a href="#support">고객지원</a></li></ul>
-  <div class="sp"></div>
-  <details><summary aria-label="전체 메뉴"></summary><nav class="glass-menu" aria-label="전체 메뉴"><a href="track.html">배송조회</a><a href="quote.html">요금산출</a><a href="guide.html">가이드</a><a href="#support">고객지원</a><a href="#ship">발송하기</a><a href="#">로그인</a><a href="#">KR</a></nav></details></div></header>
+  <form class="nav-track" style="margin-left:auto" action="track.html" method="get" role="search"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input name="awb" inputmode="numeric" placeholder="운송장 번호 조회" aria-label="운송장 번호"><button type="submit">조회</button></form>
+</div></header>
 
 
 <main id="top">
@@ -873,20 +872,15 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
 </div></section>
 
 <!-- 10. 마무리 (레퍼런스 READY TO ROLL → 트럭에 상자 싣고 출발) -->
+</main>
 <div id="tail">
 <section class="roll ed-roll" id="roll">
-  <div class="wrap">
-    <div class="ed-cap rv"><b>11</b><span>READY TO ROLL</span></div>
-    <div class="ed-row"><h2 class="ed-h" data-fx="words">실어 주세요.<br>나머지는 <span class="hl">DHL</span>이.</h2></div>
-    <div class="roll-act" data-fx="rise"><button class="btn ghost lg" id="rollBtn">상자 싣기 <span class="roll-n" id="rollN">0/3</span></button><span class="mono-s">상자를 잡아 트럭으로 던져 보세요 · 세 개면 출발해요</span><a class="btn lg roll-sub" href="track.html">배송조회 하러 가기 →</a></div>
-  </div>
   <div class="roll-stage" id="rollStage">
     <div class="roll-road" aria-hidden="true"></div>
     <div class="roll-dock" aria-hidden="true"><div class="roll-pile" id="rollPile"></div></div>
     <div class="roll-truck" id="rollTruck" data-fx="drive"><img src="img/svc3d-truck.webp" alt="상자를 기다리는 DHL 트럭" draggable="false"></div>
   </div>
 </section>
-</main>
 
 <!-- 11. 푸터 -->
 <footer><div class="wrap">
@@ -1109,7 +1103,7 @@ toShip();
   let n=0,busy=false,driving=false,tx=0,drag=null,PH=null;
   function fillPile(){if(PH)return PH.refill();pile.innerHTML=PB.map(([w,h,c],i)=>`<i data-i="${i}" class="${c==='#FFCC00'?'dhl':''}" style="--c:${c};width:${w}px;height:${h}px;left:${POS[i][0]}px;bottom:${POS[i][1]}px"></i>`).join('')}
   const sc=()=>Math.min(1,stg.clientWidth/900+.25);
-  function setN(){$('#rollN').textContent=driving?'출발!':`${n}/3`}
+  function setN(){const e=$('#rollN');if(e)e.textContent=driving?'출발!':`${n}/3`}
   const SR=()=>stg.getBoundingClientRect();
   function loaded(){n++;bump();setN();if(n===3)setTimeout(go,450)}
   /* ── 단순 버전 (물리 없이) ── */
@@ -1138,7 +1132,7 @@ toShip();
       const tilt=from===0?-Math.sin(Math.min(1,k*3)*Math.PI)*.9:Math.sin(Math.max(0,k-.7)/.3*Math.PI)*.8;trk.style.transformOrigin='70% 100%';trk.style.transform=`translateX(${tx}px) translateY(${Math.sin(now/45)*1.1*(1-Math.abs(.5-k)*2)}px) rotate(${tilt}deg)`;k<1?requestAnimationFrame(st):res()})(t0)});
     run(0,out,1500,k=>k*k*k).then(()=>{fillPile();return run(-(r.right-s.left)-60,0,1700,k=>1-Math.pow(1-k,3))}).then(()=>{tx=0;trk.style.transform='';n=0;driving=false;setN()})}
   fillPile();setN();
-  $('#rollBtn').onclick=()=>toss();
+  if($('#rollBtn'))$('#rollBtn').onclick=()=>toss();
 
   /* ── 물리 버전 ── */
   const js=document.createElement('script');js.src='https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js';js.onload=initPhys;document.head.appendChild(js);
@@ -1372,13 +1366,7 @@ function frame(){
 requestAnimationFrame(frame)})();
 </script>
 <script>
-const glassMenu=document.querySelector('#nav details');
-document.addEventListener('click',event=>{
-  if(!glassMenu.contains(event.target)||event.target.closest('.glass-menu a'))glassMenu.open=false;
-});
-document.addEventListener('keydown',event=>{
-  if(event.key==='Escape'&&glassMenu.open){glassMenu.open=false;glassMenu.querySelector('summary').focus()}
-});
+
 </script><script type="module">
 /* 적재 플래너 B안: 레퍼런스처럼 앞에서 본 컨테이너(10×4칸)에 상자를 끌어다 쌓기. 아래로 떨어져 쌓임, 누르면 자동, 실린 상자 누르면 빠짐 */
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js';
