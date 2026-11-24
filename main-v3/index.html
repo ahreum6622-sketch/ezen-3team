@@ -1093,7 +1093,7 @@ const CH=[[0,.10],[.10,.33],[.33,.49],[.49,.63],[.63,.79],[.79,.94],[.94,1.01]];
 const cards=$$('.card .c'), chips=$$('#chips span'), pins=$$('.pinpt'), hint=$('#stHint');
 // 구름 [x, y(화면 비율), 너비(화면 비율)]
 const CLW={L:653,M:416,S:283};   // 레퍼런스 구름 크기(L·M·S) — 같은 구름 그림을 크기만 다르게
-const CL=[['L',-.78,-.55,1.15,1],['M',.7,-.62,1,.8],['L',.82,.48,1.25,1.1],['S',-.15,-.82,1,.6],['M',-.88,.55,1.1,.9],['S',.25,.78,1.1,.7],['M',.18,-.12,.75,1.6],['S',-.38,.18,.7,1.4]].map(([key,nx,ny,sz,d],i)=>{const im=document.createElement('img');im.src='img/복슬복슬한 입체 구름.png';im.className='cl';im.alt='';$('#clouds').appendChild(im);return{im,key,nx,ny,sz,d,i,flip:i%2?-1:1}});
+const CL=[['L',-.78,-.55,1.15,1],['M',.7,-.62,1,.8],['L',.82,.48,1.25,1.1],['S',-.15,-.82,1,.6],['M',-.88,.55,1.1,.9],['S',.25,.78,1.1,.7],['M',.18,-.12,.75,1.6],['S',-.38,.18,.7,1.4]].map(([key,nx,ny,sz,d],i)=>{const im=document.createElement('img');im.src='img/cloud_t.webp';im.className='cl';im.alt='';$('#clouds').appendChild(im);return{im,key,nx,ny,sz,d,i,flip:i%2?-1:1}});
 let P=0,last=performance.now(),T=0;
 const crm=(a,b,c,d,t)=>{const t2=t*t;return .5*(2*b+(-a+c)*t+(2*a-5*b+4*c-d)*t2+(-a+3*b-3*c+d)*t2*t)};
 const io3=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2, smo=t=>t*t*(3-2*t);
@@ -1117,9 +1117,9 @@ function draw(p){const W=innerWidth,H=innerHeight,c=cam(p),cov=Math.max(W/IW,H/I
   // 구름 (레퍼런스): 처음엔 화면 가장자리를 풍성하게 덮고, 스크롤 0~0.15 동안 바깥으로 커지며 걷힘
   const Tc=clamp(p/.15),s2=Tc*Tc,oc=1-smo(clamp((Tc-.45)/.55)),ca=Math.max(W,H)/2100;
   CL.forEach(o=>{const wob=.012*Math.sin(.07*T+1.7*o.i),sp=1+1.9*s2*o.d,cx=W/2+(o.nx+wob)*W*.5*sp,cy=H/2+o.ny*H*.5*sp;
-    const w=CLW[o.key]*o.sz*ca*(1+2.4*s2*o.d)*1.9;   // 우리 구름 그림은 여백이 있어 조금 더 크게
-    o.im.style.width=w+'px';o.im.style.transform=`translate(${(cx-w/2).toFixed(1)}px,${(cy-w*.5).toFixed(1)}px) scaleX(${o.flip})`;
-    o.im.style.opacity=Tc>=1?0:(oc*(o.d>1.2?.9*(1-smo(clamp(Tc/.4))):1)).toFixed(3);});
+    const w=CLW[o.key]*o.sz*ca*(1+2.4*s2*o.d);   // 레퍼런스와 같은 크기 (구름 그림은 여백 없이 잘라 씀)
+    o.im.style.width=w+'px';o.im.style.transform=`translate(${(cx-w/2).toFixed(1)}px,${(cy-w*.31).toFixed(1)}px) scaleX(${o.flip})`;
+    o.im.style.opacity=Tc>=1?0:(oc*(o.d>1.2?.62*(1-smo(clamp(Tc/.4))):1)).toFixed(3);});
   hint.style.opacity=(1-clamp(p/.025)).toFixed(3);
 }
 
