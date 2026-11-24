@@ -865,21 +865,6 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
   .ha-t{transform:none;bottom:auto;top:18px;left:60px}.ha-n{top:20px}}
 @media (prefers-reduced-motion:reduce){.ha-p{transition:none}}
 
-/* OUR SERVICES: 시안(2464px 기준) 비율로 여백·크기 맞춤 */
-.os2-in{max-width:none;padding:0 5.7vw}
-.os2-h{font-size:5.3vw;line-height:1.05;font-weight:700;letter-spacing:-.035em}
-.os2-sub{margin-top:2.9vw;font-size:max(14px,1.22vw);line-height:1.5}
-.ha{width:auto;height:22.2vw;margin:min(11.8vw,16vh) 0 0;padding-left:17.8vw;gap:1.1vw}
-.ha-p{flex:calc(1 + var(--o)*3.95) 1 0;border-radius:1.25vw}
-.ha-n{left:1.9vw;top:2.6vw;font-size:max(12px,1vw)}
-.ha-t{left:1.9vw;bottom:calc(2.3vw + var(--o)*4.3vw);font-size:max(13px,1.22vw)}
-.ha-b{left:1.9vw;right:1.9vw;bottom:2.3vw}
-.ha-b i{width:calc(var(--o)*1.3vw);margin-bottom:.9vw}
-.ha-b p{font-size:max(12px,1.05vw);max-width:24vw}
-
-.os2-stick{padding-top:clamp(40px,7vh,110px);background:radial-gradient(48% 52% at 52% 46%,#f3f3f3 0%,#f7f7f7 45%,#fff 80%)}
-.ha-t{bottom:calc(2.3vw + var(--o)*(3.1*max(12px,1.05vw) + 2px + .75vw + 1.1vw))}   /* 작은 화면에서 글자 최소 크기 때문에 설명이 길어져도 제목과 겹치지 않게 */
-.ha-b i{margin-bottom:.75vw}
 
 #story .card{opacity:calc(var(--on,1)*var(--hf,1))}
 #clouds,#chips{opacity:var(--hf,1)}
@@ -1200,7 +1185,8 @@ const story=$('#story'), map=$('#map'), nav=$('#nav'), IW=4096, IH=2731;
 const KEY=[[0,2048,1364,1,'OVERVIEW'],[0.06,1900,1250,1.12,'OVERVIEW'],[0.13,830,600,2.3,'PICKUP'],[0.18,830,640,2.25,'PICKUP',1],[0.26,1000,1100,2.05,'PICKUP',1],[0.31,844,1500,1.95,'PICKUP',1],[0.37,1100,2252,1.35,'SEA'],[0.46,844,2278,1.35,'SEA'],[0.52,3328,2252,1.8,'AIR'],[0.6,3712,2201,1.7,'AIR'],[0.66,2790,1024,2,'HUB'],[0.76,2764,1036,2.1,'HUB'],[0.82,3507,435,2,'HQ'],[0.9,3532,460,2.1,'HQ'],[1,2048,1364,1,'OVERVIEW']];   // [p, x, y, 줌, 장면, 트럭따라가기]
 const CH=[[0,.10],[.10,.33],[.33,.49],[.49,.63],[.63,.79],[.79,.94],[.94,1.01]];   // 카드 01~06 + 마지막 안내가 나오는 구간
 const cards=$$('.card .c'), chips=$$('#chips span'), pins=$$('.pinpt'), hint=$('#stHint'), dot=$('#stDot'), SCARD=document.querySelector('#story .card');
-const ANC=[null,[952,525],[2132,2370],[3584,2104],'cont',[3507,330],[2048,1250]];   // 01은 카드 없음 · 02 옆에 주차된 트럭 · 03 뱃머리 · 04 주차된 비행기 · 05 들리는 컨테이너(같이 움직임) · 06 본사 · 07 가운데   // 카드별 점 위치(지도 px): 물류센터·달리는 트럭·정박한 배 뱃머리·공항 비행기·리치스태커·본사·가운데
+const ANC=[null,[952,525],[2132,2370],[3584,2104],'cont',[3507,330],null];
+const SIDE=[0,1,1,-1,1,1,0];   // 말풍선이 점의 오른쪽(1)/왼쪽(-1) 위에 고정   // 01은 카드 없음 · 02 옆에 주차된 트럭 · 03 뱃머리 · 04 주차된 비행기 · 05 들리는 컨테이너(같이 움직임) · 06 본사 · 07 가운데   // 카드별 점 위치(지도 px): 물류센터·달리는 트럭·정박한 배 뱃머리·공항 비행기·리치스태커·본사·가운데
 // 구름 [x, y(화면 비율), 너비(화면 비율)]
 const CLW={L:653,M:416,S:283};   // 레퍼런스 구름 크기(L·M·S) — 같은 구름 그림을 크기만 다르게
 const CL=[['L',-.78,-.55,1.15,1],['M',.7,-.62,1,.8],['L',.82,.48,1.25,1.1],['S',-.15,-.82,1,.6],['M',-.88,.55,1.1,.9],['S',.25,.78,1.1,.7],['M',.18,-.12,.75,1.6],['S',-.38,.18,.7,1.4]].map(([key,nx,ny,sz,d],i)=>{const im=document.createElement('img');im.src='img/cloud_t.webp';im.className='cl';im.alt='';$('#clouds').appendChild(im);return{im,key,nx,ny,sz,d,i,flip:i%2?-1:1}});
@@ -1226,11 +1212,10 @@ function draw(p){const W=innerWidth,H=innerHeight,c=cam(p),cov=Math.max(W/IW,H/I
   vehicles(p);
   /* 말풍선 카드: 장면마다 지도 위 한 점(반짝이는 점)에 붙어 따라다님 */
   if(i>=0&&ANC[i]){const tx=W/2-x*s,ty=H/2-y*s,a=ANC[i];let dx,dy;
-    if(a==='cont'){   // 리치스태커가 든 컨테이너를 따라감: 땅에 놓인 위치 + 리치스태커 이동량 + 들린 높이
-      const c=V.ct.getBoundingClientRect(),r=V.rs.getBoundingClientRect(),m=V.rs.src.match(/rs_lift_(\d)/),lift=m?[0,13,25,36,44,51,57,63][+m[1]]:0,k=c.width/640;
-      dx=r.left+k*491;dy=r.top+k*(190-lift);}else{dx=tx+a[0]*s;dy=ty+a[1]*s;}
-    const cw=SCARD.offsetWidth,chh=(cards[i]&&cards[i].offsetHeight||100)+30;
-    let L=dx+14,Tp=dy-chh-12;if(L+cw>W-16)L=dx-14-cw;if(Tp<96)Tp=dy+16;L=clamp(L,16,W-cw-16);
+    if(a==='cont'){   // 컨테이너 가운데: 땅에 있을 땐 제자리, 들릴 때부터 리치스태커와 같이 움직임
+      const c=V.ct.getBoundingClientRect(),r=V.rs.getBoundingClientRect(),m=V.rs.src.match(/rs_lift_(\d)/),lift=m?[0,13,25,36,44,51,57,63][+m[1]]:0,k=c.width/640,b=m?r:c;
+      dx=b.left+k*491;dy=b.top+k*(203-lift);}else{dx=tx+a[0]*s;dy=ty+a[1]*s;}
+    const cw=SCARD.offsetWidth,chh=(cards[i]&&cards[i].offsetHeight||100)+30,L=SIDE[i]>0?dx+30:dx-30-cw,Tp=dy-chh-20;   // 점 기준 고정 위치(화면에 맞춰 옮기지 않음)
     SCARD.style.transform=`translate(${L.toFixed(1)}px,${Tp.toFixed(1)}px)`;dot.style.transform=`translate(${dx.toFixed(1)}px,${dy.toFixed(1)}px)`;dot.style.opacity=1;SCARD.style.setProperty('--on','1');SCARD.style.pointerEvents='';}
   else{dot.style.opacity=0;SCARD.style.setProperty('--on','0');SCARD.style.pointerEvents='none';}
   // 구름 (레퍼런스): 처음엔 화면 가장자리를 풍성하게 덮고, 스크롤 0~0.15 동안 바깥으로 커지며 걷힘
