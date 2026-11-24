@@ -868,6 +868,23 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
 
 #story .card{opacity:calc(var(--on,1)*var(--hf,1))}
 #clouds,#chips{opacity:var(--hf,1)}
+
+/* ===== DHL IN NUMBERS + 지구 ===== */
+.gn{position:relative;height:240vh;background:#000;z-index:2}
+.gn-stick{position:sticky;top:0;height:100vh;overflow:hidden;background:#000}
+.gn-globe{position:absolute;left:50%;top:42%;width:min(135vh,103.5vw);aspect-ratio:1;transform:translateX(-50%);will-change:transform}
+.gn-globe canvas{width:100%;height:100%;display:block;cursor:grab}.gn-globe canvas:active{cursor:grabbing}
+.gn-globe::before{content:'';position:absolute;inset:-6%;border-radius:50%;background:radial-gradient(closest-side,rgba(255,204,0,.16),rgba(255,204,0,.05) 70%,transparent 100%);z-index:-1}
+.gn-top{position:absolute;left:0;right:0;top:clamp(90px,13vh,150px);text-align:center;color:#fff;z-index:2;padding:0 4vw}
+.gn-eb{margin:0 0 clamp(22px,4vh,44px);font:600 12px/1 var(--mono);letter-spacing:.24em;color:var(--y)}
+.gn-stats{display:flex;justify-content:center;gap:clamp(28px,6vw,120px)}
+.gn-s{text-align:center}
+.gn-s .n{margin:0;display:flex;align-items:baseline;justify-content:center;gap:6px;line-height:1}
+.gn-s .n b{font-size:clamp(40px,5.6vw,96px);font-weight:800;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.gn-s .n i{font-style:normal;font-weight:800;font-size:clamp(16px,1.7vw,30px);color:var(--r)}
+.gn-s .d{margin:14px 0 0;font-size:clamp(13px,1vw,16px);color:rgba(255,255,255,.62)}
+.gn-fade{position:absolute;inset:0;z-index:3;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,0) 0%,rgba(255,255,255,0) 35%,#fff 72%);transform:translateY(100%);will-change:transform,opacity}
+@media (max-width:720px){.gn-stats{flex-direction:column;gap:22px}.gn-globe{top:55%}}
 </style>
 </head>
 <body>
@@ -957,6 +974,22 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
         <div class="hd-c"><span class="yr today">TODAY</span><b>CONNECTING THE WORLD</b><p>220개 이상의 국가 및 지역을 연결하는 글로벌 물류 기업으로 성장하며 사람과 시장을 연결하고 있습니다.</p><i></i></div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- DHL IN NUMBERS: 검은 하늘 아래 떠오른 지구(예전 지구 히어로) + 숫자. 스크롤하면 지구가 그라데이션으로 사라짐 -->
+<section class="gn" id="globeNums">
+  <div class="gn-stick">
+    <div class="gn-globe"><canvas id="gnGlobe" aria-label="DHL 글로벌 네트워크 지구본"></canvas></div>
+    <div class="gn-top">
+      <p class="gn-eb">DHL IN NUMBERS</p>
+      <div class="gn-stats">
+        <div class="gn-s"><p class="n"><b data-to="584000" data-fmt="comma">0</b><i>명</i></p><p class="d">당신의 택배를 위해 함께 뛰는 사람들</p></div>
+        <div class="gn-s"><p class="n"><b data-to="220">0</b><i>+</i></p><p class="d">DHL로 보낼 수 있는 나라와 지역</p></div>
+        <div class="gn-s"><p class="n"><b data-to="829">0</b><i>억 유로</i></p><p class="d">2025년, 고객이 맡겨준 한 해</p></div>
+      </div>
+    </div>
+    <div class="gn-fade" id="gnFade" aria-hidden="true"></div>
   </div>
 </section>
 
@@ -1995,6 +2028,53 @@ const open=i=>{if(i===cur)return;cur=i;ps.forEach((e,k)=>e.classList.toggle('is-
 function upd(){const r=sec.getBoundingClientRect(),span=sec.offsetHeight-innerHeight,t=Math.min(1,Math.max(0,-r.top/span));open(Math.min(N-1,Math.floor(t*N)));}
 addEventListener('scroll',upd,{passive:true});addEventListener('resize',upd);upd();
 ps.forEach((p,k)=>p.addEventListener('click',()=>{const top=sec.getBoundingClientRect().top+scrollY,span=sec.offsetHeight-innerHeight;scrollTo({top:top+span*(k+.5)/N,behavior:'smooth'})}));})();
+</script>
+
+<script src="js/land.js"></script>
+<script>
+/* DHL IN NUMBERS 지구본 (DHL2 지구 히어로의 '도착 후' 상태: 촘촘한 대륙 점 + 노란 바닷길·배·항구) */
+(()=>{const sec=document.getElementById('globeNums'),cv=document.getElementById('gnGlobe');if(!sec||!cv||!window.P2)return;
+const ctx=cv.getContext('2d'),D=Math.PI/180,fade=document.getElementById('gnFade'),wrap=cv.parentElement,top=sec.querySelector('.gn-top');
+const vec=(la,lo)=>{la*=D;lo*=D;return[Math.cos(la)*Math.cos(lo),Math.cos(la)*Math.sin(lo),Math.sin(la)]};
+function slerp(a,b,t){const d=Math.min(1,Math.max(-1,a[0]*b[0]+a[1]*b[1]+a[2]*b[2])),w=Math.acos(d);if(w<1e-6)return a;const s=Math.sin(w),k1=Math.sin((1-t)*w)/s,k2=Math.sin(t*w)/s;return[a[0]*k1+b[0]*k2,a[1]*k1+b[1]*k2,a[2]*k1+b[2]*k2]}
+const LANES=[[[35.1,129.0],[33,128.5],[29,125],[24,121.5],[20,117],[12,112],[5,107],[1.2,103.9]],
+ [[1.2,103.9],[4,99],[6,94],[6,80],[12,62],[12.8,48],[13.2,43.3],[20,38.6],[27.5,34],[30,32.6],[32,31],[34,25],[37,11],[36,-5.6],[43,-10],[48,-6],[50,0],[52,3.8]],
+ [[31.2,122.3],[30,130],[35,150],[40,175],[42,-160],[38,-135],[33.7,-118.3]],
+ [[52,3.8],[50,-2],[49,-10],[45,-30],[42,-55],[40.5,-73.8]],
+ [[1.2,103.9],[-5,105.5],[-9,114],[-20,112],[-32,114],[-36,125],[-39,146],[-37,150.5],[-33.9,151.3]],
+ [[48,-6],[40,-15],[20,-24],[0,-30],[-15,-35],[-24,-45.5]],
+ [[35.1,129.0],[38,142],[45,165],[52,-170],[55,-150],[49,-127],[47.6,-122.5]]].map(l=>{const pts=[];for(let i=0;i<l.length-1;i++){const a=vec(...l[i]),b=vec(...l[i+1]);for(let t=0;t<1;t+=.05)pts.push(slerp(a,b,t))}pts.push(vec(...l[l.length-1]));
+  const seg=[0];for(let i=1;i<pts.length;i++){const p=pts[i-1],q=pts[i];seg.push(seg[i-1]+Math.hypot(p[0]-q[0],p[1]-q[1],p[2]-q[2]))}return{pts,seg,len:seg[seg.length-1]}});
+const PORTS=[[35.1,129.0,1],[1.2,103.9],[52,3.8],[31.2,122.3],[33.7,-118.3],[40.5,-73.8],[-33.9,151.3],[-24,-46.3],[47.6,-122.5]].map((p,i)=>({v:vec(p[0],p[1]),home:!!p[2],ph:i*.17}));
+const SHIPS=[];LANES.forEach((l,i)=>{for(let k=0;k<3;k++)SHIPS.push({lane:l,off:(k/3+i*.13)%1,speed:.018+((i*7+k*3)%5)*.004,dir:k%2?-1:1})});
+function along(l,u){const d=u*l.len;let i=1;while(i<l.seg.length&&l.seg[i]<d)i++;i=Math.min(i,l.pts.length-1);const a=l.pts[i-1],b=l.pts[i],t=(d-l.seg[i-1])/((l.seg[i]-l.seg[i-1])||1);return[a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t,a[2]+(b[2]-a[2])*t]}
+const LAND=[];for(let i=0;i<P2.length;i+=2)LAND.push(vec(P2[i],P2[i+1]));
+let S,R,rot=-112*D,tilt=18*D,drag=null,vel=0,vis=false;
+function resize(){const w=cv.offsetWidth,d=Math.min(2,devicePixelRatio||1);cv.width=w*d;cv.height=w*d;ctx.setTransform(d,0,0,d,0,0);S=w;R=S*.46}
+function proj(v){const c=Math.cos(rot),s=Math.sin(rot);let x=v[0]*c-v[1]*s,y=v[0]*s+v[1]*c,z=v[2];const ct=Math.cos(tilt),st=Math.sin(tilt);return[S/2+y*R,S/2-(z*ct-x*st)*R,x*ct+z*st]}
+function draw(t){ctx.clearRect(0,0,S,S);
+  const g=ctx.createRadialGradient(S/2-R*.3,S/2-R*.35,R*.1,S/2,S/2,R);g.addColorStop(0,'#1d1d1d');g.addColorStop(1,'#0a0a0a');ctx.beginPath();ctx.arc(S/2,S/2,R,0,7);ctx.fillStyle=g;ctx.fill();
+  const rim=ctx.createRadialGradient(S/2,S/2,R*.92,S/2,S/2,R*1.12);rim.addColorStop(0,'rgba(255,204,0,0)');rim.addColorStop(.45,'rgba(255,204,0,.10)');rim.addColorStop(1,'rgba(255,204,0,0)');ctx.beginPath();ctx.arc(S/2,S/2,R*1.12,0,7);ctx.fillStyle=rim;ctx.fill();
+  const dr=Math.max(.9,R*.0046);ctx.fillStyle='#8a8a8a';
+  for(const v of LAND){const p=proj(v);if(p[2]<=0)continue;ctx.globalAlpha=.22+.62*p[2];ctx.fillRect(p[0]-dr/2,p[1]-dr/2,dr,dr)}ctx.globalAlpha=1;
+  ctx.lineWidth=1;ctx.setLineDash([2,4]);ctx.strokeStyle='rgba(255,204,0,.28)';
+  for(const l of LANES){ctx.beginPath();let on=false;for(const v of l.pts){const p=proj(v);if(p[2]>0){on?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]);on=true}else on=false}ctx.stroke()}ctx.setLineDash([]);
+  for(const pt of PORTS){const p=proj(pt.v);if(p[2]<=0)continue;const pu=((t/1600)+pt.ph)%1;ctx.lineWidth=1;ctx.beginPath();ctx.arc(p[0],p[1],3+pu*10,0,7);ctx.strokeStyle=pt.home?`rgba(212,5,17,${1-pu})`:`rgba(255,204,0,${.7*(1-pu)})`;ctx.stroke();ctx.beginPath();ctx.arc(p[0],p[1],3,0,7);ctx.fillStyle=pt.home?'#D40511':'#FFCC00';ctx.fill()}
+  for(const s of SHIPS){let u=(s.off+t/1000*s.speed*s.dir)%1;if(u<0)u+=1;for(let k=6;k>=0;k--){let uu=((u-s.dir*k*.006)%1+1)%1;const p=proj(along(s.lane,uu));if(p[2]<=0)continue;ctx.globalAlpha=(1-k/7)*(.35+.65*p[2]);ctx.beginPath();ctx.arc(p[0],p[1],k?1.6:3.2,0,7);ctx.fillStyle='#FFCC00';ctx.fill()}ctx.globalAlpha=1}}
+/* 숫자: 처음 보일 때 0 → 목표값으로 올라감 */
+const nums=[...sec.querySelectorAll('.gn-s b')];let counted=false;
+function count(){counted=true;const t0=performance.now();(function st(now){const k=Math.min(1,(now-t0)/1600),e=1-Math.pow(1-k,3);
+  nums.forEach(b=>{const v=Math.round(+b.dataset.to*e);b.textContent=b.dataset.fmt?v.toLocaleString('en-US'):v});if(k<1)requestAnimationFrame(st)})(t0)}
+function frame(t){requestAnimationFrame(frame);const r=sec.getBoundingClientRect();vis=r.bottom>0&&r.top<innerHeight;if(!vis)return;
+  if(!counted&&r.top<innerHeight*.5)count();
+  const p=Math.min(1,Math.max(0,-r.top/(sec.offsetHeight-innerHeight)));
+  if(!drag){rot+=.0009+vel;vel*=.95}
+  /* 스크롤하면 아래에서 흰 그라데이션이 올라와 지구를 덮고, 지구는 살짝 내려감 */
+  const f=Math.max(0,(p-.25)/.75);fade.style.transform=`translateY(${(1-f)*100}%)`;wrap.style.transform=`translateX(-50%) translateY(${f*8}vh)`;top.style.opacity=(1-Math.max(0,(p-.55)/.3)).toFixed(3);
+  draw(t);}
+cv.addEventListener('pointerdown',e=>{drag={x:e.clientX,r:rot};vel=0;cv.setPointerCapture(e.pointerId)});
+cv.addEventListener('pointermove',e=>{if(!drag)return;const nr=drag.r-(e.clientX-drag.x)/R;vel=(nr-rot)*.3;rot=nr});
+cv.addEventListener('pointerup',()=>drag=null);addEventListener('resize',resize);resize();requestAnimationFrame(frame);})();
 </script>
 </body>
 </html>
