@@ -848,10 +848,10 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
 .os2-sub{margin:clamp(22px,3vw,48px) 0 0;font-size:clamp(15px,1.3vw,22px);color:var(--ink)}
 .ha{--speed:.75s;display:flex;gap:clamp(10px,1.1vw,22px);height:min(clamp(320px,37vw,560px),calc(100vh - 330px));margin:clamp(40px,7vh,110px) 0 0 auto;width:min(100%,1740px);padding-left:clamp(0px,17vw,320px)}
 .ha-p{--o:0;position:relative;flex:calc(1 + var(--o)*5.4) 1 0;min-width:0;border-radius:clamp(14px,1.4vw,26px);overflow:hidden;background:#d9d9d9;cursor:pointer;outline:none;transition:--o var(--speed) cubic-bezier(.65,0,.25,1)}
-.ha-p.is-open{--o:1;cursor:default}
+.ha-p.is-open{--o:1;cursor:default;box-shadow:0 24px 50px -20px rgba(0,0,0,.35)}
 .ha-p:focus-visible{box-shadow:0 0 0 3px var(--y)}
-.ha-p img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(calc(1.12 - var(--o)*.12))}
-.ha-p::before{content:'';position:absolute;inset:0;z-index:1;background:#fff;opacity:calc((1 - var(--o))*.55);pointer-events:none}   /* 닫힌 패널: 어둡게 말고 하얗게 */
+.ha-p img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(calc(1.12 - var(--o)*.12));filter:grayscale(calc(1 - var(--o))) blur(calc((1 - var(--o))*2px))}   /* 닫힌 패널: 흑백 + 살짝 흐림, 열린 패널: 원래 색 */
+.ha-p::before{content:'';position:absolute;inset:0;z-index:1;background:#fff;opacity:calc((1 - var(--o))*.72);pointer-events:none}   /* 닫힌 패널: 어둡게 말고 하얗게 */
 .ha-p::after{content:'';position:absolute;inset:0;opacity:var(--o);background:linear-gradient(180deg,rgba(0,0,0,.28) 0%,rgba(0,0,0,0) 30%,rgba(0,0,0,.08) 55%,rgba(0,0,0,.62) 100%)}
 .ha-n,.ha-t,.ha-b{position:absolute;z-index:2;color:rgb(calc(18 + var(--o)*237),calc(18 + var(--o)*237),calc(18 + var(--o)*237))}
 .ha-n{left:clamp(16px,1.9vw,46px);top:clamp(18px,2.2vw,52px);font-size:clamp(14px,1.05vw,20px);font-weight:500}
