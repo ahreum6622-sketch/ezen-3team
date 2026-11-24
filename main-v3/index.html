@@ -840,17 +840,20 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
 
 /* ===== OUR SERVICES · 가로 이미지 아코디언 (webdevsnippets horizontal image accordion 방식) ===== */
 @property --o{syntax:'<number>';inherits:true;initial-value:0}
-.os2{position:relative;background:#fff;z-index:2;padding:clamp(90px,14vh,170px) 0 clamp(90px,12vh,150px)}
+.os2{position:relative;background:#fff;z-index:2;height:460vh}   /* 스크롤로 01→06 차례로 열림 */
+.os2-stick{position:sticky;top:0;height:100vh;display:flex;align-items:center;overflow:hidden}
+.os2-in{width:100%}
 .os2-in{max-width:1680px;margin:0 auto;padding:0 clamp(20px,5.5vw,110px)}
 .os2-h{margin:0;font-size:clamp(48px,6.4vw,118px);line-height:1;letter-spacing:-.04em;font-weight:700}
 .os2-sub{margin:clamp(22px,3vw,48px) 0 0;font-size:clamp(15px,1.3vw,22px);color:var(--ink)}
-.ha{--speed:.75s;display:flex;gap:clamp(10px,1.1vw,22px);height:clamp(340px,37vw,560px);margin:clamp(60px,10vh,130px) 0 0 auto;width:min(100%,1740px);padding-left:clamp(0px,17vw,320px)}
+.ha{--speed:.75s;display:flex;gap:clamp(10px,1.1vw,22px);height:min(clamp(320px,37vw,560px),calc(100vh - 330px));margin:clamp(40px,7vh,110px) 0 0 auto;width:min(100%,1740px);padding-left:clamp(0px,17vw,320px)}
 .ha-p{--o:0;position:relative;flex:calc(1 + var(--o)*5.4) 1 0;min-width:0;border-radius:clamp(14px,1.4vw,26px);overflow:hidden;background:#d9d9d9;cursor:pointer;outline:none;transition:--o var(--speed) cubic-bezier(.65,0,.25,1)}
 .ha-p.is-open{--o:1;cursor:default}
 .ha-p:focus-visible{box-shadow:0 0 0 3px var(--y)}
-.ha-p img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(calc(1.12 - var(--o)*.12));filter:saturate(calc(.35 + var(--o)*.65)) brightness(calc(.92 + var(--o)*.08))}
-.ha-p::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.28) 0%,rgba(0,0,0,0) 30%,rgba(0,0,0,.08) 55%,rgba(0,0,0,.62) 100%)}
-.ha-n,.ha-t,.ha-b{position:absolute;z-index:1;color:#fff}
+.ha-p img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(calc(1.12 - var(--o)*.12))}
+.ha-p::before{content:'';position:absolute;inset:0;z-index:1;background:#fff;opacity:calc((1 - var(--o))*.55);pointer-events:none}   /* 닫힌 패널: 어둡게 말고 하얗게 */
+.ha-p::after{content:'';position:absolute;inset:0;opacity:var(--o);background:linear-gradient(180deg,rgba(0,0,0,.28) 0%,rgba(0,0,0,0) 30%,rgba(0,0,0,.08) 55%,rgba(0,0,0,.62) 100%)}
+.ha-n,.ha-t,.ha-b{position:absolute;z-index:2;color:rgb(calc(18 + var(--o)*237),calc(18 + var(--o)*237),calc(18 + var(--o)*237))}
 .ha-n{left:clamp(16px,1.9vw,46px);top:clamp(18px,2.2vw,52px);font-size:clamp(14px,1.05vw,20px);font-weight:500}
 /* 제목: 닫힘=세로(아래에서 위로), 열림=가로 */
 .ha-t{left:clamp(16px,1.9vw,46px);bottom:calc(clamp(22px,2.2vw,48px) + var(--o)*clamp(70px,5.6vw,120px));margin:0;white-space:nowrap;font-weight:700;letter-spacing:-.01em;
@@ -972,11 +975,11 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
 
 <!-- OUR SERVICES (레퍼런스 영상: 왼쪽 제목·글 / 오른쪽 큰 사진 + 뒤에 이전 사진, 화살표로 넘기기) -->
 <section class="os2" id="ourServices">
-  <div class="os2-in">
+  <div class="os2-stick"><div class="os2-in">
     <h2 class="os2-h">Beyond Delivery</h2>
     <p class="os2-sub">국경을 넘어 고객의 다양한 물류 요구에 맞춘 전문적인 운송 서비스를 제공합니다.</p>
     <div class="ha" id="haRow"><article class="ha-p is-open" tabindex="0" aria-label="International Express 국제 특송"><img src="img/svc/express.webp" alt="" loading="lazy" decoding="async"><span class="ha-n">01</span><h3 class="ha-t">International Express</h3><div class="ha-b"><i></i><p>긴급 서류부터 중요 화물까지 글로벌 특송 네트워크를 통해 신속하고 안전하게 배송합니다.</p></div></article><article class="ha-p" tabindex="0" aria-label="Ocean Freight 해상 운송"><img src="img/svc/ocean.webp" alt="" loading="lazy" decoding="async"><span class="ha-n">02</span><h3 class="ha-t">Ocean Freight</h3><div class="ha-b"><i></i><p>대량 화물과 다양한 운송 조건에 맞춰 효율적이고 경제적인 해상 운송 서비스를 제공합니다.</p></div></article><article class="ha-p" tabindex="0" aria-label="Customs Services 통관 서비스"><img src="img/svc/customs.webp" alt="" loading="lazy" decoding="async"><span class="ha-n">03</span><h3 class="ha-t">Customs Services</h3><div class="ha-b"><i></i><p>국가별 통관 규정에 대한 전문성을 바탕으로 복잡한 수출입 절차를 지원합니다.</p></div></article><article class="ha-p" tabindex="0" aria-label="Warehousing 창고·물류센터"><img src="img/svc/warehouse.webp" alt="" loading="lazy" decoding="async"><span class="ha-n">04</span><h3 class="ha-t">Warehousing</h3><div class="ha-b"><i></i><p>상품의 보관부터 재고 관리, 출고까지 체계적인 물류 관리 서비스를 제공합니다.</p></div></article><article class="ha-p" tabindex="0" aria-label="Value-Added Services 부가 서비스"><img src="img/svc/vas.webp" alt="" loading="lazy" decoding="async"><span class="ha-n">05</span><h3 class="ha-t">Value-Added Services</h3><div class="ha-b"><i></i><p>포장, 라벨링 등 고객의 물류 환경과 목적에 맞춘 맞춤형 서비스를 제공합니다.</p></div></article><article class="ha-p" tabindex="0" aria-label="Road Freight 육상 운송"><img src="img/svc/road.webp" alt="" loading="lazy" decoding="async"><span class="ha-n">06</span><h3 class="ha-t">Road Freight</h3><div class="ha-b"><i></i><p>효율적인 육상 운송 네트워크를 기반으로 국내 및 지역 간 화물을 안정적으로 운송합니다.</p></div></article></div>
-  </div>
+  </div></div>
 </section>
 
 <!-- 5. 도착 시간 레이스 (레퍼런스 MODES를 DHL식으로) -->
@@ -1978,10 +1981,13 @@ requestAnimationFrame(frame);})();
 
 
 <script>
-/* OUR SERVICES 아코디언: 마우스를 올리거나·탭하거나·키보드로 옮긴 패널이 열림 (마지막으로 고른 것 유지) */
-(()=>{const ps=[...document.querySelectorAll('#haRow .ha-p')];if(!ps.length)return;
-const open=p=>ps.forEach(e=>e.classList.toggle('is-open',e===p));
-ps.forEach(p=>{p.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse')open(p)});p.addEventListener('click',()=>open(p));p.addEventListener('focusin',()=>open(p));});})();
+/* OUR SERVICES 아코디언: 스크롤하면 01→06이 차례로 열림. 패널을 누르면 그 단계로 스크롤 */
+(()=>{const sec=document.getElementById('ourServices'),ps=[...document.querySelectorAll('#haRow .ha-p')];if(!sec||!ps.length)return;
+const N=ps.length;let cur=-1;
+const open=i=>{if(i===cur)return;cur=i;ps.forEach((e,k)=>e.classList.toggle('is-open',k===i));};
+function upd(){const r=sec.getBoundingClientRect(),span=sec.offsetHeight-innerHeight,t=Math.min(1,Math.max(0,-r.top/span));open(Math.min(N-1,Math.floor(t*N)));}
+addEventListener('scroll',upd,{passive:true});addEventListener('resize',upd);upd();
+ps.forEach((p,k)=>p.addEventListener('click',()=>{const top=sec.getBoundingClientRect().top+scrollY,span=sec.offsetHeight-innerHeight;scrollTo({top:top+span*(k+.5)/N,behavior:'smooth'})}));})();
 </script>
 </body>
 </html>
