@@ -1143,8 +1143,8 @@ function at(pa,t){t=clamp(t);const d=t*pa.T;let i=1;while(i<pa.L.length-1&&pa.L[
   return{x:a[0]+(b[0]-a[0])*f,y:a[1]+(b[1]-a[1])*f,dx:b[0]-a[0],dy:b[1]-a[1]};}
 const TN=['000','022','045','068','090','112','135','158','180','202','225','248','270','292','315','338'];
 function truckImg(dx,dy){let yw=Math.atan2(-dy/SE,dx)*180/Math.PI;yw=(yw+360)%360;return 'img/v3/truck_'+TN[Math.round(yw/22.5)%16]+'.webp';}
-const PA=mkPath([[400,238],[330,290],[275,318],[270,345],[285,375],[330,390],[400,397],[490,413],[552,428],[576,452],[570,480],[540,505],[490,515],[390,522],[290,535],[215,555],[195,580],[196,610],[207,640],[240,660],[300,668]]);
-const PB=mkPath([[620,225],[655,258],[693,298],[738,336],[782,382],[825,432],[870,472],[915,509],[962,545],[1008,572],[1060,594],[1120,606],[1180,612]]);
+const PA=mkPath([[497,254],[450,268],[410,280],[375,290],[340,296],[310,299],[292,309],[280,322],[271,337],[269,349],[273,360],[282,370],[295,378],[310,384],[330,390],[360,395],[400,401],[455,406],[487,410],[515,417],[540,425],[558,436],[570,450],[575,466],[572,480],[563,491],[547,501],[530,508],[510,515],[480,522],[450,529],[420,532],[390,534],[360,537],[327,542],[295,547],[264,555],[235,566],[215,578],[203,595],[201,612],[210,627],[225,638],[246,649],[272,656],[297,663],[310,666]]);   // 도로 가운데 점선을 따라 다시 땀 (출발: 물류센터 앞 도로 위)
+const PB=mkPath([[646.5,296.1],[706.5,336.8],[766.5,377.5],[826.5,418.2],[886.5,458.9],[946.5,499.5],[1006.5,540.2],[1056.5,572.5],[1091.5,591.5],[1121.5,601.5],[1146.5,605.5]]);   // 야적장 울타리 옆 도로(잔디 말고 아스팔트) 위
 const PR=mkPath([[920,340],[980,380],[1020,450]],4), PG=mkPath([[1300,995],[1480,945]],2), PC=mkPath([[1480,945],[1720,880]],2), PS=mkPath([[600,1062],[-380,800]],2);
 const card=$('.card'),V={tac:$('#vTAc'),tat:$('#vTAt'),tcc:$('#vTCc'),tct:$('#vTCt'),tbc:$('#vTBc'),tbt:$('#vTBt'),ct:$('#vCont'),rs:$('#vRS'),ps:$('#vPS'),pb:$('#vPB'),sh:$('#vShip'),wk:$('#vWake')};
 function put(el,x,y,w,extra=''){el.style.width=w+'px';el.style.transform=`translate(${(x-w/2).toFixed(1)}px,${(y-w/2).toFixed(1)}px)${extra}`;}
@@ -1165,7 +1165,7 @@ const TIMG={};for(let i=0;i<32;i++){const n=String(i).padStart(2,'0');['cab','tr
 function truck(g,d,cab,trl,vis=1){
   const K=gAt(g,d),R=gAt(g,d-TLEN),hx=K.x-R.x,hy=K.y-R.y;
   const kx=K.x,ky=K.y*SE;put(cab,kx,ky,TW);put(trl,kx,ky,TW);
-  setSrc(cab,`img/v3/cab_${spIdx(K.tx,K.ty)}.webp`);setSrc(trl,`img/v3/trl_${spIdx(hx,hy)}.webp`);
+  const F=gAt(g,d+45),fx=F.x-K.x,fy=F.y-K.y;setSrc(cab,`img/v3/cab_${spIdx(fx,fy)}.webp`);setSrc(trl,`img/v3/trl_${spIdx(hx,hy)}.webp`);   // 머리 방향: 앞쪽 지점을 향하게(커브에서 바깥으로 삐져나가지 않게)
   const cabFront=K.ty>0;cab.style.zIndex=cabFront?3:2;trl.style.zIndex=cabFront?2:3;   // 아래로 내려올 땐 캡이 앞, 올라갈 땐 트레일러가 앞
   cab.style.opacity=trl.style.opacity=vis;}
 const gA=gPath(PA), gC=gPath({o:PA.o.slice().reverse()}), gB=gPath(PB);
@@ -1185,7 +1185,7 @@ function vehicles(p){
   const run=(g,k)=>TLEN+(g.T-TLEN)*k;   // 출발할 때도 트럭 전체(트레일러까지)가 길 위에 있도록
   truck(gA,run(gA,ez(sv(p,.10,.31))),V.tac,V.tat);
   truck(gC,run(gC,sv(p,.08,.33)),V.tcc,V.tct);
-  truck(gB,run(gB,sv(p,.58,.70)),V.tbc,V.tbt,(1-sv(p,.70,.72)).toFixed(3));   // 공항 앞에 도착하면 사라짐
+  truck(gB,run(gB,sv(p,.58,.70)),V.tbc,V.tbt,(sv(p,.56,.585)*(1-sv(p,.70,.72))).toFixed(3));   // 야적장 장면에서만 보임 (그 전엔 숨김)   // 공항 앞에 도착하면 사라짐
   rs(p);
   const g=sv(p,.49,.555),c=sv(p,.555,.63);
   if(c<=0){let q=at(PG,g*g);put(V.pb,q.x,q.y,330);put(V.ps,q.x,q.y,330);setSrc(V.pb,'img/v3/plane_ground.webp');V.ps.style.opacity=.5;V.pb.style.opacity=1;}
