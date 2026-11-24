@@ -1152,8 +1152,14 @@ function setSrc(el,src){if(!el.src.endsWith(src))el.src=src;}
 /* 트럭: 머리(캡)와 트레일러를 따로 그려 커브에서 꺾임. 좌표는 지면(위에서 본) 기준으로 계산 */
 const TK=12.4, TLEN=7.9*TK, LANE=1.7*TK, TW=310;          // TK: 지도 px/m, TLEN: 킹핀~트레일러 뒤 차축, LANE: 차선 중앙까지 거리
 function gPath(pa){const o=pa.o.map(([x,y])=>[x,y/SE]),L=[0];for(let i=1;i<o.length;i++)L.push(L[i-1]+Math.hypot(o[i][0]-o[i-1][0],o[i][1]-o[i-1][1]));return{o,L,T:L[L.length-1]};}
-function gAt(g,d){d=clamp(d,0,g.T);let i=1;while(i<g.L.length-1&&g.L[i]<d)i++;const a=g.o[i-1],b=g.o[i],f=(d-g.L[i-1])/((g.L[i]-g.L[i-1])||1),l=Math.hypot(b[0]-a[0],b[1]-a[1])||1;
-  const tx=(b[0]-a[0])/l,ty=(b[1]-a[1])/l;return{x:a[0]+(b[0]-a[0])*f-ty*LANE,y:a[1]+(b[1]-a[1])*f+tx*LANE,tx,ty};}   // 진행 방향 오른쪽 차선
+function gC0(g,d){   /* 중심선 위의 점. 경로 밖(앞·뒤)은 끝 방향 그대로 연장 → 출발 직후에도 트레일러가 길 위에 */
+  const o=g.o,n=o.length;
+  if(d<=0){const a=o[0],b=o[Math.min(n-1,3)],l=Math.hypot(b[0]-a[0],b[1]-a[1])||1;return[a[0]+(b[0]-a[0])/l*d,a[1]+(b[1]-a[1])/l*d];}
+  if(d>=g.T){const a=o[Math.max(0,n-4)],b=o[n-1],l=Math.hypot(b[0]-a[0],b[1]-a[1])||1,e=d-g.T;return[b[0]+(b[0]-a[0])/l*e,b[1]+(b[1]-a[1])/l*e];}
+  let i=1;while(i<g.L.length-1&&g.L[i]<d)i++;const a=o[i-1],b=o[i],f=(d-g.L[i-1])/((g.L[i]-g.L[i-1])||1);return[a[0]+(b[0]-a[0])*f,a[1]+(b[1]-a[1])*f];}
+function gAt(g,d){   /* 진행 방향은 앞뒤 8px 지점으로 구해 흔들림·튐 없이 */
+  const p=gC0(g,d),A=gC0(g,d-8),B=gC0(g,d+8),l=Math.hypot(B[0]-A[0],B[1]-A[1])||1,tx=(B[0]-A[0])/l,ty=(B[1]-A[1])/l;
+  return{x:p[0]-ty*LANE,y:p[1]+tx*LANE,tx,ty};}   // 진행 방향 오른쪽 차선
 const spIdx=(hx,hy)=>{let yw=Math.atan2(-hy,hx)*180/Math.PI;return String(Math.round(((yw+360)%360)/11.25)%32).padStart(2,'0');};
 const TIMG={};for(let i=0;i<32;i++){const n=String(i).padStart(2,'0');['cab','trl'].forEach(k=>{const im=new Image();im.src=`img/v3/${k}_${n}.webp`;TIMG[k+n]=im.src;});}
 function truck(g,d,cab,trl,vis=1){
@@ -1176,9 +1182,10 @@ function rs(p){
   put(V.rs,RSP[0]+RSF[0]*off,RSP[1]+RSF[1]*off,RSW);setSrc(V.rs,src);
   put(V.ct,RSP[0],RSP[1],RSW);V.ct.style.opacity=cont;}
 function vehicles(p){
-  truck(gA,gA.T*ez(sv(p,.10,.31)),V.tac,V.tat);
-  truck(gC,gC.T*sv(p,.08,.33),V.tcc,V.tct);
-  truck(gB,gB.T*sv(p,.58,.70),V.tbc,V.tbt,(1-sv(p,.70,.72)).toFixed(3));   // 공항 앞에 도착하면 사라짐
+  const run=(g,k)=>TLEN+(g.T-TLEN)*k;   // 출발할 때도 트럭 전체(트레일러까지)가 길 위에 있도록
+  truck(gA,run(gA,ez(sv(p,.10,.31))),V.tac,V.tat);
+  truck(gC,run(gC,sv(p,.08,.33)),V.tcc,V.tct);
+  truck(gB,run(gB,sv(p,.58,.70)),V.tbc,V.tbt,(1-sv(p,.70,.72)).toFixed(3));   // 공항 앞에 도착하면 사라짐
   rs(p);
   const g=sv(p,.49,.555),c=sv(p,.555,.63);
   if(c<=0){let q=at(PG,g*g);put(V.pb,q.x,q.y,330);put(V.ps,q.x,q.y,330);setSrc(V.pb,'img/v3/plane_ground.webp');V.ps.style.opacity=.5;V.pb.style.opacity=1;}
@@ -1421,8 +1428,14 @@ toShip();
 })();
 /* 부드러운 스크롤 */
 let ST=null,SR=0,SL=0;
-addEventListener('wheel',e=>{if(e.ctrlKey||e.target.closest('input[type=range]'))return;e.preventDefault();if(ST===null)ST=scrollY;ST=clamp(ST+e.deltaY*1.3,0,document.documentElement.scrollHeight-innerHeight);if(!SR){SL=performance.now();SR=requestAnimationFrame(st)}},{passive:false});
-function st(now){const dt=Math.min(50,now-SL);SL=now;const y=scrollY+(ST-scrollY)*(1-Math.exp(-dt/200));if(Math.abs(ST-y)<.5){scrollTo({top:ST,behavior:'instant'});SR=0;ST=null;return}scrollTo({top:y,behavior:'instant'});SR=requestAnimationFrame(st)}
+addEventListener('wheel',e=>{if(e.ctrlKey||e.target.closest('input[type=range]'))return;e.preventDefault();if(ST===null){ST=scrollY;SY=null}ST=clamp(ST+e.deltaY*1.3,0,document.documentElement.scrollHeight-innerHeight);if(!SR){SL=performance.now();SR=requestAnimationFrame(st)}},{passive:false});
+let SY=null;
+function stStop(){if(SR)cancelAnimationFrame(SR);SR=0;ST=null;SY=null}
+function st(now){if(SY!==null&&Math.abs(scrollY-SY)>3){stStop();return}   // 키보드·스크롤바·다른 스크립트가 스크롤을 움직였으면 예전 목표로 끌고 가지 않음
+  const dt=Math.min(50,now-SL);SL=now;ST=clamp(ST,0,document.documentElement.scrollHeight-innerHeight);
+  const y=scrollY+(ST-scrollY)*(1-Math.exp(-dt/200));if(Math.abs(ST-y)<.5){scrollTo({top:ST,behavior:'instant'});stStop();return}
+  scrollTo({top:y,behavior:'instant'});SY=scrollY;SR=requestAnimationFrame(st)}
+['keydown','touchstart','pointerdown'].forEach(ev=>addEventListener(ev,stStop,{passive:true}));
 addEventListener('mousedown',()=>{if(SR){cancelAnimationFrame(SR);SR=0;ST=null}});
 $$('a[href^="#"]').forEach(a=>a.addEventListener('click',()=>{if(SR){cancelAnimationFrame(SR);SR=0;ST=null}}));
 })();
