@@ -1055,7 +1055,7 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
   <div class="hd-stage">
     <div class="hd-out" id="hdOut" aria-hidden="true">OUR HERITAGE · SINCE 1969 · OUR HERITAGE · SINCE 1969 · </div>
     <div class="hd-ground"><div class="hd-dash" id="hdDash"></div></div>
-    <div class="hd-truck" id="hdTruck"><img src="img/hd/truck2.webp" alt="DHL 트럭"><div class="hd-wh" id="hdWh"></div></div>
+    <div class="hd-truck" id="hdTruck"><img src="img/hd/truck_nw.webp" alt="DHL 트럭"><div class="hd-wh" id="hdWh"></div></div>
     <div class="hd-svc">
       <div class="hd-cards" id="hdCards">
         <div class="hd-head"><p class="eb">OUR HERITAGE</p><h3>작은 시작에서,<br><span>세계를 연결하기까지</span></h3>
@@ -2081,7 +2081,7 @@ requestAnimationFrame(frame);})();
    스크롤하면 아래 검은 바닥의 연혁이 왼쪽으로 밀려오며 1969 → TODAY 순서로 '촤라락' 나타남 */
 (()=>{const $=id=>document.getElementById(id);
 const sec=$('heritage'),out=$('hdOut'),dash=$('hdDash'),truck=$('hdTruck'),whBox=$('hdWh'),cards=$('hdCards');
-const WH=[{f:'w2_0',x:329,y:717,w:90},{f:'w2_1',x:418,y:717,w:90},{f:'w2_2',x:506,y:717,w:90},{f:'w2_3',x:925,y:716,w:90},{f:'w2_4',x:1243,y:716,w:90}]   /* 새 일러스트 트럭 바퀴 (truck2) */
+const WH=[{f:'wh0',x:331,y:718,w:88},{f:'wh1',x:421,y:718,w:88},{f:'wh2',x:511,y:718,w:88},{f:'wh3',x:931,y:718,w:88},{f:'wh4',x:1247,y:718,w:88}]
   .map(w=>{const e=document.createElement('img');e.src='img/hd/'+w.f+'.webp';e.alt='';whBox.appendChild(e);return Object.assign({e},w)});
 const cl=(v,a=0,b=1)=>Math.min(b,Math.max(a,v)),sv=(p,a,b)=>cl((p-a)/(b-a)),eo=t=>1-Math.pow(1-t,3);
 let P0=0;const fade=$('hdFade');
