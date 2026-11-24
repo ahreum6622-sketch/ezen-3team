@@ -837,6 +837,30 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
 .st-dot::before,.st-dot::after{content:'';position:absolute;inset:-3px;border-radius:50%;border:2px solid #fff;animation:stPing 1.8s cubic-bezier(.2,.7,.3,1) infinite}
 .st-dot::after{border-color:rgba(212,5,17,.55);animation-delay:.9s}
 @keyframes stPing{0%{transform:scale(1);opacity:.95}100%{transform:scale(3.2);opacity:0}}
+
+/* ===== OUR SERVICES · 가로 이미지 아코디언 (webdevsnippets horizontal image accordion 방식) ===== */
+@property --o{syntax:'<number>';inherits:true;initial-value:0}
+.os2{position:relative;background:#fff;z-index:2;padding:clamp(90px,14vh,170px) 0 clamp(90px,12vh,150px)}
+.os2-in{max-width:1680px;margin:0 auto;padding:0 clamp(20px,5.5vw,110px)}
+.os2-h{margin:0;font-size:clamp(48px,6.4vw,118px);line-height:1;letter-spacing:-.04em;font-weight:700}
+.os2-sub{margin:clamp(22px,3vw,48px) 0 0;font-size:clamp(15px,1.3vw,22px);color:var(--ink)}
+.ha{--speed:.75s;display:flex;gap:clamp(10px,1.1vw,22px);height:clamp(340px,37vw,560px);margin:clamp(60px,10vh,130px) 0 0 auto;width:min(100%,1740px);padding-left:clamp(0px,17vw,320px)}
+.ha-p{--o:0;position:relative;flex:calc(1 + var(--o)*5.4) 1 0;min-width:0;border-radius:clamp(14px,1.4vw,26px);overflow:hidden;background:#d9d9d9;cursor:pointer;outline:none;transition:--o var(--speed) cubic-bezier(.65,0,.25,1)}
+.ha-p.is-open{--o:1;cursor:default}
+.ha-p:focus-visible{box-shadow:0 0 0 3px var(--y)}
+.ha-p img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(calc(1.12 - var(--o)*.12));filter:saturate(calc(.35 + var(--o)*.65)) brightness(calc(.92 + var(--o)*.08))}
+.ha-p::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.28) 0%,rgba(0,0,0,0) 30%,rgba(0,0,0,.08) 55%,rgba(0,0,0,.62) 100%)}
+.ha-n,.ha-t,.ha-b{position:absolute;z-index:1;color:#fff}
+.ha-n{left:clamp(16px,1.9vw,46px);top:clamp(18px,2.2vw,52px);font-size:clamp(14px,1.05vw,20px);font-weight:500}
+/* 제목: 닫힘=세로(아래에서 위로), 열림=가로 */
+.ha-t{left:clamp(16px,1.9vw,46px);bottom:calc(clamp(22px,2.2vw,48px) + var(--o)*clamp(70px,5.6vw,120px));margin:0;white-space:nowrap;font-weight:700;letter-spacing:-.01em;
+  font-size:calc(clamp(15px,1.2vw,24px) + var(--o)*clamp(2px,.25vw,6px));transform-origin:0 100%;transform:translateX(calc((1 - var(--o))*1.1em)) rotate(calc((1 - var(--o))*-90deg))}
+.ha-b{left:clamp(16px,1.9vw,46px);right:clamp(16px,1.9vw,46px);bottom:clamp(22px,2.2vw,48px);opacity:calc((var(--o) - .6)*2.5);transform:translateY(calc((1 - var(--o))*16px));pointer-events:none}
+.ha-b i{display:block;width:calc(var(--o)*32px);height:2px;background:var(--y);margin-bottom:clamp(10px,.9vw,18px)}
+.ha-b p{margin:0;max-width:520px;font-size:clamp(13px,1vw,18px);line-height:1.55;word-break:keep-all;color:rgba(255,255,255,.95)}
+@media (max-width:720px){.ha{flex-direction:column;height:auto;padding-left:0}.ha-p{flex:none;height:calc(64px + var(--o)*300px)}
+  .ha-t{transform:none;bottom:auto;top:18px;left:60px}.ha-n{top:20px}}
+@media (prefers-reduced-motion:reduce){.ha-p{transition:none}}
 </style>
 </head>
 <body>
@@ -947,24 +971,13 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
 </section>
 
 <!-- OUR SERVICES (레퍼런스 영상: 왼쪽 제목·글 / 오른쪽 큰 사진 + 뒤에 이전 사진, 화살표로 넘기기) -->
-<section class="os" id="ourServices">
-  <div class="os-in">
-    <div class="os-l">
-      <p class="os-eb">OUR SERVICES</p>
-      <h2 class="os-h">Beyond<br>Delivery.</h2>
-      <p class="os-sub">국경을 넘어 고객의 다양한 물류 요구에 맞춘<br>전문적인 운송 서비스를 제공합니다.</p>
-      <div class="os-rule"><i id="osRule"></i></div>
-      <p class="os-name" id="osName"></p>
-      <p class="os-ds" id="osDs"></p>
-      <div class="os-ft">
-        <p class="os-num"><b id="osNum">1</b><span>/6</span></p>
-        <div class="os-nav"><button type="button" id="osPrev" aria-label="이전 서비스">&#8592;</button><button type="button" id="osNext" aria-label="다음 서비스">&#8594;</button></div>
-      </div>
-    </div>
-    <div class="os-r" id="osStage"><figure class="os-im" data-i="0"><img src="img/svc/express.webp" alt="국제 특송 이미지(임시: 지도 장면)" loading="lazy" decoding="async"></figure><figure class="os-im" data-i="1"><img src="img/svc/ocean.webp" alt="해상 운송 이미지(임시: 지도 장면)" loading="lazy" decoding="async"></figure><figure class="os-im" data-i="2"><img src="img/svc/customs.webp" alt="통관 서비스 이미지(임시: 지도 장면)" loading="lazy" decoding="async"></figure><figure class="os-im" data-i="3"><img src="img/svc/warehouse.webp" alt="창고·물류센터 이미지(임시: 지도 장면)" loading="lazy" decoding="async"></figure><figure class="os-im" data-i="4"><img src="img/svc/vas.webp" alt="부가 서비스 이미지(임시: 지도 장면)" loading="lazy" decoding="async"></figure><figure class="os-im" data-i="5"><img src="img/svc/road.webp" alt="육상 운송 이미지(임시: 지도 장면)" loading="lazy" decoding="async"></figure></div>
+<section class="os2" id="ourServices">
+  <div class="os2-in">
+    <h2 class="os2-h">Beyond Delivery</h2>
+    <p class="os2-sub">국경을 넘어 고객의 다양한 물류 요구에 맞춘 전문적인 운송 서비스를 제공합니다.</p>
+    <div class="ha" id="haRow"><article class="ha-p is-open" tabindex="0" aria-label="International Express 국제 특송"><img src="img/svc/express.webp" alt="" loading="lazy" decoding="async"><span class="ha-n">01</span><h3 class="ha-t">International Express</h3><div class="ha-b"><i></i><p>긴급 서류부터 중요 화물까지 글로벌 특송 네트워크를 통해 신속하고 안전하게 배송합니다.</p></div></article><article class="ha-p" tabindex="0" aria-label="Ocean Freight 해상 운송"><img src="img/svc/ocean.webp" alt="" loading="lazy" decoding="async"><span class="ha-n">02</span><h3 class="ha-t">Ocean Freight</h3><div class="ha-b"><i></i><p>대량 화물과 다양한 운송 조건에 맞춰 효율적이고 경제적인 해상 운송 서비스를 제공합니다.</p></div></article><article class="ha-p" tabindex="0" aria-label="Customs Services 통관 서비스"><img src="img/svc/customs.webp" alt="" loading="lazy" decoding="async"><span class="ha-n">03</span><h3 class="ha-t">Customs Services</h3><div class="ha-b"><i></i><p>국가별 통관 규정에 대한 전문성을 바탕으로 복잡한 수출입 절차를 지원합니다.</p></div></article><article class="ha-p" tabindex="0" aria-label="Warehousing 창고·물류센터"><img src="img/svc/warehouse.webp" alt="" loading="lazy" decoding="async"><span class="ha-n">04</span><h3 class="ha-t">Warehousing</h3><div class="ha-b"><i></i><p>상품의 보관부터 재고 관리, 출고까지 체계적인 물류 관리 서비스를 제공합니다.</p></div></article><article class="ha-p" tabindex="0" aria-label="Value-Added Services 부가 서비스"><img src="img/svc/vas.webp" alt="" loading="lazy" decoding="async"><span class="ha-n">05</span><h3 class="ha-t">Value-Added Services</h3><div class="ha-b"><i></i><p>포장, 라벨링 등 고객의 물류 환경과 목적에 맞춘 맞춤형 서비스를 제공합니다.</p></div></article><article class="ha-p" tabindex="0" aria-label="Road Freight 육상 운송"><img src="img/svc/road.webp" alt="" loading="lazy" decoding="async"><span class="ha-n">06</span><h3 class="ha-t">Road Freight</h3><div class="ha-b"><i></i><p>효율적인 육상 운송 네트워크를 기반으로 국내 및 지역 간 화물을 안정적으로 운송합니다.</p></div></article></div>
   </div>
 </section>
-<script>window.OS_DATA=[["International Express", "국제 특송", "긴급 서류부터 중요 화물까지 글로벌 특송 네트워크를 통해 신속하고 안전하게 배송합니다."], ["Ocean Freight", "해상 운송", "대량 화물과 다양한 운송 조건에 맞춰 효율적이고 경제적인 해상 운송 서비스를 제공합니다."], ["Customs Services", "통관 서비스", "국가별 통관 규정에 대한 전문성을 바탕으로 복잡한 수출입 절차를 지원합니다."], ["Warehousing", "창고·물류센터", "상품의 보관부터 재고 관리, 출고까지 체계적인 물류 관리 서비스를 제공합니다."], ["Value-Added Services", "부가 서비스", "포장, 라벨링 등 고객의 물류 환경과 목적에 맞춘 맞춤형 서비스를 제공합니다."], ["Road Freight", "육상 운송", "효율적인 육상 운송 네트워크를 기반으로 국내 및 지역 간 화물을 안정적으로 운송합니다."]];</script>
 
 <!-- 5. 도착 시간 레이스 (레퍼런스 MODES를 DHL식으로) -->
 <section class="sec ed" id="services"><div class="wrap">
@@ -1962,25 +1975,13 @@ function frame(now){
 requestAnimationFrame(frame);})();
 </script>
 
+
+
 <script>
-/* OUR SERVICES: 화살표로 넘기면 새 사진이 오른쪽에서 밀려 들어와 덮고, 이전 사진은 작아지며 왼쪽 뒤로. 설명은 어절씩 진해짐 */
-(()=>{const D=window.OS_DATA,root=document.getElementById('ourServices');if(!D||!root)return;
-const ims=[...root.querySelectorAll('.os-im')],N=D.length,name=document.getElementById('osName'),ds=document.getElementById('osDs'),num=document.getElementById('osNum'),rule=document.getElementById('osRule');
-let cur=0,busy=false,timers=[];
-function text(i){timers.forEach(clearTimeout);timers=[];
-  name.innerHTML=`${String(i+1).padStart(2,'0')}. ${D[i][0]}<b>${D[i][1]}</b>`;
-  ds.innerHTML=D[i][2].split(' ').map(w=>`<span>${w}</span>`).join(' ');
-  [...ds.children].forEach((w,k)=>timers.push(setTimeout(()=>w.classList.add('on'),120+k*55)));
-  num.textContent=i+1;rule.style.width=((i+1)/N*100)+'%';}
-function set(i,dir){if(busy||i===cur)return;busy=true;const prev=cur;cur=(i+N)%N;
-  const back=ims.find(e=>e.classList.contains('back'));if(back){back.className='os-im gone';}
-  const old=ims[prev],nw=ims[cur];nw.className='os-im enter';void nw.offsetWidth;
-  old.className='os-im back';nw.className='os-im main';text(cur);
-  setTimeout(()=>{ims.forEach(e=>{if(e.classList.contains('gone'))e.className='os-im'});busy=false},1000);}
-ims[0].className='os-im main';ims[N-1].className='os-im back';text(0);
-document.getElementById('osNext').onclick=()=>set(cur+1);
-document.getElementById('osPrev').onclick=()=>set(cur-1);
-})();
+/* OUR SERVICES 아코디언: 마우스를 올리거나·탭하거나·키보드로 옮긴 패널이 열림 (마지막으로 고른 것 유지) */
+(()=>{const ps=[...document.querySelectorAll('#haRow .ha-p')];if(!ps.length)return;
+const open=p=>ps.forEach(e=>e.classList.toggle('is-open',e===p));
+ps.forEach(p=>{p.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse')open(p)});p.addEventListener('click',()=>open(p));p.addEventListener('focusin',()=>open(p));});})();
 </script>
 </body>
 </html>
