@@ -944,6 +944,38 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
 .rc-lane.is-winner{border:2px solid #F2C94C;box-shadow:none}/* [07 확정] 바깥 카드 테두리+그림자 유지, Best pick = 테두리만(B) */
 
 #services.rc-sec{background:#fff!important}
+
+/* ===== OUR SERVICES · 1MILLION 'Dance Partner'형: 왼쪽 고정 + 오른쪽 두 줄 카드 ===== */
+.bd{position:relative;background:#fff;z-index:2;padding-bottom:40px}
+.bd-in{display:flex;justify-content:space-between;padding:clamp(120px,14vh,200px) clamp(20px,5.5vw,100px)}
+.bd-fix{flex:none;width:49%}
+.bd-left{position:sticky;top:clamp(110px,14vh,170px);opacity:0;transition:opacity .9s ease .25s}
+.bd.motion .bd-left{opacity:1}
+.bd-h{margin:0 0 25px;font-size:clamp(60px,6.8vw,130px);font-weight:700;line-height:.9;letter-spacing:-.035em;color:var(--ink)}
+.bd-s{margin:0 0 clamp(22px,2vw,40px);font-size:clamp(14px,1vw,17px);line-height:1.5;color:#777}
+.bd-btn{display:inline-flex;align-items:center;background:rgba(9,9,9,.08);color:#434343;font-size:clamp(15px,1.05vw,20px);font-weight:500;padding:8px 10px 8px 26px;border-radius:100px;white-space:nowrap;text-decoration:none;border:1px solid rgba(255,255,255,.13);backdrop-filter:blur(6px);transition:background .3s}
+.bd-btn:hover{background:rgba(9,9,9,.14)}
+.bd-btn span{position:relative;width:40px;height:40px;margin-left:14px;border-radius:50%;background:#F5F6FB}
+.bd-btn img{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%)}
+.bd-right{display:flex;justify-content:space-between;width:49%}
+.bd-right ul{list-style:none;margin:0;padding:0;width:49%;opacity:0}
+.bd-right li{margin-bottom:clamp(14px,1.3vw,25px)}
+.bd.motion .bd-l1{animation:bdA .9s cubic-bezier(.2,.8,.2,1) forwards}
+.bd.motion .bd-l2{animation:bdB .9s cubic-bezier(.2,.8,.2,1) forwards}
+@keyframes bdA{0%{opacity:0;transform:translateY(-700px)}30%{opacity:0;transform:translateY(-700px)}100%{opacity:1;transform:none}}
+@keyframes bdB{0%{opacity:0;transform:translateY(700px)}30%{opacity:0;transform:translateY(700px)}100%{opacity:1;transform:none}}
+.bd-ph{position:relative;display:flex;align-items:flex-end;min-height:clamp(380px,29vw,560px);padding:clamp(18px,1.6vw,30px);border-radius:20px;overflow:hidden;background:#ddd center/cover no-repeat;text-decoration:none;isolation:isolate}
+.bd-ph::before{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(0,0,0,0) 45%,rgba(0,0,0,.55) 100%)}
+.bd-ph::after{content:'';position:absolute;inset:0;z-index:-2;background:inherit;transition:transform .8s cubic-bezier(.2,.8,.2,1)}
+.bd-ph:hover::after{transform:scale(1.05)}
+.bd-tit{margin:0;display:flex;align-items:center;flex-wrap:wrap;gap:0 10px;font-size:clamp(22px,2vw,40px);line-height:1.1;font-weight:700;letter-spacing:-.02em;color:#f5f6fb}
+.bd-tit img{width:clamp(28px,2vw,42px);height:auto}
+.bd-sub{margin:6px 0 0;font-size:clamp(13px,.85vw,16px);letter-spacing:1px;font-weight:300;color:#f5f6fb}
+.bd-tx{display:flex;flex-direction:column;align-items:flex-end;text-align:right;padding:clamp(22px,1.8vw,35px);border-radius:20px;border:1px solid rgba(0,0,0,.1);background:#fff center/cover no-repeat}
+.bd-type{font-size:clamp(12px,.85vw,16px);background:#3D3D3D;color:#fff;padding:5px clamp(16px,1.3vw,25px);border-radius:20px}
+.bd-txt{margin:16px 0 0;font-size:clamp(24px,1.9vw,36px);line-height:1;color:#505050;font-weight:400}
+.bd-txt b{font-weight:700}
+@media (max-width:820px){.bd-in{display:block}.bd-fix,.bd-right{width:100%}.bd-left{position:static;margin-bottom:40px}.bd-h{font-size:14vw}}
 </style>
 </head>
 <body>
@@ -1054,13 +1086,16 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
   </div>
 </section>
 
-<!-- OUR SERVICES (레퍼런스 영상: 왼쪽 제목·글 / 오른쪽 큰 사진 + 뒤에 이전 사진, 화살표로 넘기기) -->
-<section class="os2" id="ourServices">
-  <div class="os2-stick"><div class="os2-in">
-    <h2 class="os2-h">Beyond Delivery</h2>
-    <p class="os2-sub">국경을 넘어 고객의 다양한 물류 요구에 맞춘 전문적인 운송 서비스를 제공합니다.</p>
-    <div class="ha" id="haRow"><article class="ha-p is-open" tabindex="0" aria-label="International Express 국제 특송"><img src="img/svc/express.webp" alt="" loading="lazy" decoding="async"><span class="ha-n">01</span><h3 class="ha-t">International Express</h3><div class="ha-b"><i></i><p>긴급 서류부터 중요 화물까지 글로벌 특송 네트워크를 통해 신속하고 안전하게 배송합니다.</p></div></article><article class="ha-p" tabindex="0" aria-label="Ocean Freight 해상 운송"><img src="img/svc/ocean.webp" alt="" loading="lazy" decoding="async"><span class="ha-n">02</span><h3 class="ha-t">Ocean Freight</h3><div class="ha-b"><i></i><p>대량 화물과 다양한 운송 조건에 맞춰 효율적이고 경제적인 해상 운송 서비스를 제공합니다.</p></div></article><article class="ha-p" tabindex="0" aria-label="Customs Services 통관 서비스"><img src="img/svc/customs.webp" alt="" loading="lazy" decoding="async"><span class="ha-n">03</span><h3 class="ha-t">Customs Services</h3><div class="ha-b"><i></i><p>국가별 통관 규정에 대한 전문성을 바탕으로 복잡한 수출입 절차를 지원합니다.</p></div></article><article class="ha-p" tabindex="0" aria-label="Warehousing 창고·물류센터"><img src="img/svc/warehouse.webp" alt="" loading="lazy" decoding="async"><span class="ha-n">04</span><h3 class="ha-t">Warehousing</h3><div class="ha-b"><i></i><p>상품의 보관부터 재고 관리, 출고까지 체계적인 물류 관리 서비스를 제공합니다.</p></div></article><article class="ha-p" tabindex="0" aria-label="Value-Added Services 부가 서비스"><img src="img/svc/vas.webp" alt="" loading="lazy" decoding="async"><span class="ha-n">05</span><h3 class="ha-t">Value-Added Services</h3><div class="ha-b"><i></i><p>포장, 라벨링 등 고객의 물류 환경과 목적에 맞춘 맞춤형 서비스를 제공합니다.</p></div></article><article class="ha-p" tabindex="0" aria-label="Road Freight 육상 운송"><img src="img/svc/road.webp" alt="" loading="lazy" decoding="async"><span class="ha-n">06</span><h3 class="ha-t">Road Freight</h3><div class="ha-b"><i></i><p>효율적인 육상 운송 네트워크를 기반으로 국내 및 지역 간 화물을 안정적으로 운송합니다.</p></div></article></div>
-  </div></div>
+<!-- OUR SERVICES (레퍼런스: 1MILLION 'Meet Your Dance Partner' — 왼쪽 제목 고정, 오른쪽 두 줄 카드가 위·아래에서 들어와 스크롤) -->
+<section class="bd" id="ourServices">
+  <div class="bd-in">
+    <div class="bd-fix"><div class="bd-left">
+      <h2 class="bd-h">Beyond <br>Delivery</h2>
+      <p class="bd-s">국경을 넘어 고객의 다양한 물류 요구에 맞춘 <br>전문적인 운송 서비스를 제공합니다.</p>
+      <a href="#services" class="bd-btn">Read more <span><img src="img/bd/btn_arrow.svg" alt=""></span></a>
+    </div></div>
+    <div class="bd-right"><ul class="bd-l1"><li><a class="bd-ph" href="#" style="background-image:url(img/svc/express.webp)"><div class="bd-box"><p class="bd-tit">International Express <img src="img/bd/arrow_glass.svg" alt=""></p><p class="bd-sub">국제 특송</p></div></a></li><li><div class="bd-tx" style="background-image:url(img/bd/tx1.webp)"><span class="bd-type">Express</span><p class="bd-txt">Door to <br><b>Door</b></p></div></li><li><a class="bd-ph" href="#" style="background-image:url(img/svc/customs.webp)"><div class="bd-box"><p class="bd-tit">Customs Services <img src="img/bd/arrow_glass.svg" alt=""></p><p class="bd-sub">통관 서비스</p></div></a></li><li><div class="bd-tx" style="background-image:url(img/bd/tx3.webp)"><span class="bd-type">Customs</span><p class="bd-txt">Smooth <br><b>Clearance</b></p></div></li><li><a class="bd-ph" href="#" style="background-image:url(img/svc/vas.webp)"><div class="bd-box"><p class="bd-tit">Value-Added Services <img src="img/bd/arrow_glass.svg" alt=""></p><p class="bd-sub">부가 서비스</p></div></a></li><li><div class="bd-tx" style="background-image:url(img/bd/tx5.webp)"><span class="bd-type">Value-Added</span><p class="bd-txt">Pack & <br><b>Label</b></p></div></li></ul><ul class="bd-l2"><li><div class="bd-tx" style="background-image:url(img/bd/tx5.webp)"><span class="bd-type">Ocean</span><p class="bd-txt">FCL · <br><b>LCL</b></p></div></li><li><a class="bd-ph" href="#" style="background-image:url(img/svc/ocean.webp)"><div class="bd-box"><p class="bd-tit">Ocean Freight <img src="img/bd/arrow_glass.svg" alt=""></p><p class="bd-sub">해상 운송</p></div></a></li><li><div class="bd-tx" style="background-image:url(img/bd/tx2.webp)"><span class="bd-type">Warehousing</span><p class="bd-txt">Store & <br><b>Fulfill</b></p></div></li><li><a class="bd-ph" href="#" style="background-image:url(img/svc/warehouse.webp)"><div class="bd-box"><p class="bd-tit">Warehousing <img src="img/bd/arrow_glass.svg" alt=""></p><p class="bd-sub">창고 · 물류센터</p></div></a></li><li><div class="bd-tx" style="background-image:url(img/bd/tx4.webp)"><span class="bd-type">Road</span><p class="bd-txt">Reliable <br><b>Network</b></p></div></li><li><a class="bd-ph" href="#" style="background-image:url(img/svc/road.webp)"><div class="bd-box"><p class="bd-tit">Road Freight <img src="img/bd/arrow_glass.svg" alt=""></p><p class="bd-sub">육상 운송</p></div></a></li></ul></div>
+  </div>
 </section>
 
 <!-- 5. 도착 시간 레이스 (레퍼런스 MODES를 DHL식으로) -->
@@ -2071,13 +2106,11 @@ requestAnimationFrame(frame);})();
 
 
 <script>
-/* OUR SERVICES 아코디언: 스크롤하면 01→06이 차례로 열림. 패널을 누르면 그 단계로 스크롤 */
-(()=>{const sec=document.getElementById('ourServices'),ps=[...document.querySelectorAll('#haRow .ha-p')];if(!sec||!ps.length)return;
-const N=ps.length;let cur=-1;
-const open=i=>{if(i===cur)return;cur=i;ps.forEach((e,k)=>e.classList.toggle('is-open',k===i));};
-function upd(){const r=sec.getBoundingClientRect(),span=sec.offsetHeight-innerHeight,t=Math.min(1,Math.max(0,-r.top/span));open(Math.min(N-1,Math.floor(t*N)));}
-addEventListener('scroll',upd,{passive:true});addEventListener('resize',upd);upd();
-ps.forEach((p,k)=>p.addEventListener('click',()=>{const top=sec.getBoundingClientRect().top+scrollY,span=sec.offsetHeight-innerHeight;scrollTo({top:top+span*(k+.5)/N,behavior:'smooth'})}));})();
+/* OUR SERVICES: 화면에 들어오면 왼쪽 줄은 위에서, 오른쪽 줄은 아래에서 들어옴. 섹션 끝에서 살짝 사라지며 다음 섹션으로 */
+(()=>{const sec=document.getElementById('ourServices');if(!sec)return;
+new IntersectionObserver((es,o)=>es.forEach(e=>{if(e.isIntersecting){sec.classList.add('motion');o.disconnect()}}),{threshold:.12}).observe(sec);
+function upd(){const r=sec.getBoundingClientRect(),H=innerHeight,f=Math.min(1,Math.max(0,(H*.55-r.bottom)/(H*.3)));sec.style.opacity=(1-f).toFixed(3)}
+addEventListener('scroll',upd,{passive:true});upd();})();
 </script>
 
 
