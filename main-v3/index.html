@@ -784,6 +784,16 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
 /* 푸터 트럭: 레퍼런스 비율(화면 너비의 약 35%)로 작게, 렌더 티 덜 나게 톤 다운 */
 .roll-stage{--tw:clamp(280px,35vw,600px)}
 .roll-truck{filter:saturate(.86) contrast(.9) brightness(1.05) drop-shadow(0 16px 18px rgba(120,96,30,.16))}
+
+#veh #vShip,#veh #vPB,#veh #vPS,#veh .wake{z-index:5000}
+/* 푸터: 레퍼런스 배치 — 왼쪽 작은 하역대(상자) · 가운데 트럭 · 도로 띠 */
+.roll-stage{--tw:clamp(280px,33.2vw,860px);--rh:clamp(48px,2.9vw,80px);height:calc(var(--tw)*.267 + var(--rh) + 9vw);margin-top:clamp(30px,5vh,60px)}
+.roll-road{height:var(--rh);background:#ebe4d2}
+.roll-road::before{top:50%;height:3px;margin-top:-1px;background:repeating-linear-gradient(90deg,#fff 0 2.1vw,transparent 2.1vw 4.2vw);opacity:1}
+.roll-dock{left:4vw;bottom:0;width:13.8vw;height:calc(var(--rh) + 3.2vw);background:#f1ece0;border-top:.35vw solid #e4ddcb;z-index:2}
+.roll-dock::after{top:.8vw;height:.28vw;background:repeating-linear-gradient(90deg,var(--y) 0 1vw,transparent 1vw 1.9vw);opacity:.75;left:.4vw;right:.4vw}
+.roll-pile{left:.4vw;right:auto;width:12.6vw;transform-origin:0 100%}
+.roll-truck{left:calc(50% - var(--tw)/2);bottom:calc(var(--rh)*.57)}
 </style>
 </head>
 <body>
@@ -1088,7 +1098,7 @@ function count(root){root.querySelectorAll('[data-to]').forEach(b=>{const to=+b.
 /* 3~4. 미니어처 지도: 스크롤 위치(p)에 따라 카메라가 지도 위 구역을 차례로 비춤 */
 const story=$('#story'), map=$('#map'), nav=$('#nav'), IW=4096, IH=2731;
 // [p, 지도 x, 지도 y, 줌, 장면] — 지도 좌표는 img/map.webp(2896×2172) 기준. 구역을 바꾸려면 여기 숫자만 고치면 됨
-const KEY=[[0,2048,1364,1,'OVERVIEW'],[0.06,1900,1250,1.12,'OVERVIEW'],[0.13,1230,560,2.3,'PICKUP'],[0.18,1230,600,2.25,'PICKUP',1],[0.26,1000,1100,2.05,'PICKUP',1],[0.31,844,1500,1.95,'PICKUP',1],[0.37,1100,2252,1.35,'SEA'],[0.46,844,2278,1.35,'SEA'],[0.52,3328,2252,1.8,'AIR'],[0.6,3712,2201,1.7,'AIR'],[0.66,2790,1024,2,'HUB'],[0.76,2764,1036,2.1,'HUB'],[0.82,3507,435,2,'HQ'],[0.9,3532,460,2.1,'HQ'],[1,2048,1364,1,'OVERVIEW']];   // [p, x, y, 줌, 장면, 트럭따라가기]
+const KEY=[[0,2048,1364,1,'OVERVIEW'],[0.06,1900,1250,1.12,'OVERVIEW'],[0.13,830,600,2.3,'PICKUP'],[0.18,830,640,2.25,'PICKUP',1],[0.26,1000,1100,2.05,'PICKUP',1],[0.31,844,1500,1.95,'PICKUP',1],[0.37,1100,2252,1.35,'SEA'],[0.46,844,2278,1.35,'SEA'],[0.52,3328,2252,1.8,'AIR'],[0.6,3712,2201,1.7,'AIR'],[0.66,2790,1024,2,'HUB'],[0.76,2764,1036,2.1,'HUB'],[0.82,3507,435,2,'HQ'],[0.9,3532,460,2.1,'HQ'],[1,2048,1364,1,'OVERVIEW']];   // [p, x, y, 줌, 장면, 트럭따라가기]
 const CH=[[0,.10],[.10,.33],[.33,.49],[.49,.63],[.63,.79],[.79,.94],[.94,1.01]];   // 카드 01~06 + 마지막 안내가 나오는 구간
 const cards=$$('.card .c'), chips=$$('#chips span'), pins=$$('.pinpt'), hint=$('#stHint');
 // 구름 [x, y(화면 비율), 너비(화면 비율)]
@@ -1134,14 +1144,14 @@ function at(pa,t){t=clamp(t);const d=t*pa.T;let i=1;while(i<pa.L.length-1&&pa.L[
 const TN=['000','022','045','068','090','112','135','158','180','202','225','248','270','292','315','338'];
 function truckImg(dx,dy){let yw=Math.atan2(-dy/SE,dx)*180/Math.PI;yw=(yw+360)%360;return 'img/v3/truck_'+TN[Math.round(yw/22.5)%16]+'.webp';}
 const PA=mkPath([[497,254],[450,268],[410,280],[375,290],[340,296],[310,299],[292,309],[280,322],[271,337],[269,349],[273,360],[282,370],[295,378],[310,384],[330,390],[360,395],[400,401],[455,406],[487,410],[515,417],[540,425],[558,436],[570,450],[575,466],[572,480],[563,491],[547,501],[530,508],[510,515],[480,522],[450,529],[420,532],[390,534],[360,537],[327,542],[295,547],[264,555],[235,566],[215,578],[203,595],[201,612],[210,627],[225,638],[246,649],[272,656],[297,663],[310,666]]);   // 도로 가운데 점선 기준
-const PAB=mkPath([[452,160],[481,192],[500,213],[509,232],[506,248],[486,258],[450,268],[410,280],[375,290],[340,296],[310,299],[292,309],[280,322],[271,337],[269,349],[273,360],[282,370],[295,378],[310,384],[330,390],[360,395],[400,401],[455,406],[487,410],[515,417],[540,425],[558,436],[570,450],[575,466],[572,480],[563,491],[547,501],[530,508],[510,515],[480,522],[450,529],[420,532],[390,534],[360,537],[327,542],[295,547],[264,555],[235,566],[215,578],[203,595],[201,612],[210,627],[225,638],[246,649],[272,656],[297,663],[310,666]]);   // 물류센터 빈 도크에 주차 → 도로로 나가는 길
+const PAB=mkPath([[305,199],[318,215],[330,231],[340,250],[343,272],[333,291],[314,302],[292,309],[280,322],[271,337],[269,349],[273,360],[282,370],[295,378],[310,384],[330,390],[360,395],[400,401],[455,406],[487,410],[515,417],[540,425],[558,436],[570,450],[575,466],[572,480],[563,491],[547,501],[530,508],[510,515],[480,522],[450,529],[420,532],[390,534],[360,537],[327,542],[295,547],[264,555],[235,566],[215,578],[203,595],[201,612],[210,627],[225,638],[246,649],[272,656],[297,663],[310,666]]);   // 맨 왼쪽 도크에 주차 → 도로로 나가는 길
 const PB=mkPath([[646.5,296.1],[706.5,336.8],[766.5,377.5],[826.5,418.2],[886.5,458.9],[946.5,499.5],[1006.5,540.2],[1056.5,572.5],[1091.5,591.5],[1121.5,601.5],[1146.5,605.5]]);   // 야적장 울타리 옆 도로(잔디 말고 아스팔트) 위
 const PR=mkPath([[920,340],[980,380],[1020,450]],4), PG=mkPath([[1300,995],[1480,945]],2), PC=mkPath([[1480,945],[1720,880]],2), PS=mkPath([[600,1062],[-380,800]],2);
 const card=$('.card'),V={tac:$('#vTAc'),tat:$('#vTAt'),tcc:$('#vTCc'),tct:$('#vTCt'),tbc:$('#vTBc'),tbt:$('#vTBt'),ct:$('#vCont'),rs:$('#vRS'),ps:$('#vPS'),pb:$('#vPB'),sh:$('#vShip'),wk:$('#vWake')};
 function put(el,x,y,w,extra=''){el.style.width=w+'px';el.style.transform=`translate(${(x-w/2).toFixed(1)}px,${(y-w/2).toFixed(1)}px)${extra}`;}
 function setSrc(el,src){if(!el.src.endsWith(src))el.src=src;}
 /* 트럭: 머리(캡)와 트레일러를 따로 그려 커브에서 꺾임. 좌표는 지면(위에서 본) 기준으로 계산 */
-const TK=12.4, TLEN=7.9*TK, LANE=1.7*TK, TW=310;          // TK: 지도 px/m, TLEN: 킹핀~트레일러 뒤 차축, LANE: 차선 중앙까지 거리
+const TK=16, TLEN=7.9*TK, LANE=2.0*TK, TW=25*TK;   // 주차된 트럭과 같은 크기로 키움          // TK: 지도 px/m, TLEN: 킹핀~트레일러 뒤 차축, LANE: 차선 중앙까지 거리
 function gPath(pa){const o=pa.o.map(([x,y])=>[x,y/SE]),L=[0];for(let i=1;i<o.length;i++)L.push(L[i-1]+Math.hypot(o[i][0]-o[i-1][0],o[i][1]-o[i-1][1]));return{o,L,T:L[L.length-1]};}
 function gC0(g,d){   /* 중심선 위의 점. 경로 밖(앞·뒤)은 끝 방향 그대로 연장 → 출발 직후에도 트레일러가 길 위에 */
   const o=g.o,n=o.length;
@@ -1157,7 +1167,7 @@ function truck(g,d,cab,trl,vis=1){
   const K=gAt(g,d),R=gAt(g,d-TLEN),hx=K.x-R.x,hy=K.y-R.y;
   const kx=K.x,ky=K.y*SE;put(cab,kx,ky,TW);put(trl,kx,ky,TW);
   const F=gAt(g,d+45),fx=F.x-K.x,fy=F.y-K.y;setSrc(cab,`img/v3/cab_${spIdx(fx,fy)}.webp`);setSrc(trl,`img/v3/trl_${spIdx(hx,hy)}.webp`);   // 머리 방향: 앞쪽 지점을 향하게(커브에서 바깥으로 삐져나가지 않게)
-  const cabFront=K.ty>0;cab.style.zIndex=cabFront?3:2;trl.style.zIndex=cabFront?2:3;   // 아래로 내려올 땐 캡이 앞, 올라갈 땐 트레일러가 앞
+  cab.style.zIndex=Math.round((K.y+K.ty*TK*2.5)*SE);trl.style.zIndex=Math.round((K.y+R.y)/2*SE);   // 화면에서 아래(가까운) 것이 앞에: 트럭끼리·머리와 짐칸 겹침 정리
   cab.style.opacity=trl.style.opacity=vis;}
 const gA=gPath(PAB), gC=gPath({o:PA.o.slice().reverse()}), gB=gPath(PB);
 const runD=(g,k)=>TLEN+(g.T-TLEN)*k, dA=p=>runD(gA,ez(sv(p,.16,.34)));   // 카메라가 다가간 뒤(.13~) 주차된 트럭이 출발
@@ -1172,7 +1182,7 @@ function rs(p){
   else if(c<=0){off=0;src=`img/v3/rs_low_${Math.min(7,Math.floor(b*8))}.webp`;cont=0;}
   else if(r<=0){off=0;src=`img/v3/rs_lift_${Math.min(7,Math.floor(c*8))}.webp`;cont=0;}
   else{off=-RSD*ez(r);src='img/v3/rs_lift_7.webp';cont=0;}
-  put(V.rs,RSP[0]+RSF[0]*off,RSP[1]+RSF[1]*off,RSW);setSrc(V.rs,src);
+  put(V.rs,RSP[0]+RSF[0]*off,RSP[1]+RSF[1]*off,RSW);V.rs.style.zIndex=V.ct.style.zIndex=Math.round(RSP[1]);setSrc(V.rs,src);
   put(V.ct,RSP[0],RSP[1],RSW);V.ct.style.opacity=cont;}
 function vehicles(p){
   truck(gA,dA(p),V.tac,V.tat);
@@ -1300,8 +1310,8 @@ toShip();
   const PB=[[46,34],[40,30],[34,40],[44,26],[30,30],[38,28]].map(([w,h],i)=>[w,h,LPC[i]]);
   const POS=[[0,0],[48,0],[92,0],[8,34],[54,30],[30,62]];
   let n=0,busy=false,driving=false,tx=0,drag=null,PH=null;
-  function fillPile(){if(PH)return PH.refill();pile.innerHTML=PB.map(([w,h,c],i)=>`<i data-i="${i}" class="${c==='#FFCC00'?'dhl':''}" style="--c:${c};width:${w}px;height:${h}px;left:${POS[i][0]}px;bottom:${POS[i][1]}px"></i>`).join('')}
-  const sc=()=>Math.min(1,stg.clientWidth/900+.25);
+  function fillPile(){if(PH)return PH.refill();pile.style.setProperty('--ps',sc().toFixed(3));pile.innerHTML=PB.map(([w,h,c],i)=>`<i data-i="${i}" class="${c==='#FFCC00'?'dhl':''}" style="--c:${c};width:${w}px;height:${h}px;left:${POS[i][0]}px;bottom:${POS[i][1]}px"></i>`).join('')}
+  const sc=()=>Math.max(.7,stg.clientWidth/1180);   // 상자 크기: 화면 너비에 비례 (레퍼런스처럼 하역대에 비해 큼직하게)
   function setN(){const e=$('#rollN');if(e)e.textContent=driving?'출발!':`${n}/3`}
   const SR=()=>stg.getBoundingClientRect();
   function loaded(){n++;bump();setN();if(n===3)setTimeout(go,450)}
