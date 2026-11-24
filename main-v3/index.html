@@ -1320,7 +1320,7 @@ toShip();
   const POS=[[0,0],[48,0],[92,0],[8,34],[54,30],[30,62]];
   let n=0,busy=false,driving=false,tx=0,drag=null,PH=null;
   function fillPile(){if(PH)return PH.refill();pile.style.setProperty('--ps',sc().toFixed(3));pile.innerHTML=PB.map(([w,h,c],i)=>`<i data-i="${i}" class="${c==='#FFCC00'?'dhl':''}" style="--c:${c};width:${w}px;height:${h}px;left:${POS[i][0]}px;bottom:${POS[i][1]}px"></i>`).join('')}
-  const sc=()=>Math.max(.7,stg.clientWidth/1180);   // 상자 크기: 화면 너비에 비례 (레퍼런스처럼 하역대에 비해 큼직하게)
+  const sc=()=>Math.max(.56,stg.clientWidth/1180*.8);   // 20% 작게   // 상자 크기: 화면 너비에 비례 (레퍼런스처럼 하역대에 비해 큼직하게)
   function setN(){const e=$('#rollN');if(e)e.textContent=driving?'출발!':`${n}/3`}
   const SR=()=>stg.getBoundingClientRect();
   function loaded(){n++;bump();setN();if(n===3)setTimeout(go,450)}
