@@ -1938,11 +1938,14 @@ function frame(){mobile=innerWidth<=820;const vh=innerHeight,sy=scrollY;
        Object.assign(mo.style,{visibility:'visible',left:L+'px',top:T+'px',width:W+'px',height:Hh+'px',borderRadius:(12+8*p)+'px'});
        mo.querySelector('img').style.opacity=(1-cl((p-.6)/.38)).toFixed(3)}
      if(intro&&bd&&!mobile){const mb=media.getBoundingClientRect().bottom,bb=bd.getBoundingClientRect().bottom;intro.style.transform=`translateY(${(bb-8-mb).toFixed(1)}px)`;}   /* 소개 글 아랫선 = 보드 아랫선 */
-     if(intro)intro.classList.toggle('on',p>.85&&e<440);}   /* 영상이 다 덮으면 글자는 꺼둠 → 장면 전환 때 뒤에서 비치지 않게 */
+     if(intro)intro.classList.toggle('on',p>.85&&e<480);
+     /* 1장면(소개 글+보드)이 먼저 위로 빠지며 사라진 뒤 → 2장면(사진+목록)이 올라옴. 서로 겹치지 않게 */
+     {const o=1-ss(cl((e-90)/150));if(intro)for(const c of intro.children){c.style.opacity=o.toFixed(3);c.style.translate=`0 ${(-60*(1-o)).toFixed(1)}px`;}
+      if(bd){bd.style.opacity=o.toFixed(3);bd.style.translate=`0 ${(-60*(1-o)).toFixed(1)}px`;bd.style.pointerEvents=o<.5?'none':'';}}}   /* 영상이 다 덮으면 글자는 꺼둠 → 장면 전환 때 뒤에서 비치지 않게 */
     /* 4) 첫 장면은 스크롤로 밀려 올라옴, 그다음은 목록을 눌러 전환 */
-    {const was=sc.classList.contains('st-list');sc.classList.toggle('st-list',e>=430);if(was!==(e>=430))its.forEach((x,k)=>x.classList.toggle('on',k===act&&e>=430));}   /* 다음 그림이 다 올라온 뒤에 목록 등장 */
+    {const was=sc.classList.contains('st-list');sc.classList.toggle('st-list',e>=470);if(was!==(e>=470))its.forEach((x,k)=>x.classList.toggle('on',k===act&&e>=430));}   /* 다음 그림이 다 올라온 뒤에 목록 등장 */
     const want=e>=STEP[2]?2:e>=STEP[1]?1:0;if(want!==act)setAct(want);
-    if(act===0){const q=ss(cl((e-150)/300));ly[0].classList.add('drag');ly[0].style.transform=q>=1?'none':`translateY(${(1-q)*100}vh) scale(${1.05-.05*q})`;Ai.classList.toggle('off',q>.55);}
+    if(act===0){const q=ss(cl((e-200)/270));ly[0].classList.add('drag');ly[0].style.transform=q>=1?'none':`translateY(${(1-q)*100}vh) scale(${1.05-.05*q})`;Ai.classList.toggle('off',q>.55);}
     else Ai.classList.add('off');
   }
   requestAnimationFrame(frame);}
