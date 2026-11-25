@@ -1030,6 +1030,31 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
 
 /* Connecting 첫 장면: 이미지 대신 반복 영상 (레이아웃 동일) */
 .sc2-ly video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+
+/* ===== HERITAGE 텍스트 연출 (팀원 시안 반영): 노란 선 위 점, 연도 슬롯머신, 영문 제목·설명 차례로, 제목은 왼쪽으로 밀리며 사라짐 ===== */
+#heritage{--u:min(1vw,2vh)}
+#heritage .hd-svc{display:block;padding-top:4.8vh}
+#heritage .hd-cards{position:relative;z-index:1;gap:0;padding:4.1vh 0 0 5.7vw;width:max-content}
+.hd-line{position:absolute;top:4.8vh;left:0;height:2px;margin-top:-1px;width:0;background:linear-gradient(90deg,rgba(255,204,0,0) 0%,rgba(255,204,0,.45) 18%,rgba(255,204,0,.9) 50%,rgba(255,204,0,.45) 82%,rgba(255,204,0,0) 100%);pointer-events:none;will-change:transform,width}
+#heritage .hd-head{width:44.6vw;margin-right:0;padding-right:4vw}
+#heritage .hd-c{position:relative;width:max(300px,calc(var(--u)*21));margin-right:22vw;opacity:0;transform:none}
+#heritage .hd-c:last-child{margin-right:30vw}
+#heritage .hd-c i.dot{position:absolute;left:-2px;top:-4.1vh;width:11px;height:11px;margin:-5.5px 0 0;border-radius:50%;background:#6f6a58;transition:box-shadow .3s}
+#heritage .hd-c.on i.dot{box-shadow:0 0 0 4px rgba(255,204,0,.16),0 0 14px rgba(255,204,0,.75)}
+#heritage .hd-c .yr{display:flex;font-variant-numeric:tabular-nums}
+#heritage .reel{position:relative;display:block;height:1.06em;overflow:hidden}
+#heritage .reel .sz{visibility:hidden;display:block;line-height:1.06}
+#heritage .reel .strip{position:absolute;left:0;right:0;top:0;text-align:center;will-change:transform}
+#heritage .reel .strip span{display:block;height:1.06em;line-height:1.06}
+#heritage .hd-c b,#heritage .hd-c p{opacity:0;transform:translateY(22px);transition:opacity .35s ease,transform .35s ease}
+#heritage .hd-c.in b,#heritage .hd-c.in p{opacity:1;transform:none;transition:opacity .45s ease,transform .55s cubic-bezier(.2,.8,.2,1)}
+#heritage .hd-c.in b{transition-delay:.28s}#heritage .hd-c.in p{transition-delay:.4s}
+@media (max-width:820px){#heritage .hd-head{width:86vw}#heritage .hd-c{width:68vw;margin-right:24vw}}
+/* PROMISE 텍스트 연출 (팀원 시안 반영): 목록·막대·설명이 차례로 떠오름 */
+#promise .pr-list li,#promise .pr-bar,#promise .pr-dsw{opacity:0;transform:translateY(18px);transition:opacity .45s ease,transform .6s cubic-bezier(.2,.8,.2,1),color .4s}
+#promise.show .pr-list li,#promise.show .pr-bar,#promise.show .pr-dsw{opacity:1;transform:none}
+#promise.show .pr-list li:nth-child(2){transition-delay:.05s}#promise.show .pr-list li:nth-child(3){transition-delay:.1s}#promise.show .pr-list li:nth-child(4){transition-delay:.15s}#promise.show .pr-list li:nth-child(5){transition-delay:.2s}#promise.show .pr-list li:nth-child(6){transition-delay:.25s}
+#promise.show .pr-bar{transition-delay:.15s}#promise.show .pr-dsw{transition-delay:.3s}
 </style>
 </head>
 <body>
@@ -1125,15 +1150,16 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
     <div class="hd-ground"><div class="hd-dash" id="hdDash"></div></div>
     <div class="hd-truck" id="hdTruck"><img src="img/hd/truck_nw.webp" alt="DHL 트럭"><div class="hd-wh" id="hdWh"></div></div>
     <div class="hd-svc">
+      <div class="hd-line" id="hdLine" aria-hidden="true"></div>
       <div class="hd-cards" id="hdCards">
-        <div class="hd-head"><p class="eb">OUR HERITAGE</p><h3>작은 시작에서,<br><span>세계를 연결하기까지</span></h3>
+        <div class="hd-head" id="hdHead"><p class="eb">OUR HERITAGE</p><h3>작은 시작에서,<br><span>세계를 연결하기까지</span></h3>
           <p>1969년 시작된 DHL은 끊임없는 도전과 혁신을 통해<br>글로벌 물류 네트워크를 구축해 왔습니다.</p></div>
-        <div class="hd-c"><span class="yr">1969</span><b>THE BEGINNING</b><p>미국 샌프란시스코에서 DHL이 설립되었습니다. 호놀룰루까지 서류를 항공으로 운송하며 국제 특송의 새로운 가능성을 열었습니다.</p><i></i></div>
-        <div class="hd-c"><span class="yr">1971</span><b>GLOBAL EXPANSION</b><p>아시아와 유럽 등으로 물류 네트워크를 확장하며 국제 특송 기업으로 성장하기 시작했습니다.</p><i></i></div>
-        <div class="hd-c"><span class="yr">1979</span><b>BEYOND DOCUMENTS</b><p>서류 중심의 운송에서 소포 배송으로 서비스 영역을 확대하며 더욱 다양한 고객의 물류 수요에 대응했습니다.</p><i></i></div>
-        <div class="hd-c"><span class="yr">2002</span><b>A NEW CHAPTER</b><p>Deutsche Post의 DHL 인수를 통해 글로벌 특송과 종합 물류 서비스를 아우르는 기업으로 발전했습니다.</p><i></i></div>
-        <div class="hd-c"><span class="yr">2007</span><b>LOGISTICS INNOVATION</b><p>DHL 이노베이션 센터를 개설하며 기술과 연구를 기반으로 미래 물류 서비스의 발전을 추진했습니다.</p><i></i></div>
-        <div class="hd-c"><span class="yr today">TODAY</span><b>CONNECTING THE WORLD</b><p>220개 이상의 국가 및 지역을 연결하는 글로벌 물류 기업으로 성장하며 사람과 시장을 연결하고 있습니다.</p><i></i></div>
+        <div class="hd-c"><i class="dot"></i><span class="yr">1969</span><b>THE BEGINNING</b><p>미국 샌프란시스코에서 DHL이 설립되었습니다. 호놀룰루까지 서류를 항공으로 운송하며 국제 특송의 새로운 가능성을 열었습니다.</p><i></i></div>
+        <div class="hd-c"><i class="dot"></i><span class="yr">1971</span><b>GLOBAL EXPANSION</b><p>아시아와 유럽 등으로 물류 네트워크를 확장하며 국제 특송 기업으로 성장하기 시작했습니다.</p><i></i></div>
+        <div class="hd-c"><i class="dot"></i><span class="yr">1979</span><b>BEYOND DOCUMENTS</b><p>서류 중심의 운송에서 소포 배송으로 서비스 영역을 확대하며 더욱 다양한 고객의 물류 수요에 대응했습니다.</p><i></i></div>
+        <div class="hd-c"><i class="dot"></i><span class="yr">2002</span><b>A NEW CHAPTER</b><p>Deutsche Post의 DHL 인수를 통해 글로벌 특송과 종합 물류 서비스를 아우르는 기업으로 발전했습니다.</p><i></i></div>
+        <div class="hd-c"><i class="dot"></i><span class="yr">2007</span><b>LOGISTICS INNOVATION</b><p>DHL 이노베이션 센터를 개설하며 기술과 연구를 기반으로 미래 물류 서비스의 발전을 추진했습니다.</p><i></i></div>
+        <div class="hd-c"><i class="dot"></i><span class="yr today">TODAY</span><b>CONNECTING THE WORLD</b><p>220개 이상의 국가 및 지역을 연결하는 글로벌 물류 기업으로 성장하며 사람과 시장을 연결하고 있습니다.</p><i></i></div>
       </div>
     </div>
     <div class="hd-fade" id="hdFade" aria-hidden="true"></div>
@@ -1986,7 +2012,7 @@ function frame(now){const dt=Math.min(.05,(now-last)/1000);last=now;
   sec.classList.toggle('in',t>1.5&&ef<.02);
   tin.style.opacity=ef>0?String(cl(1-ef*2.2)):'';tin.style.translate=ef>0?`0 ${-ef*80}px`:'';
   /* 여섯 가지 가치 */
-  const bo=ss(cl((u-BA)/(BB-BA)));B.style.opacity=bo.toFixed(3);B.classList.toggle('on',bo>.5);
+  const bo=ss(cl((u-BA)/(BB-BA)));B.style.opacity=bo.toFixed(3);B.classList.toggle('on',bo>.5);sec.classList.toggle('show',bo>.05);
   pimg.style.visibility=ef>=1?'visible':'hidden';
   setIdx(Math.max(0,Math.min(5,Math.floor((u-BB)/ST))));
   fill.style.height=(cl((u-BB)/(ST*6))*100).toFixed(2)+'%';
@@ -2003,6 +2029,18 @@ const WH=[{f:'wh0',x:331,y:718,w:88},{f:'wh1',x:421,y:718,w:88},{f:'wh2',x:511,y
   .map(w=>{const e=document.createElement('img');e.src='img/hd/'+w.f+'.webp';e.alt='';whBox.appendChild(e);return Object.assign({e},w)});
 const cl=(v,a=0,b=1)=>Math.min(b,Math.max(a,v)),sv=(p,a,b)=>cl((p-a)/(b-a)),eo=t=>1-Math.pow(1-t,3);
 let P0=0;const fade=$('hdFade');
+const line=$('hdLine'),head=$('hdHead'),items=[...cards.querySelectorAll('.hd-c')],mix=(a,b,t)=>a.map((v,i)=>Math.round(v+(b[i]-v)*t));
+const TITLE_OUT=[.08,.32],FADE_EDGE=.38,FIRST_IN=[.30,.38],START=.34,END=.82,LAST_AT=.50,SHOW_FROM=.85,SHOW_LEN=.30,LINE_HALF=.34;
+/* 연도 슬롯머신: 글자마다 세로 띠가 돌아가다 차례로 멈춤 */
+const SLOT_TIME=.55,SLOT_GAP=.06,DIG='0123456789',ABC='ABCDEFGHIJKLMNOPQRSTUVWXYZ',rnd=set=>set[Math.floor(Math.random()*set.length)];
+items.forEach(it=>{const yr=it.querySelector('.yr'),txt=yr.textContent.trim();yr.textContent='';yr.setAttribute('aria-label',txt);
+  it._reels=[...txt].map((ch,i)=>{const set=/\d/.test(ch)?DIG:ABC,n=5+i*2,r=document.createElement('span');r.className='reel';r.setAttribute('aria-hidden','true');
+    const strip=Array.from({length:n},()=>rnd(set));strip.push(ch);
+    r.innerHTML=`<span class="sz">${ch}</span><span class="strip">${strip.map(c=>`<span>${c}</span>`).join('')}</span>`;yr.appendChild(r);return {st:r.querySelector('.strip'),n,i};});
+  it._on=false;});
+function slot(it,on){if(it._on===on)return;it._on=on;it.classList.toggle('in',on);
+  it._reels.forEach(r=>{if(on){r.st.style.transition=`transform ${SLOT_TIME+r.i*SLOT_GAP}s cubic-bezier(.12,.7,.2,1) ${r.i*.03}s`;r.st.style.transform=`translateY(${-r.n*1.06}em)`;}
+    else{r.st.style.transition='none';r.st.style.transform='translateY(0)';}});}
 function frame(now){
   const r=sec.getBoundingClientRect(),W=innerWidth,H=innerHeight,tgt=cl(-r.top/(sec.offsetHeight-H));
   P0+=(tgt-P0)*.09;const P=cl(P0/.86),F=sv(P0,.86,1);   // 앞 86%: 원래 주행·연혁, 뒤 14%: 흰 그라데이션이 아래에서 올라와 다음 섹션으로 이어짐
@@ -2015,11 +2053,29 @@ function frame(now){
   const k=tw/1600;WH.forEach(w=>{w.e.style.width=w.w*k+'px';w.e.style.transform=`translate(${w.x*k}px,${w.y*k}px) rotate(${drive*520+(1-enter)*-900}deg)`});
   out.style.transform=`translateX(${-drive*18}vw)`;
   dash.style.transform=`translateX(${-((drive*900)%150)}px)`;
-  // 연혁: 왼쪽으로 밀려오고, 화면 오른쪽 88% 안으로 들어오는 순간 하나씩 등장
-  const cw=cards.scrollWidth;cards.style.transform=`translateX(${-(cw-W*.86)*sv(P,.14,.92)}px)`;
-  [...cards.children].forEach((it,i)=>{if(i===0){it.style.opacity=sv(P,.03,.12);return}
-    const x=it.getBoundingClientRect().left,k2=eo(Math.min(cl((W*.9-x)/(W*.12)),sv(P,.08+i*.025,.13+i*.025)));   /* 처음 보이는 것들은 짧은 간격으로 연달아 */
-    it.style.opacity=k2.toFixed(3);it.style.transform=`translateY(${(1-k2)*40}px)`;});
+  const tx=(1-enter)*-W*.9+Math.pow(F,1.6)*W*.9;          // 트럭이 가운데에서 벗어난 거리
+  // 연혁 줄: 마지막 점(TODAY)이 화면 LAST_AT 위치에 오면 멈추는 속도로 왼쪽으로 흐름
+  const lastX=items[items.length-1].offsetLeft,rate=Math.max(0,lastX-W*LAST_AT)/(END-START),shift=rate*Math.max(0,P0/.86-START);
+  cards.style.transform=`translateX(${-shift}px)`;
+  // 제목: 트럭이 달리면 풍경처럼 왼쪽으로 밀려 나가며 화면 왼쪽 끝에서 그라데이션으로 사라짐
+  const wo=sv(P,TITLE_OUT[0],TITLE_OUT[1]);head.style.opacity=(sv(P,.02,.08)*(1-wo*wo)).toFixed(3);
+  const L0=head.offsetLeft,hw=head.offsetWidth,hs=(wo*wo*(3-2*wo))*(L0+hw*.6);
+  head.style.transform=hs>0?`translateX(${(-hs).toFixed(1)}px)`:'';
+  if(hs>0){const z=W*FADE_EDGE*wo,a0=hs-L0,m=`linear-gradient(90deg,transparent ${a0.toFixed(1)}px,#000 ${(a0+z).toFixed(1)}px)`;head.style.webkitMaskImage=m;head.style.maskImage=m;}
+  else{head.style.webkitMaskImage='';head.style.maskImage='';}
+  // 연도 카드: 오른쪽에서 들어오며 밝아지고, 들어오면 연도가 슬롯머신처럼 돌다 멈춤 → 영문 제목·설명이 차례로
+  items.forEach((it,i)=>{const x=it.offsetLeft-shift;let v=cl((W*SHOW_FROM-x)/(W*SHOW_LEN));
+    if(i===0)v=Math.min(v,sv(P,FIRST_IN[0],FIRST_IN[1]));v=eo(v);
+    it.style.opacity=v<=.001?0:(.08+v*.92).toFixed(3);
+    if(v>.3)slot(it,true);else if(v<.03)slot(it,false);
+    it.style.transform=`translateX(${((1-v)*24).toFixed(1)}px)`;
+    it.querySelector('.dot').style.background=`rgb(${mix([90,88,80],[255,204,0],v).join(',')})`;
+    it.classList.toggle('on',v>.98);});
+  // 노란 선: 트럭 가운데에서 양옆으로 번지며 생기고 트럭을 따라감, TODAY 점에서 끝남
+  const grow=eo(sv(P,.03,.16)),half=W*LINE_HALF*grow,cx=W/2+tx;
+  line.style.width=(half*2).toFixed(1)+'px';line.style.transform=`translateX(${(cx-half).toFixed(1)}px)`;line.style.opacity=Math.min(1,grow*1.6).toFixed(3);
+  const todayX=items[items.length-1].offsetLeft-shift+3,cut=Math.max(0,Math.min(half*2,(cx+half)-todayX));
+  line.style.clipPath=cut>0?`inset(-6px ${cut.toFixed(1)}px -6px 0)`:'none';
   requestAnimationFrame(frame);}
 requestAnimationFrame(frame);})();
 </script>
