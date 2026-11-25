@@ -1117,6 +1117,10 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
 .pr-deal img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 #promise .pr-b{z-index:50}
 #promise .pr-img{position:relative;z-index:2}
+/* 여섯 가지 가치 사진: 큐카드 넘김 (앞 카드가 기울지 않고 위로 쏙 빠졌다가 묶음 맨 뒤에 꽂힘, 뒤 카드 1장이 위로 살짝 보임) */
+#promise .pr-img{overflow:visible}
+#promise .pr-img img{border-radius:calc(24/1954*100vw);opacity:1;transform:none;transform-origin:50% 50%;
+  box-shadow:0 18px 40px -18px rgba(0,0,0,.28);transition:transform .55s cubic-bezier(.2,.8,.2,1),filter .55s,opacity .35s;will-change:transform}
 #promise .pr-list li{font-weight:700}
 /* ===== 수정: 굵기 전부 bold(700) + 모션 순서 (끊김 없이 이어지도록 정리) =====
    전환 흐름 (한 줄로 이어짐)
@@ -2119,7 +2123,28 @@ const SPIN=2.2;     // 벽이 도는 속도(도/초)
 const TILT=-2;      // 살짝 내려다보는 각도(도)
 let E=0,pile=null,deal=null,T0=null,last=performance.now(),spin=0,heroI=-1,heroRect=null,idx=-1;
 const STEP=360/N;
-function setIdx(i){if(i===idx)return;idx=i;lis.forEach((e,k)=>e.classList.toggle('on',k===i));ims.forEach((e,k)=>e.classList.toggle('on',k===i));dss.forEach((e,k)=>e.classList.toggle('on',k===i));}
+/* ── 큐카드 넘김 ── */
+const CUE_PEEK=1,CUE_UP=230,CUE_DOWN=330;     // 뒤에 보이는 카드 수, 위로 빠지는 시간(ms), 뒤로 꽂히는 시간(ms)
+let cueOrder=ims.map((_,k)=>k),cueCur=0,cueBusy=false,cueQ=[];
+function cueSlot(k){const j=Math.min(k,CUE_PEEK);return{t:`translateY(${(-j*9).toFixed(1)}%) scale(${(1-j*.04).toFixed(3)})`,f:j?`brightness(${(1-j*.12).toFixed(2)})`:'none',o:k>CUE_PEEK?0:1};}
+function cueLayout(skip){cueOrder.forEach((ci,k)=>{const im=ims[ci];if(im===skip)return;const s=cueSlot(k);im.style.transform=s.t;im.style.filter=s.f;im.style.opacity=s.o;im.style.zIndex=String(ims.length-k);});}
+async function cueFwd(){const f=ims[cueOrder[0]];f.style.transition='none';
+  await f.animate([{transform:'translateY(0) scale(1)'},{transform:'translateY(-112%) scale(1)'}],{duration:CUE_UP,easing:'cubic-bezier(.5,0,.75,0)',fill:'forwards'}).finished;
+  cueOrder.push(cueOrder.shift());f.style.zIndex='0';cueLayout(f);const s=cueSlot(ims.length-1);
+  await f.animate([{transform:'translateY(-112%) scale(.96)',opacity:1},{transform:s.t,opacity:s.o}],{duration:CUE_DOWN,easing:'cubic-bezier(.2,.8,.2,1)',fill:'forwards'}).finished;
+  f.getAnimations().forEach(a=>a.cancel());f.style.transition='';cueLayout();}
+async function cueBack(){const b=ims[cueOrder[ims.length-1]];b.style.transition='none';const s=cueSlot(ims.length-1);
+  await b.animate([{transform:s.t,opacity:.6},{transform:'translateY(-112%) scale(.96)',opacity:1}],{duration:CUE_UP+30,easing:'cubic-bezier(.5,0,.75,0)',fill:'forwards'}).finished;
+  cueOrder.unshift(cueOrder.pop());b.style.zIndex=String(ims.length+1);cueLayout(b);
+  await b.animate([{transform:'translateY(-112%) scale(1)'},{transform:'translateY(0) scale(1)'}],{duration:CUE_DOWN-30,easing:'cubic-bezier(.2,.8,.2,1)',fill:'forwards'}).finished;
+  b.getAnimations().forEach(a=>a.cancel());b.style.transition='';cueLayout();}
+async function cueGo(t){cueQ.push(t);if(cueBusy)return;cueBusy=true;
+  while(cueQ.length){const g=cueQ.shift();
+    if(pimg.style.visibility==='hidden'){while(cueCur!==g){if(g>cueCur){cueOrder.push(cueOrder.shift());cueCur++;}else{cueOrder.unshift(cueOrder.pop());cueCur--;}}cueLayout();continue;}   // 안 보일 때는 애니메이션 없이 바로
+    while(cueCur!==g){if(g>cueCur){cueCur++;await cueFwd();}else{cueCur--;await cueBack();}}}
+  cueBusy=false;}
+cueLayout();
+function setIdx(i){if(i===idx)return;idx=i;lis.forEach((e,k)=>e.classList.toggle('on',k===i));cueGo(i);dss.forEach((e,k)=>e.classList.toggle('on',k===i));}
 lis.forEach((e,k)=>e.addEventListener('click',()=>{const top=sec.getBoundingClientRect().top+scrollY;scrollTo({top:top+(BB+k*ST+ST*.5)*innerHeight,behavior:'smooth'})}));
 function frame(now){const dt=Math.min(.05,(now-last)/1000);last=now;
   const r=sec.getBoundingClientRect(),W=innerWidth,vh=innerHeight,u=-r.top/vh;
