@@ -1931,7 +1931,7 @@ function frame(){mobile=innerWidth<=820;const vh=innerHeight,sy=scrollY;
        const L=t.left+(b.left-t.left)*p,T=t.top+(b.top-t.top)*p,W=t.width+(b.width-t.width)*p,Hh=t.height+(b.height-t.height)*p;
        Object.assign(mo.style,{visibility:'visible',left:L+'px',top:T+'px',width:W+'px',height:Hh+'px',borderRadius:(12+8*p)+'px'});
        mo.querySelector('img').style.opacity=(1-cl((p-.6)/.38)).toFixed(3)}
-     if(intro)intro.classList.toggle('on',p>.85);}
+     if(intro)intro.classList.toggle('on',p>.85&&e<440);}   /* 영상이 다 덮으면 글자는 꺼둠 → 장면 전환 때 뒤에서 비치지 않게 */
     /* 4) 첫 장면은 스크롤로 밀려 올라옴, 그다음은 목록을 눌러 전환 */
     {const was=sc.classList.contains('st-list');sc.classList.toggle('st-list',e>=430);if(was!==(e>=430))its.forEach((x,k)=>x.classList.toggle('on',k===act&&e>=430));}   /* 다음 그림이 다 올라온 뒤에 목록 등장 */
     const want=e>=STEP[2]?2:e>=STEP[1]?1:0;if(want!==act)setAct(want);
