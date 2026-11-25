@@ -1549,14 +1549,21 @@ function tPts(g,d,e=0){const K=shift(gAt(g,d),e),R=shift(gAt(g,d-TLEN),e-0),F={x
   for(let i=0;i<=6;i++){const t=i/6;o.push([R.x+(K.x-R.x)*t,R.y+(K.y-R.y)*t])}o.push([(K.x+F.x)/2,(K.y+F.y)/2],[F.x,F.y]);return o;}
 function gapOf(a,b){let m=1e9;for(const p of a)for(const q of b){const d=Math.hypot(p[0]-q[0],p[1]-q[1]);if(d<m)m=d}return m;}
 function truck(g,d,cab,trl,vis=1,ex=0){
-  const K=shift(gAt(g,d),ex),R=shift(gAt(g,d-TLEN),ex),hx=K.x-R.x,hy=K.y-R.y;
+  const K=shift(gAt(g,d),ex),R=shift(gAt(g,d-TLEN),ex);
   const kx=K.x,ky=K.y*SE;put(cab,kx,ky,TW);put(trl,kx,ky,TW);
-  const F=gAt(g,d+45),fx=F.x-K.x,fy=F.y-K.y;setSrc(cab,`img/v3/cab_${spIdx(fx,fy)}.webp`);setSrc(trl,`img/v3/trl_${spIdx(hx,hy)}.webp`);   // 머리 방향: 앞쪽 지점을 향하게(커브에서 바깥으로 삐져나가지 않게)
-  const base=Math.round((K.y+R.y)*SE)*2, cabFront=K.ty>.6;   // 트럭끼리는 화면에서 아래(가까운) 트럭이 앞
+  const ta=Math.atan2(K.y-R.y,K.x-R.x), F=gAt(g,d+1.6*TK);   // 트레일러: 킹핀→뒤 차축(실제 트레일러처럼 안쪽으로 따라옴) / 머리: 킹핀 바로 앞 도로 방향
+  let da=Math.atan2(F.ty,F.tx)-ta;while(da>Math.PI)da-=2*Math.PI;while(da<-Math.PI)da+=2*Math.PI;
+  const it=+spIdx(Math.cos(ta),Math.sin(ta)), sa=i=>Math.atan2(-Math.sin(i*Math.PI/16)*SE,Math.cos(i*Math.PI/16));   // 스프라이트 번호 → 화면에 보이는 각도
+  let ic=+spIdx(Math.cos(ta+Math.max(-.3927,Math.min(.3927,da))),Math.sin(ta+Math.max(-.3927,Math.min(.3927,da))));   // 머리·짐칸 꺾임: 지면 기준 최대 22.5°
+  const sd=(i,j)=>{let x=sa(i)-sa(j);while(x>Math.PI)x-=2*Math.PI;while(x<-Math.PI)x+=2*Math.PI;return Math.abs(x)};
+  for(let k=0;k<3&&sd(ic,it)>.3;k++){let st=(ic-it+48)%32-16;ic=(ic-Math.sign(st)+32)%32;}   // 화면에서 보이는 꺾임 17° 이내(세로로 달릴 때 과장돼 보여 짐칸이 떨어져 보이던 것 방지)
+  const ca=ic*Math.PI/16*-1;   // (z 정렬용)
+  setSrc(cab,`img/v3/cab_${String(ic).padStart(2,'0')}.webp`);setSrc(trl,`img/v3/trl_${String(it).padStart(2,'0')}.webp`);
+  const base=Math.round((K.y+R.y)*SE)*2, cabFront=Math.sin(ca)>.6;   // 트럭끼리는 화면에서 아래(가까운) 트럭이 앞
   cab.style.zIndex=base+(cabFront?1:0);trl.style.zIndex=base+(cabFront?0:1);   // 같은 트럭 안: 짐칸이 머리 뒤 차대(바퀴)를 덮음. 정면으로 다가올 때만 머리가 앞
   cab.style.opacity=trl.style.opacity=vis;}
 const gA=gPath(PAB), gC=gPath({o:PA.o.slice().reverse()}), gB=gPath(PB);
-let CEX=0;
+let KC=0,CF=1,CT=null;
 const runD=(g,k)=>TLEN+(g.T-TLEN)*k, dA=p=>runD(gA,ez(sv(p,.16,.34)));   // 카메라가 다가간 뒤(.13~) 주차된 트럭이 출발
 window.truckA=p=>{const K=gAt(gA,dA(p));return[K.x,K.y*SE]};
 /* 리치스태커: 다가가서 → 붐을 내려 컨테이너를 잡고 → 들어 올린 채 후진 */
@@ -1577,11 +1584,16 @@ function rs(p){
   put(V.ct,RSP[0],RSP[1],RSW);V.ct.style.opacity=cont;}
 function vehicles(p){
   truck(gA,dA(p),V.tac,V.tat);
-  { const k=(T/48)%1;   // 아래에서 올라오는 트럭: 스크롤과 상관없이 48초마다 끝까지 갔다가 사라지고 처음부터 다시
-    const dC=runD(gC,k),pA=tPts(gA,dA(p)),SAFE=3.3*TK;   // 마주 오는 트럭과 몸통 간격이 3.3m보다 좁아지면 갓길 쪽으로 살짝 비켜감(최대 2m)
-    let ex=0;while(ex<2*TK&&gapOf(pA,tPts(gC,dC,ex))<SAFE)ex+=.25*TK;
-    CEX+=(ex-CEX)*.2;   // 부드럽게 비켜섰다가 돌아옴
-    truck(gC,dC,V.tcc,V.tct,(sv(k,0,.03)*(1-sv(k,.96,1))).toFixed(3),CEX); }
+  { /* 마주 오는 트럭(C): 48초에 한 바퀴. 우리 트럭(A)과는 길에서 마주치지 않음:
+       A가 달리는 동안 C가 가려는 자리 근처(10m)에 A가 오거나 곧 올 거면 → 출발하지 않고 대기(아직 안 보이는 출발점) / 이미 길 위면 스르르 사라졌다가 처음부터 */
+    const dt=CT===null?0:Math.max(0,Math.min(.1,T-CT));CT=T;
+    const a=dA(p), act=p>.13&&p<.37, A0=act?Math.max(TLEN,a-10*TK):a, A1=act?Math.min(gA.T,a+45*TK):a, SAFE=10*TK;
+    const free=dc=>{const c=tPts(gC,dc);for(let x=A0;x<=A1;x+=TK)if(gapOf(tPts(gA,x),c)<SAFE)return false;return true;};
+    let kn=KC+dt/48;
+    if(kn>=1){KC=0;CF=1;}
+    else if(free(runD(gC,kn))){KC=kn;CF=Math.min(1,CF+dt*2);}
+    else if(KC>.001){CF-=dt*2.5;if(CF<=0){KC=0;CF=1;}}
+    truck(gC,runD(gC,KC),V.tcc,V.tct,(sv(KC,0,.03)*(1-sv(KC,.96,1))*CF).toFixed(3)); }
   truck(gB,runD(gB,sv(p,.58,.70)),V.tbc,V.tbt,(sv(p,.56,.585)*(1-sv(p,.70,.72))).toFixed(3));   // 야적장 장면에서만 보임 (그 전엔 숨김)   // 공항 앞에 도착하면 사라짐
   rs(p);
   const g=sv(p,.49,.555),c=sv(p,.555,.63);
