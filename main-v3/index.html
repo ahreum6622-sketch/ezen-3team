@@ -1268,7 +1268,7 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
   <div class="hd-stage">
     <div class="hd-out" id="hdOut" aria-hidden="true">OUR HERITAGE · SINCE 1969 · OUR HERITAGE · SINCE 1969 · </div>
     <div class="hd-ground"><div class="hd-dash" id="hdDash"></div></div>
-    <div class="hd-truck" id="hdTruck"><img src="img/hd/truck_nw.webp" alt="DHL 트럭"><div class="hd-wh" id="hdWh"></div></div>
+    <div class="hd-truck" id="hdTruck"><img src="img/hd/truck_v2.webp" alt="DHL 트럭"><div class="hd-wh" id="hdWh"></div></div>
     <div class="hd-svc">
       <div class="hd-line" id="hdLine" aria-hidden="true"></div>
       <div class="hd-cards" id="hdCards">
@@ -2209,7 +2209,7 @@ items.forEach(it=>{const yr=it.querySelector('.yr'),txt=yr.textContent.trim();yr
 function slot(it,on){if(it._on===on)return;it._on=on;it.classList.toggle('in',on);
   it._reels.forEach(r=>{if(on){r.st.style.transition=`transform ${SLOT_TIME+r.i*SLOT_GAP}s cubic-bezier(.12,.7,.2,1) ${r.i*.03}s`;r.st.style.transform=`translateY(${-r.n*1.06}em)`;}
     else{r.st.style.transition='none';r.st.style.transform='translateY(0)';}});}
-const WH=[{f:'wh0',x:331,y:718,w:88},{f:'wh1',x:421,y:718,w:88},{f:'wh2',x:511,y:718,w:88},{f:'wh3',x:931,y:718,w:88},{f:'wh4',x:1247,y:718,w:88}]   /* 우리 트럭(truck_nw) 바퀴 */
+const WH=[{f:'wv0',x:360.1,y:727.4,w:68.2},{f:'wv1',x:451,y:727.4,w:68.2},{f:'wv2',x:544.8,y:727.4,w:68.2},{f:'wv3',x:937.4,y:727.4,w:68.2},{f:'wv4',x:1235.2,y:727.4,w:68.2}]   /* 새 트럭(truck_v2: 팀장이 준 측면 트럭) 휠 부분만 잘라 돌림 */
   .map(w=>{const e=document.createElement('img');e.src='img/hd/'+w.f+'.webp';e.alt='';whBox.appendChild(e);return Object.assign({e},w)});
 const cl=(v,a=0,b=1)=>Math.min(b,Math.max(a,v)),sv=(p,a,b)=>cl((p-a)/(b-a)),eo=t=>1-Math.pow(1-t,3);
 const mix=(a,b,t)=>a.map((v,i)=>Math.round(v+(b[i]-v)*t));
