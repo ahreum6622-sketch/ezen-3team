@@ -1058,6 +1058,9 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
 .sc2-ly video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
 :root{--u:min(1vw,2vh);--en:'Inter','Pretendard',system-ui,sans-serif}
 /* ===== 팀원 시안(헤리티지·고객 약속·Connecting 글자 모션) 반영 ===== */
+.hd-skip{position:fixed;right:24px;bottom:24px;z-index:60;padding:10px 16px;border-radius:999px;border:1px solid rgba(255,255,255,.25);background:rgba(17,17,17,.72);color:#fff;font:600 13px var(--sans);letter-spacing:.02em;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .4s;backdrop-filter:blur(6px)}
+.hd-skip.on{opacity:1;pointer-events:auto}
+.hd-skip:hover{background:#111}
 .hd{position:relative;height:900vh;z-index:2;--ground:.66}
 .hd-stage{position:sticky;top:0;height:100vh;overflow:hidden;background:#fff}
 .hd-fade{position:absolute;left:0;right:0;top:0;height:200vh;z-index:6;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,0) 0%,rgba(255,255,255,.55) 20%,#fff 42%);transform:translateY(100vh);will-change:transform}
@@ -2293,7 +2296,7 @@ function frame(){
   const Kx=i=>items[i].offsetLeft-x0;   /* i번째 연도가 1969 자리(왼쪽)에 오는 위치 */
   let shift;   /* 연도마다 잠깐 멈춰 읽을 시간을 주고(구간의 55%), 다음 연도로 부드럽게 넘어감(45%) */
   if(u<=0)shift=0;else if(u>=1)shift=Kx(nI)+rate*(pp-END);
-  else{const sg=u*(nI+1),i=Math.min(nI,Math.floor(sg)),f=sg-i,HOLD=.4,m=f<HOLD?0:(t=>t*t*(3-2*t))((f-HOLD)/(1-HOLD));shift=i>=nI?Kx(nI):Kx(i)+(Kx(i+1)-Kx(i))*m;}   /* 마지막(TODAY)도 한 번 머문 뒤 흘러감 */             // 멈추지 않고 화면 전환 중에도 계속 흐름
+  else{const sg=u*(nI+1),i=Math.min(nI,Math.floor(sg)),f=sg-i,HOLD=.5,m=f<HOLD?0:(t=>t*t*(3-2*t))((f-HOLD)/(1-HOLD));shift=i>=nI?Kx(nI):Kx(i)+(Kx(i+1)-Kx(i))*m;}   /* 마지막(TODAY)도 한 번 머문 뒤 흘러감 */             // 멈추지 않고 화면 전환 중에도 계속 흐름
   cards.style.transform=`translateX(${-shift}px)`;
   // 제목: 처음부터 보이고, 왼쪽으로 밀리기 시작하면 서서히 사라짐
   // 제목 사라짐: 트럭이 앞으로 달리니 제목이 풍경처럼 뒤(왼쪽)로 밀려 나가고, 화면 왼쪽 끝에서 그라데이션으로 스르르 사라짐
@@ -2375,6 +2378,27 @@ window.abShow=render;render();   /* 처음부터 행을 채워 둬야 보드 크
   const sec=document.getElementById('scale');const chk=()=>{const r=sec.getBoundingClientRect(),vis=r.top<innerHeight*.5&&r.bottom>innerHeight*.5,front=(!ly||ly.classList.contains('cur'))&&sec.classList.contains('st-list');   /* 사진이 다 올라와 목록이 보일 때(st-list)부터 재생 → 첫 영상이 보드 화면 뒤에서 미리 끝나버리던 문제 수정 */
     if(vis&&front){if(!seen){seen=true;v.currentTime=0;v.play().catch(()=>{})}}else if(!vis||ly.classList.contains('past')||!front){if(seen&&!front){v.pause()}seen=false}};
   addEventListener('scroll',chk,{passive:true});new MutationObserver(chk).observe(ly,{attributes:true,attributeFilter:['class']});new MutationObserver(chk).observe(sec,{attributes:true,attributeFilter:['class']});chk();});})();
+
+/* 우리의 역사(트럭) 섹션: 위에서 들어오면 스크롤을 잠그고 모션을 자동 재생 → 끝나면 다음 섹션으로 풀어줌.
+   (아래에서 위로 올라올 때는 예전처럼 스크롤로 움직임 / '건너뛰기'로 바로 넘어갈 수 있음) */
+(()=>{const sec=document.getElementById('heritage');if(!sec)return;
+const DUR=26000;   // 자동 재생 전체 길이(ms)
+const btn=document.createElement('button');btn.className='hd-skip';btn.type='button';btn.textContent='건너뛰기 ↓';document.body.appendChild(btn);
+let ap=null,done=false,lastY=scrollY;
+const block=e=>{if(ap){e.preventDefault();}};
+const keys=e=>{if(ap&&[' ','PageDown','PageUp','ArrowDown','ArrowUp','Home','End'].includes(e.key))e.preventDefault();};
+addEventListener('wheel',block,{passive:false});addEventListener('touchmove',block,{passive:false});addEventListener('keydown',keys);
+const go=y=>window.scrollTo({top:y,behavior:'instant'});
+function stop(jumpEnd){if(!ap)return;const y1=ap.y1;ap=null;done=true;btn.classList.remove('on');if(jumpEnd)go(y1+2);}
+btn.addEventListener('click',()=>stop(true));
+function tick(now){if(ap){const k=Math.min(1,(now-ap.t0)/DUR);go(ap.y0+(ap.y1-ap.y0)*k);if(k>=1)stop(false);}requestAnimationFrame(tick);}
+requestAnimationFrame(tick);
+addEventListener('scroll',()=>{const y=scrollY,down=y>lastY;lastY=y;if(ap)return;
+  const top=sec.getBoundingClientRect().top+y,end=top+sec.offsetHeight-innerHeight;
+  if(y<top-innerHeight*.3)done=false;                       // 섹션 위로 다시 올라가면 다음에 또 자동 재생
+  if(!done&&down&&y>=top-2&&y<top+innerHeight*.6){ap={t0:performance.now()-Math.max(0,(y-top)/(end-top))*DUR,y0:top,y1:end};btn.classList.add('on');}
+},{passive:true});
+})();
 </script>
 </body>
 </html>
