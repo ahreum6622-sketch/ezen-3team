@@ -1114,6 +1114,18 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
 #promise .pr-img img{border-radius:calc(24/1954*100vw);opacity:1;transform:none;transform-origin:50% 50%;
   box-shadow:0 18px 40px -18px rgba(0,0,0,.28);transition:transform .55s cubic-bezier(.2,.8,.2,1),filter .55s,opacity .35s;will-change:transform}
 #promise .pr-list li{font-weight:700}
+/* 여섯 가지 가치: 팀장 시안(Frame 180) 크기 — 목록 | 막대 | 사진 묶음을 가운데로 모으고, 아랫선 맞춤 */
+@media (min-width:821px){
+ #promise .pr-b{grid-template-columns:auto 2px auto;justify-content:center;align-items:end;align-content:center;column-gap:calc(110/1954*100vw);padding-left:calc(44/1954*100vw)}
+ #promise .pr-list{width:calc(418/1954*100vw);gap:calc(2/1954*100vw)}
+ #promise .pr-list li{font-size:calc(44/1954*100vw);line-height:1.3;padding:calc(3/1954*100vw) 0}
+ #promise .pr-bar{height:calc(330/1954*100vw)}
+ #promise .pr-r{padding-left:0}
+ #promise .pr-img{width:calc(467/1954*100vw);aspect-ratio:467/310}
+ #promise .pr-img img{border-radius:calc(26/1954*100vw)}
+ #promise .pr-dsw{width:calc(467/1954*100vw);margin-top:calc(38/1954*100vw);min-height:calc(60/1954*100vw)}
+ #promise .pr-dsw p{font-size:calc(15/1954*100vw);line-height:1.45}
+}
 /* ===== 수정: 굵기 전부 bold(700) + 모션 순서 (끊김 없이 이어지도록 정리) =====
    전환 흐름 (한 줄로 이어짐)
    0.00~0.32초  이전 항목: 빨간 Connecting이 줄어들며 타이틀이 왼쪽 제자리로 (빠르게)
