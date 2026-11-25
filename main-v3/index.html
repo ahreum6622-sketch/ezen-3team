@@ -1974,7 +1974,8 @@ let P=0,act=0,mobile=false;
 /* 빨간 Connecting 너비를 재 두고, 그 너비만큼 왼쪽→오른쪽으로 열림 (팀원 시안) */
 function measure(){sc.querySelectorAll('.cn').forEach(c=>c.parentNode.style.setProperty('--cw',(c.offsetWidth+parseFloat(getComputedStyle(c).fontSize)*.42)+'px'));}
 measure();addEventListener('resize',measure);document.fonts&&document.fonts.ready.then(measure);
-function setAct(i){act=i;its.forEach((e,k)=>e.classList.toggle('on',k===i&&sc.classList.contains('st-list')));ly.forEach((l,k)=>{l.classList.remove('drag');l.style.transform='';l.classList.toggle('cur',k===i);l.classList.toggle('past',k<i)});}
+let actAt=0;const MIN_DWELL=2000;   /* 목록 항목마다 최소 2초는 머묾(스크롤을 빨리 내려도) */
+function setAct(i){act=i;actAt=performance.now();its.forEach((e,k)=>e.classList.toggle('on',k===i&&sc.classList.contains('st-list')));ly.forEach((l,k)=>{l.classList.remove('drag');l.style.transform='';l.classList.toggle('cur',k===i);l.classList.toggle('past',k<i)});}
 const list=document.getElementById('scList'),STEP=[0,1500,2500],SCHOLD=900;   /* SCHOLD: 소개 글+보드 화면에서 머무는 스크롤 길이(화면 높이 900 기준) */   /* 단계가 바뀌는 스크롤 위치(화면 높이 900 기준) */
 its.forEach((e,k)=>e.addEventListener('click',()=>{const st=sc.getBoundingClientRect().top+scrollY;scrollTo({top:st+(STEP[k]+(k?60:500)+SCHOLD)*innerHeight/900,behavior:'smooth'});}));
 function frame(){mobile=innerWidth<=820;const vh=innerHeight,sy=scrollY;
@@ -2016,8 +2017,8 @@ function frame(){mobile=innerWidth<=820;const vh=innerHeight,sy=scrollY;
      {const o=1-ss(cl((e-90)/150));if(intro)for(const c of intro.children){c.style.opacity=o.toFixed(3);c.style.translate=`0 ${(-60*(1-o)).toFixed(1)}px`;}
       if(bd){bd.style.opacity=o.toFixed(3);bd.style.translate=`0 ${(-60*(1-o)).toFixed(1)}px`;bd.style.pointerEvents=o<.5?'none':'';}}}   /* 영상이 다 덮으면 글자는 꺼둠 → 장면 전환 때 뒤에서 비치지 않게 */
     /* 4) 첫 장면은 스크롤로 밀려 올라옴, 그다음은 목록을 눌러 전환 */
-    {const was=sc.classList.contains('st-list');sc.classList.toggle('st-list',e>=470);if(was!==(e>=470))its.forEach((x,k)=>x.classList.toggle('on',k===act&&e>=430));}   /* 다음 그림이 다 올라온 뒤에 목록 등장 */
-    const want=e>=STEP[2]?2:e>=STEP[1]?1:0;if(want!==act)setAct(want);
+    {const was=sc.classList.contains('st-list');sc.classList.toggle('st-list',e>=470);if(was!==(e>=470)){if(e>=470)actAt=performance.now();}if(was!==(e>=470))its.forEach((x,k)=>x.classList.toggle('on',k===act&&e>=430));}   /* 다음 그림이 다 올라온 뒤에 목록 등장 */
+    const want=e>=STEP[2]?2:e>=STEP[1]?1:0;if(want!==act&&(performance.now()-actAt>=MIN_DWELL||!sc.classList.contains('st-list')))setAct(act+Math.sign(want-act));   /* 2초가 안 됐으면 기다렸다가 한 칸씩 */
     if(act===0){const q=ss(cl((e-200)/270));ly[0].classList.add('drag');ly[0].style.transform=q>=1?'none':`translateY(${(1-q)*100}vh) scale(${1.05-.05*q})`;Ai.classList.toggle('off',q>.55);}
     else Ai.classList.add('off');
   }
