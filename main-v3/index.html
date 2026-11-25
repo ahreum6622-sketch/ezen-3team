@@ -1146,6 +1146,25 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
 #scale .sc2-it.on .cnw{width:var(--cw);transition:width .8s var(--ez) .72s}
 @media (max-width:820px){#scale .cnw{width:auto}#scale .sc2-it .d>p{transform:none;opacity:1}}
 @media (prefers-reduced-motion:reduce){#scale .sc2-it,#scale .sc2-it *{transition:none!important}}
+
+/* ===== 상자 적재: 따뜻한 흰 유리 통 + 노랑·크림·살구 상자 + 빨간 테이프 (레퍼런스 구조, DHL 색) ===== */
+#plannerB{background:#fff}
+#plannerB .pb-card{border:1px solid #f1ede4;border-radius:28px;background:#fff;box-shadow:0 1px 2px rgba(60,40,0,.04),0 24px 50px -30px rgba(120,100,60,.28)}
+#plannerB .pb-stage{background:radial-gradient(90% 85% at 45% 18%,#ffffff,#fbf7ee 92%)}
+#plannerB .pb-stage.over{box-shadow:inset 0 0 0 3px #ffd34d}
+#plannerB .pb-meter{border-radius:20px;padding:20px 22px;background:rgba(255,255,255,.92);box-shadow:0 1px 2px rgba(60,40,0,.05),0 14px 30px -18px rgba(120,100,60,.3);backdrop-filter:blur(6px)}
+#plannerB .pb-eye,#plannerB .pb-pct{color:#d40511}
+#plannerB .pb-pct{font-size:34px}
+#plannerB .pb-cap{font-size:15px;color:#4b4a44}
+#plannerB .pb-bar{height:6px;background:#f4efe3}
+#plannerB .pb-bar i{background:linear-gradient(90deg,#ffd34d,#e8484f)}
+#plannerB .pb-count,#plannerB .pb-hint{color:#9a948a}
+#plannerB .pb-hint{letter-spacing:.14em}
+#plannerB .pb-dock{background:#fdfcf8;border-left:1px solid #f1ede4}
+#plannerB .pb-btn.ghost{background:#f6f2e9;color:#3b382f}
+#plannerB .pb-btn.pri{background:#d40511;color:#fff;box-shadow:none}
+#plannerB .pb-parcel{border:1px solid rgba(200,160,60,.25);border-radius:7px;box-shadow:0 3px 0 rgba(200,160,60,.16)}
+#plannerB .pb-parcel i{background:#e8484f;opacity:1;width:7px;margin-left:-3.5px}
 </style>
 </head>
 <body>
@@ -1835,31 +1854,31 @@ requestAnimationFrame(frame)})();
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js';
 const $=s=>document.querySelector(s);
 const CW=10,CH=4,D=2.4;
-const COL=['#ffffff','#fff0b5','#ffd9a8','#cdebdc','#ffffff','#ffe1dc','#ffffff','#fff0b5','#ffd9a8','#cdebdc','#ffffff','#ffe1dc','#ffffff','#fff0b5','#ffd9a8','#cdebdc'];
+const COL=[...Array(16)].map((_,i)=>['#fff3c2','#ffe7a3','#ffffff','#ffdcb8','#fff3c2','#fffaf0','#ffe7a3','#ffdcb8'][i%8]);   /* 노랑·크림·흰·살구 상자 */
 const SZ=[[3,2],[2,2],[2,2],[3,1],[2,1],[2,1],[1,2],[2,2],[1,1],[2,1],[1,2],[1,1],[3,1],[1,1],[2,1],[1,1]];
 const PAR=SZ.map(([w,h],i)=>({i,w,h,c:COL[i],at:null,mesh:null}));
 const cv=$('#pbCanvas'),stg=$('#pbStage');
 const r=new THREE.WebGLRenderer({canvas:cv,antialias:true,alpha:true});r.setPixelRatio(Math.min(2,devicePixelRatio));r.shadowMap.enabled=true;r.shadowMap.type=THREE.PCFSoftShadowMap;
 const sc=new THREE.Scene(),cam=new THREE.PerspectiveCamera(26,1,.1,100);
 cam.position.set(3.2,5.6,15.5);cam.lookAt(5.4,1.7,-D/2);
-sc.add(new THREE.HemisphereLight(0xffffff,0xf1e3bf,1.5));
-const sun=new THREE.DirectionalLight(0xffffff,1.7);sun.position.set(-4,10,8);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);
+sc.add(new THREE.HemisphereLight(0xffffff,0xf4f1ea,2.1));
+const sun=new THREE.DirectionalLight(0xffffff,1.5);sun.position.set(-7,9,5);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);
 Object.assign(sun.shadow.camera,{left:-4,right:14,top:10,bottom:-4});sc.add(sun);
-const gnd=new THREE.Mesh(new THREE.PlaneGeometry(60,60),new THREE.ShadowMaterial({opacity:.12}));gnd.rotation.x=-Math.PI/2;gnd.position.y=-.16;gnd.receiveShadow=true;sc.add(gnd);
+const gnd=new THREE.Mesh(new THREE.PlaneGeometry(60,60),new THREE.ShadowMaterial({color:0x7a7466,opacity:.2}));gnd.rotation.x=-Math.PI/2;gnd.position.y=-.16;gnd.receiveShadow=true;sc.add(gnd);
 // 컨테이너
-const Y=new THREE.MeshStandardMaterial({color:0xffcc00,roughness:.5,metalness:.1});
+const Y=new THREE.MeshStandardMaterial({color:0xe4e0d8,emissive:0xe4e0d8,emissiveIntensity:.12,roughness:.45,metalness:.05});   /* 따뜻한 연회색 틀 */
 const beam=(w,h,d,x,y,z)=>{const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),Y);m.position.set(x,y,z);m.castShadow=true;sc.add(m);return m;};
 const t=.16;
 [[0,0],[CW,0],[0,-D],[CW,-D]].forEach(([x,z])=>beam(t,CH+t,t,x,CH/2,z));
 [[0],[-D]].forEach(([z])=>{beam(CW+t,t,t,CW/2,CH+t/2,z);beam(CW+t,t,t,CW/2,-t/2,z);});
 [0,CW].forEach(x=>{beam(t,t,D,x,CH+t/2,-D/2);beam(t,t,D,x,-t/2,-D/2);});
-const glass=new THREE.MeshStandardMaterial({color:0xfff4d1,transparent:true,opacity:.45,side:THREE.DoubleSide,roughness:1});
+const glass=new THREE.MeshStandardMaterial({color:0xfbfaf7,transparent:true,opacity:.5,depthWrite:false,side:THREE.DoubleSide,roughness:1});
 const back=new THREE.Mesh(new THREE.PlaneGeometry(CW,CH),glass);back.position.set(CW/2,CH/2,-D);sc.add(back);
 const side=new THREE.Mesh(new THREE.PlaneGeometry(D,CH),glass);side.rotation.y=Math.PI/2;side.position.set(CW,CH/2,-D/2);sc.add(side);
-const lineM=new THREE.LineBasicMaterial({color:0xe9d9a8,transparent:true,opacity:.7});
-for(let x=.25;x<CW;x+=.25){const g=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(x,0,-D+.01),new THREE.Vector3(x,CH,-D+.01)]);sc.add(new THREE.Line(g,lineM));}
-const floor=new THREE.Mesh(new THREE.BoxGeometry(CW,.06,D),new THREE.MeshStandardMaterial({color:0xfaf3df,roughness:.9}));floor.position.set(CW/2,-.03,-D/2);floor.receiveShadow=true;sc.add(floor);
-for(let x=1;x<CW;x++){const g=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(x,.005,0),new THREE.Vector3(x,.005,-D)]);sc.add(new THREE.Line(g,new THREE.LineBasicMaterial({color:0xd9ccaa})));}
+const lineM=new THREE.LineBasicMaterial({color:0xe2ddd3,transparent:true,opacity:.45});
+for(let x=.08;x<CW;x+=.08){const g=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(x,0,-D+.01),new THREE.Vector3(x,CH,-D+.01)]);sc.add(new THREE.Line(g,lineM));}
+const floor=new THREE.Mesh(new THREE.BoxGeometry(CW,.06,D),new THREE.MeshStandardMaterial({color:0xfdfcf9,roughness:.9}));floor.position.set(CW/2,-.03,-D/2);floor.receiveShadow=true;sc.add(floor);
+for(let x=1;x<CW;x++){const g=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(x,.005,0),new THREE.Vector3(x,.005,-D)]);sc.add(new THREE.Line(g,new THREE.LineBasicMaterial({color:0xe8e3d8})));}
 // 칸 상태
 const grid=[...Array(CH)].map(()=>Array(CW).fill(-1));
 const fits=(p,c,rw)=>{if(c<0||rw<0||c+p.w>CW||rw+p.h>CH)return false;for(let y=rw;y<rw+p.h;y++)for(let x=c;x<c+p.w;x++)if(grid[y][x]>=0)return false;return true;};
@@ -1867,13 +1886,13 @@ const lowest=(p,c)=>{for(let y=0;y+p.h<=CH;y++){if(fits(p,c,y)){let ok=true;for(
 function settle(p,c){ // 위에서 떨어뜨려 처음 막히는 곳에 놓음
   let y=CH-p.h;if(!fits(p,c,y))return -1;while(y>0&&fits(p,c,y-1))y--;return y;}
 function firstFit(p){for(let y=0;y+p.h<=CH;y++)for(let x=0;x+p.w<=CW;x++)if(fits(p,x,y)&&settle(p,x)===y)return[x,y];return null;}
-function tapeMesh(p){const mt=new THREE.MeshStandardMaterial({color:0xe2574c,roughness:.6}),g=new THREE.Group(),th=Math.min(.5,p.h*.4);
+function tapeMesh(p){const mt=new THREE.MeshStandardMaterial({color:0xe8484f,roughness:.6,emissive:0xe8484f,emissiveIntensity:.25}),g=new THREE.Group(),th=Math.min(.5,p.h*.4);
   const f=new THREE.Mesh(new THREE.BoxGeometry(.22,th,.02),mt);f.position.set(0,(p.h-.06)/2-th/2+.001,(D-.16)/2+.011);   // 앞면에서 내려오는 테이프
   const t=new THREE.Mesh(new THREE.BoxGeometry(.22,.02,D-.16+.02),mt);t.position.set(0,(p.h-.06)/2+.011,0);              // 윗면을 가로지르는 테이프
   g.add(f,t);return g;}
 function place(p,x,y){
   for(let yy=y;yy<y+p.h;yy++)for(let xx=x;xx<x+p.w;xx++)grid[yy][xx]=p.i;
-  p.at=[x,y];const g=new THREE.Mesh(new THREE.BoxGeometry(p.w-.06,p.h-.06,D-.16),new THREE.MeshStandardMaterial({color:p.c,roughness:.85}));
+  p.at=[x,y];const g=new THREE.Mesh(new THREE.BoxGeometry(p.w-.06,p.h-.06,D-.16),new THREE.MeshStandardMaterial({color:p.c,roughness:.9,emissive:p.c,emissiveIntensity:.18}));
   g.castShadow=g.receiveShadow=true;g.add(tapeMesh(p));g.userData.p=p;g.position.set(x+p.w/2,y+p.h/2+3.2,-D/2);g.userData.ty=y+p.h/2;sc.add(g);p.mesh=g;
   dock[p.i].classList.add('used');meter();}
 function unplace(p){if(!p.at)return;for(let yy=0;yy<CH;yy++)for(let xx=0;xx<CW;xx++)if(grid[yy][xx]===p.i)grid[yy][xx]=-1;sc.remove(p.mesh);p.mesh=null;p.at=null;dock[p.i].classList.remove('used');
@@ -1887,7 +1906,7 @@ function meter(){const used=PAR.filter(p=>p.at),a=used.reduce((s,p)=>s+p.w*p.h,0
 const ul=$('#pbParcels');ul.innerHTML=PAR.map(p=>`<li><button class="pb-parcel" style="--w:${p.w};--h:${p.h};--c:${p.c}" aria-label="상자 ${p.w}×${p.h}" data-i="${p.i}"><i></i></button></li>`).join('');
 const dock=[...ul.querySelectorAll('.pb-parcel')];
 const pv=new THREE.Group();pv.visible=false;sc.add(pv);   // 끌어다 놓을 때 들어갈 자리 미리보기 (반투명 상자 + 빨간 테두리)
-const pvFill=new THREE.Mesh(new THREE.BoxGeometry(1,1,1),new THREE.MeshBasicMaterial({color:0xffcc00,transparent:true,opacity:.22,depthWrite:false}));
+const pvFill=new THREE.Mesh(new THREE.BoxGeometry(1,1,1),new THREE.MeshBasicMaterial({color:0xffd34d,transparent:true,opacity:.22,depthWrite:false}));
 const pvEdge=new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(1,1,1)),new THREE.LineBasicMaterial({color:0xd40511}));pv.add(pvFill,pvEdge);
 function preview(p,c,y){if(c==null||y<0){pv.visible=false;return;}pv.visible=true;pv.scale.set(p.w-.04,p.h-.04,D-.12);pv.position.set(c+p.w/2,y+p.h/2,-D/2);}
 function target(p,cx,cy){const h=cellAt(cx,cy);if(!h)return null;let c=Math.round(h.x-p.w/2);c=Math.max(0,Math.min(CW-p.w,c));const y=settle(p,c);return y<0?null:[c,y];}
