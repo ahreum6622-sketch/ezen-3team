@@ -1447,6 +1447,9 @@ window.truckA=p=>{const K=gAt(gA,dA(p));return[K.x,K.y*SE]};
 /* 리치스태커: 다가가서 → 붐을 내려 컨테이너를 잡고 → 들어 올린 채 후진 */
 const RSF=[0.898,-0.439], RSP=[1090*GS,385*GS], RSD=200, RSW=390;
 const RSI=[];['empty','cont'].forEach(n=>RSI.push(`img/v3/rs_${n}.webp`));for(let k=0;k<8;k++){RSI.push(`img/v3/rs_low_${k}.webp`,`img/v3/rs_lift_${k}.webp`);}RSI.forEach(u=>{const im=new Image();im.src=u;});
+/* 리치스태커 프레임을 미리 겹쳐 두고 보이기만 바꿈 → src 교체 시 디코딩 틈에 컨테이너가 깜빡이던 문제 해결 */
+const RSFR={};let rsCur=null;RSI.filter(u=>!u.includes('rs_cont')).forEach(u=>{const im=V.rs.cloneNode();im.removeAttribute('id');im.src=u;im.decoding='sync';im.style.visibility='hidden';V.rs.parentNode.insertBefore(im,V.rs);RSFR[u]=im;});
+V.rs.style.visibility='hidden';
 function rs(p){
   const a=sv(p,.63,.685),b=sv(p,.685,.715),c=sv(p,.715,.745),r=sv(p,.75,.79);
   let off,src,cont=1;
@@ -1455,6 +1458,7 @@ function rs(p){
   else if(r<=0){off=0;src=`img/v3/rs_lift_${Math.min(7,Math.floor(c*8))}.webp`;cont=0;}
   else{off=-RSD*ez(r);src='img/v3/rs_lift_7.webp';cont=0;}
   put(V.rs,RSP[0]+RSF[0]*off,RSP[1]+RSF[1]*off,RSW);V.rs.style.zIndex=V.ct.style.zIndex=Math.round(RSP[1]);setSrc(V.rs,src);
+  const fr=RSFR[src];if(fr){put(fr,RSP[0]+RSF[0]*off,RSP[1]+RSF[1]*off,RSW);fr.style.zIndex=V.rs.style.zIndex;if(rsCur!==fr){fr.style.visibility='visible';if(rsCur)rsCur.style.visibility='hidden';rsCur=fr;}}
   put(V.ct,RSP[0],RSP[1],RSW);V.ct.style.opacity=cont;}
 function vehicles(p){
   truck(gA,dA(p),V.tac,V.tat);
