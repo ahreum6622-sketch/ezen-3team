@@ -1106,6 +1106,18 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
   </div>
 </section>
 
+<section class="pb-sec" id="plannerB"><div class="wrap">
+  <header class="pb-head"><div><p class="pb-eye">LOAD PLANNER</p><h2 class="pb-title">DHL처럼, 빈틈없이.</h2></div>
+    <p class="pb-lede">상자를 컨테이너로 끌어다 놓거나, DHL에게 맡겨 보세요. 비어 있는 칸 하나가 곧 길 위의 비용이에요.</p></header>
+  <div class="pb-card">
+    <div class="pb-stage" id="pbStage"><canvas id="pbCanvas" aria-label="3D 컨테이너 적재 계획" role="img"></canvas>
+      <div class="pb-meter" aria-live="polite"><span class="pb-pct" id="pbPct">0%</span><span class="pb-cap">공간 사용</span><span class="pb-bar"><i id="pbBar"></i></span><span class="pb-count" id="pbCount">0/16 상자 실림</span></div></div>
+    <div class="pb-dock"><div class="pb-dock-head"><span class="pb-hint">상자를 컨테이너로 끌어다 놓으세요</span>
+      <div class="pb-actions"><button class="pb-btn ghost" id="pbUnload">모두 내리기</button><button class="pb-btn pri" id="pbAuto">자동 적재</button></div></div>
+      <ul class="pb-parcels" id="pbParcels"></ul></div>
+  </div>
+</div></section>
+
 <!-- OUR HERITAGE: 세로 스크롤 → 가로로 흐르는 연혁 (레퍼런스 151 horizontal slider + progress marker) -->
 <section class="hd" id="heritage">
   <div class="hd-stage">
@@ -1175,40 +1187,7 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
 <!-- 감성: 화면 꽉 찬 그림 한 장 -->
 
 
-<!-- 6. 적재 플래너 (레퍼런스 LOAD PLANNER → DHL 합적) -->
-<div class="lp-switch" id="lpSwitch" role="group" aria-label="적재 플래너 시안 선택"><span>상자 적재 섹션</span><button data-v="A" class="on">A안 · 기존</button><button data-v="B">B안 · 레퍼런스형</button></div>
-<section class="sec ed" id="planner"><div class="wrap ed-two">
-  <div class="ed-stick">
-    <div class="ed-cap rv"><b>08</b><span>LOAD PLANNER</span></div>
-    <h2 class="ed-h2" data-fx="words">빈틈없이 실으면,<br><span class="hl">덜</span> 달립니다.</h2>
-    <p class="editorial-copy ed-q" data-fx="rise">여러 고객의 상자를 한 컨테이너에 모으면 같은 트럭, 같은 비행기에 더 많이 실려요. 요금도, 배출도 함께 줄어요.</p>
-  </div>
-  <div class="ed-play">
-  <div class="lp" data-fx="pop">
-    <div class="lp-stage" id="lpStage">
-      <canvas id="lpCanvas" aria-label="3D 컨테이너 적재 화면" role="img"></canvas>
-      <div class="lp-meter"><b id="lpPct">0%</b><span>공간 사용</span><i class="lp-bar"><em id="lpBar"></em></i><small id="lpCnt">0/16 상자 실림</small></div>
-      <p class="lp-fb" id="lpFb">3D를 불러오는 중…</p>
-    </div>
-    <div class="lp-dock">
-      <div class="lp-head"><span class="hint">원하는 자리로 끌어다 놓기 · 누르면 자동 · 실린 상자를 누르면 빠져요</span><div class="lp-act"><button class="btn ghost" id="lpUnload">모두 내리기</button><button class="btn pri" id="lpAuto">자동 적재</button></div></div>
-      <ul class="lp-parcels" id="lpParcels" data-fx="stagger"></ul>
-      <p class="lp-note">DHL은 화물을 모아 싣는 합적(Consolidation)을 배출을 줄이는 방법으로 쓰고, 상자 안 빈 공간을 줄이는 AI 포장 도구(OptiCarton)도 운영해요. <span class="demo">※ 시안 · 적재 방식은 단순화한 예시</span><br><a class="lp-link" href="guide.html">포장 가이드 보기 →</a></p>
-    </div>
-  </div>
-  </div>
-</div></section>
-<section class="pb-sec" id="plannerB"><div class="wrap">
-  <header class="pb-head"><div><p class="pb-eye">LOAD PLANNER</p><h2 class="pb-title">DHL처럼, 빈틈없이.</h2></div>
-    <p class="pb-lede">상자를 컨테이너로 끌어다 놓거나, DHL에게 맡겨 보세요. 비어 있는 칸 하나가 곧 길 위의 비용이에요.</p></header>
-  <div class="pb-card">
-    <div class="pb-stage" id="pbStage"><canvas id="pbCanvas" aria-label="3D 컨테이너 적재 계획" role="img"></canvas>
-      <div class="pb-meter" aria-live="polite"><span class="pb-pct" id="pbPct">0%</span><span class="pb-cap">공간 사용</span><span class="pb-bar"><i id="pbBar"></i></span><span class="pb-count" id="pbCount">0/16 상자 실림</span></div></div>
-    <div class="pb-dock"><div class="pb-dock-head"><span class="pb-hint">상자를 컨테이너로 끌어다 놓으세요</span>
-      <div class="pb-actions"><button class="pb-btn ghost" id="pbUnload">모두 내리기</button><button class="pb-btn pri" id="pbAuto">자동 적재</button></div></div>
-      <ul class="pb-parcels" id="pbParcels"></ul></div>
-  </div>
-</div></section>
+
 
 
 
@@ -1531,46 +1510,8 @@ $$('#rPrio button').forEach(b=>b.onclick=()=>{rPrio=b.dataset.p;$$('#rPrio butto
 $('#raceAgain').onclick=race;
 new IntersectionObserver((es,o)=>es.forEach(e=>{if(e.isIntersecting){race();o.disconnect();}}),{threshold:.3}).observe($('#race'));
 
-/* 8. 적재 플래너 — 컨테이너 앞면을 8칸×4칸 격자로 봄. 원하는 위치에 놓으면 그 칸 위에서 떨어져 아래에 쌓임 (3D는 아래 module 스크립트) */
-const LP_W=8, LP_H=4;
-const LPP=[[3,2],[2,2],[2,2],[3,1],[2,1],[2,1],[1,2],[2,2],[1,1],[2,1],[1,2],[1,1],[3,1],[1,1],[2,1],[1,1]];
+/* 상자 색 (적재 플래너 B·발송 견적에서 사용) */
 const LPC=['#F5CD62','#F6D7B5','#E6AF59','#EEAE96','#F7E9C9','#F5CD62','#E6AF59','#F6D7B5','#EEAE96','#F5CD62','#F7E9C9','#E6AF59','#F6D7B5','#EEAE96','#F5CD62','#F7E9C9'];
-const LP={placed:[],onChange:null,ghost:null};
-const lpH=(x,w,skip)=>{let t=0;LP.placed.forEach(p=>{if(p.k!==skip&&p.x<x+w&&x<p.x+p.w)t=Math.max(t,p.y+p.h)});return t}; // 그 칸들 위 가장 높은 곳
-function lpDrop(k,x){const[w,h]=LPP[k];x=Math.max(0,Math.min(LP_W-w,x));const y=lpH(x,w);return y+h<=LP_H?{x,y}:null}
-function lpAutoAt(k){const[w,h]=LPP[k];let best=null;for(let x=0;x<=LP_W-w;x++){const y=lpH(x,w);if(y+h<=LP_H&&(!best||y<best.y))best={x,y}}return best}
-function lpPut(k,at,fromY){const[w,h]=LPP[k];LP.placed.push({k,w,h,...at,sy:fromY??LP_H+2.5,t:performance.now()});lpUI()}
-function lpLoad(k,x){if(LP.placed.some(p=>p.k===k))return false;const at=x==null?lpAutoAt(k):lpDrop(k,x);
-  if(!at){lpFlash(x==null?'이 상자는 자리가 없어요. 상자를 눌러 빼거나 자동 적재를 써 보세요.':'거기엔 높이가 모자라요. 다른 곳에 놓아 보세요.');return false}
-  lpPut(k,at);return true}
-function lpRemove(k){LP.placed=LP.placed.filter(p=>p.k!==k);   // 빼고 나면 위에 있던 상자가 아래로 내려앉음
-  LP.placed.sort((a,b)=>a.y-b.y).forEach(p=>{const y=lpH(p.x,p.w,p.k);if(y<p.y){p.sy=p.y;p.y=y;p.t=performance.now()}});lpUI()}
-function lpUI(){const used=LP.placed.reduce((a,p)=>a+p.w*p.h,0),pct=Math.round(used/(LP_W*LP_H)*100);
-  $('#lpPct').textContent=pct+'%';$('#lpBar').style.width=pct+'%';$('#lpCnt').textContent=`${LP.placed.length}/${LPP.length} 상자 실림`;
-  $$('#lpParcels button').forEach(b=>b.classList.toggle('in',LP.placed.some(p=>p.k===+b.dataset.k)));
-  if(pct>=85)lpFlash(`빈 공간 ${100-pct}%. 이 정도면 컨테이너 하나로 충분해요.`);LP.onChange&&LP.onChange();}
-let lpFT=0;function lpFlash(t){const f=$('#lpFb');f.textContent=t;clearTimeout(lpFT);lpFT=setTimeout(()=>f.textContent='',2600)}
-$('#lpParcels').innerHTML=LPP.map(([w,h],k)=>`<li><button data-k="${k}" class="${LPC[k]==='#FFCC00'?'dhl':''}" style="--w:${w};--h:${h};--c:${LPC[k]}" aria-label="상자 ${w}×${h}"></button></li>`).join('');
-/* 끌기: 마우스·손가락 모두 (포인터 이벤트). 거의 안 움직이고 떼면 '누르기' → 자동 위치 */
-let drag=null;
-$('#lpParcels').addEventListener('pointerdown',e=>{const b=e.target.closest('button');if(!b||b.classList.contains('in'))return;e.preventDefault();
-  const r=b.getBoundingClientRect(),cl=b.cloneNode();cl.className+=' lp-fly';cl.style.cssText+=`;left:${r.left}px;top:${r.top}px`;document.body.appendChild(cl);
-  drag={k:+b.dataset.k,b,cl,sx:e.clientX,sy:e.clientY,ox:e.clientX-r.left,oy:e.clientY-r.top,moved:false};b.setPointerCapture(e.pointerId)});
-function lpCol(e){const k=drag.k,[w]=LPP[k],r=$('#lpStage').getBoundingClientRect();
-  if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom||!window.lpPick)return null;
-  const fx=window.lpPick(e.clientX,e.clientY);return fx==null?null:Math.round(fx-w/2)}
-$('#lpParcels').addEventListener('pointermove',e=>{if(!drag)return;if(Math.hypot(e.clientX-drag.sx,e.clientY-drag.sy)>6)drag.moved=true;
-  drag.cl.style.left=e.clientX-drag.ox+'px';drag.cl.style.top=e.clientY-drag.oy+'px';
-  const c=lpCol(e),at=c==null?null:lpDrop(drag.k,c);$('#lpStage').classList.toggle('drag',c!=null);
-  drag.cl.style.opacity=c!=null?.25:1;LP.ghost=at?{k:drag.k,...at,bad:false}:(c!=null?{k:drag.k,x:Math.max(0,Math.min(LP_W-LPP[drag.k][0],c)),y:lpH(Math.max(0,Math.min(LP_W-LPP[drag.k][0],c)),LPP[drag.k][0]),bad:true}:null)});
-function lpEnd(e){if(!drag)return;const c=drag.moved?lpCol(e):undefined;drag.cl.remove();$('#lpStage').classList.remove('drag');LP.ghost=null;
-  if(!drag.moved)lpLoad(drag.k);else if(c!=null)lpLoad(drag.k,c);drag=null}
-$('#lpParcels').addEventListener('pointerup',lpEnd);$('#lpParcels').addEventListener('pointercancel',e=>{if(drag){drag.cl.remove();LP.ghost=null;drag=null}});
-/* 실린 상자를 누르면 빠짐 */
-$('#lpStage').addEventListener('click',e=>{if(!window.lpHit)return;const k=window.lpHit(e.clientX,e.clientY);if(k!=null)lpRemove(k)});
-$('#lpUnload').onclick=()=>{LP.placed=[];lpUI()};
-$('#lpAuto').onclick=()=>{LP.placed=[];lpUI();LPP.map((s,k)=>k).sort((a,b)=>LPP[b][0]*LPP[b][1]-LPP[a][0]*LPP[a][1]||LPP[b][0]-LPP[a][0]).forEach((k,n)=>setTimeout(()=>lpLoad(k),n*90))};
-lpUI();window.LP=LP;window.LP_DIM=[LP_W,LP_H,LPP,LPC];
 
 /* 9. 운송장·발송: 레이스에서 고른 서비스 + 상자 크기·무게 → 예상 요금 (부피무게 = 가로×세로×높이÷5,000, 큰 쪽 기준) */
 const BOX=[{k:'S',d:[25,20,10]},{k:'M',d:[40,30,20]},{k:'L',d:[50,40,30]},{k:'XL',d:[60,50,40]}];
@@ -1726,100 +1667,7 @@ addEventListener('mousedown',()=>{if(SR){cancelAnimationFrame(SR);SR=0;ST=null}}
 $$('a[href^="#"]').forEach(a=>a.addEventListener('click',()=>{if(SR){cancelAnimationFrame(SR);SR=0;ST=null}}));
 })();
 </script>
-<script type="module">
-/* 적재 플래너 3D: 반투명 DHL 컨테이너 + 상자가 위에서 떨어져 칸에 들어감. 놓을 자리 미리보기, 상자 눌러 빼기 */
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js';
-const cv=document.getElementById('lpCanvas'), st=document.getElementById('lpStage'), fb=document.getElementById('lpFb');
-const [W,H,PP,PC]=window.LP_DIM, LP=window.LP, D=2.2;
-const r=new THREE.WebGLRenderer({canvas:cv,antialias:true,alpha:true}); r.setPixelRatio(Math.min(2,devicePixelRatio)); r.shadowMap.enabled=true;
-const sc=new THREE.Scene(), cam=new THREE.PerspectiveCamera(30,1,.1,100);
-cam.position.set(8.5,7,15.5); cam.lookAt(.3,1.7,0);
-sc.add(new THREE.HemisphereLight(0xffffff,0xd9cfb6,1.6));
-const sun=new THREE.DirectionalLight(0xffffff,1.6); sun.position.set(6,10,7); sun.castShadow=true; sun.shadow.mapSize.set(1024,1024); sc.add(sun);
-const root=new THREE.Group(); root.position.set(-W/2,0,-D/2); sc.add(root);
-const gnd=new THREE.Mesh(new THREE.PlaneGeometry(30,30),new THREE.ShadowMaterial({opacity:.12})); gnd.rotation.x=-Math.PI/2; gnd.position.y=-.02; gnd.receiveShadow=true; sc.add(gnd);
-const PAD=.12;
-const floor=new THREE.Mesh(new THREE.BoxGeometry(W+PAD*2,.12,D+PAD*2),new THREE.MeshStandardMaterial({color:0xd9d2c0,roughness:.9})); floor.position.set(W/2,-.06,D/2); floor.receiveShadow=true; root.add(floor);
-const fr=new THREE.MeshStandardMaterial({color:0xFFCC00,roughness:.5}), bar=(w,h,d,x,y,z)=>{const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),fr);m.position.set(x,y,z);m.castShadow=true;root.add(m)};
-[[-PAD,-PAD],[W+PAD,-PAD],[-PAD,D+PAD],[W+PAD,D+PAD]].forEach(([x,z])=>bar(.12,H+.1,.12,x,(H+.1)/2,z));
-[-PAD,D+PAD].forEach(z=>bar(W+PAD*2+.12,.12,.12,W/2,H+.1,z));
-[-PAD,W+PAD].forEach(x=>bar(.12,.12,D+PAD*2,x,H+.1,D/2));
-const glass=new THREE.MeshStandardMaterial({color:0xfff6cc,transparent:true,opacity:.18,roughness:.2,side:THREE.DoubleSide,depthWrite:false});
-const back=new THREE.Mesh(new THREE.PlaneGeometry(W+PAD*2,H+.1),glass); back.position.set(W/2,(H+.1)/2,-PAD); root.add(back);
-const side=new THREE.Mesh(new THREE.PlaneGeometry(D+PAD*2,H+.1),glass); side.rotation.y=Math.PI/2; side.position.set(-PAD,(H+.1)/2,D/2); root.add(side);
-const stripe=new THREE.Mesh(new THREE.BoxGeometry(W+PAD*2,.16,.02),new THREE.MeshStandardMaterial({color:0xD40511})); stripe.position.set(W/2,H*.82,-PAD-.01); root.add(stripe);
-// 바닥 칸 표시선 (어디 놓을지 보이게)
-const gl=new THREE.LineBasicMaterial({color:0xbfb49a,transparent:true,opacity:.6});
-for(let i=1;i<W;i++){const g=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(i,.005,0),new THREE.Vector3(i,.005,D)]);root.add(new THREE.Line(g,gl))}
-const meshes=new Map(), G=.06;
-const parcelShapes=new Map(),parcelMaterials=new Map();
-function boxMesh(k){
-  const [w,h]=PP[k], key=w+'x'+h, radius=.055;
-  if(!parcelShapes.has(key)){
-    const geo=new THREE.BoxGeometry(w-G,h-G,D-G*2,4,4,4);
-    const pos=geo.attributes.position,norm=geo.attributes.normal;
-    const half=[(w-G)/2,(h-G)/2,(D-G*2)/2];
-    for(let i=0;i<pos.count;i++){
-      const coords=[pos.getX(i),pos.getY(i),pos.getZ(i)];
-      const core=coords.map((v,j)=>Math.sign(v)*(Math.abs(v)<.001?0:half[j]-radius));
-      const dir=new THREE.Vector3(...coords.map((v,j)=>Math.abs(v)>half[j]-.001?Math.sign(v):0)).normalize();
-      pos.setXYZ(i,core[0]+radius*dir.x,core[1]+radius*dir.y,core[2]+radius*dir.z);
-      norm.setXYZ(i,dir.x,dir.y,dir.z);
-    }
-    parcelShapes.set(key,geo);
-  }
-  const matKey=PC[k]+key;
-  if(!parcelMaterials.has(matKey)){
-    const mat=new THREE.MeshStandardMaterial({color:PC[k],roughness:.94});
-    mat.onBeforeCompile=shader=>{
-      shader.uniforms.parcelTop={value:(h-G)/2};
-      shader.uniforms.tapeColor={value:new THREE.Color('#C95B52')};
-      shader.vertexShader='varying vec3 parcelPoint;\n'+shader.vertexShader.replace('#include <begin_vertex>','#include <begin_vertex>\nparcelPoint=position;');
-      shader.fragmentShader='varying vec3 parcelPoint; uniform float parcelTop; uniform vec3 tapeColor;\n'+shader.fragmentShader.replace('#include <color_fragment>',`#include <color_fragment>
-        float side=abs(parcelPoint.x)-0.08;
-        float endDist=parcelTop-0.32-parcelPoint.y;
-        float sw=max(fwidth(side),0.0001)*0.5;
-        float ew=max(fwidth(endDist),0.0001)*0.5;
-        float ribbon=(1.0-smoothstep(-sw,sw,side))*(1.0-smoothstep(-ew,ew,endDist));
-        diffuseColor.rgb=mix(diffuseColor.rgb,tapeColor,ribbon);`);
-    };
-    parcelMaterials.set(matKey,mat);
-  }
-  const m=new THREE.Mesh(parcelShapes.get(key),parcelMaterials.get(matKey));
-  m.castShadow=m.receiveShadow=true;m.userData.k=k;
-  const group=new THREE.Group();group.add(m);return group;
-}
-function sync(){const now=new Set(LP.placed.map(p=>p.k));
-  for(const [k,m] of meshes) if(!now.has(k)){root.remove(m);meshes.delete(k)}
-  LP.placed.forEach(p=>{let m=meshes.get(p.k);if(!m){m=boxMesh(p.k);root.add(m);meshes.set(p.k,m)}m.userData=p})}
-LP.onChange=sync; sync();
-// 놓을 자리 미리보기 상자
-const ghostMat=new THREE.MeshBasicMaterial({color:0xFFCC00,transparent:true,opacity:.45,depthWrite:false});
-const ghostEdge=new THREE.LineBasicMaterial({color:0xD40511});
-let ghost=null,gk=-1;
-function updGhost(){const g=LP.ghost;
-  if(!g){if(ghost)ghost.visible=false;return}
-  if(gk!==g.k){if(ghost)root.remove(ghost);const[w,h]=PP[g.k],geo=new THREE.BoxGeometry(w-G,h-G,D-G*2);ghost=new THREE.Group();ghost.add(new THREE.Mesh(geo,ghostMat),new THREE.LineSegments(new THREE.EdgesGeometry(geo),ghostEdge));root.add(ghost);gk=g.k}
-  const[w,h]=PP[g.k];ghost.visible=true;ghost.position.set(g.x+w/2,g.y+h/2,D/2);ghostMat.color.set(g.bad?0xD40511:0xFFCC00)}
-// 화면 좌표 → 컨테이너 안 가로 위치 / 눌린 상자
-const ray=new THREE.Raycaster(), v2=new THREE.Vector2();
-function setRay(cx,cy){const b=cv.getBoundingClientRect();v2.set((cx-b.left)/b.width*2-1,-(cy-b.top)/b.height*2+1);ray.setFromCamera(v2,cam)}
-window.lpPick=(cx,cy)=>{setRay(cx,cy);root.updateMatrixWorld();
-  const n=new THREE.Vector3(0,0,1).applyQuaternion(root.quaternion),pt=root.localToWorld(new THREE.Vector3(0,0,D/2)),hit=new THREE.Vector3();
-  if(!ray.ray.intersectPlane(new THREE.Plane().setFromNormalAndCoplanarPoint(n,pt),hit))return null;return root.worldToLocal(hit).x};
-window.lpHit=(cx,cy)=>{setRay(cx,cy);const hs=ray.intersectObjects([...meshes.values()],true);return hs.length?hs[0].object.userData.k:null};
-cv.addEventListener('pointermove',e=>{cv.style.cursor=window.lpHit(e.clientX,e.clientY)!=null?'pointer':''});
-function size(){const w=st.clientWidth,h=st.clientHeight;r.setSize(w,h,false);cam.aspect=w/h;cam.fov=w<520?44:30;cam.updateProjectionMatrix()}
-new ResizeObserver(size).observe(st); size();
-const ez=t=>1-Math.pow(1-t,3);
-function loop(now){
-  for(const m of meshes.values()){const p=m.userData,k=Math.min(1,(now-p.t)/520),bounce=k<1?Math.sin(k*Math.PI)*(1-k)*.25:0;
-    m.position.set(p.x+p.w/2,p.y+(p.sy-p.y)*(1-ez(k))+bounce+p.h/2,D/2)}
-  updGhost();
-  root.rotation.y=Math.sin(now/4000)*.06;
-  r.render(sc,cam); requestAnimationFrame(loop)}
-requestAnimationFrame(loop); fb.textContent='';
-</script>
+
 <script>
 /* 감성 시안: 문단이 스크롤 따라 차오르고, 그림 조각이 천천히 떠다님 */
 (()=>{const fill=document.getElementById('edFill'),sec=document.getElementById('edFloat');if(!fill)return;
@@ -1956,7 +1804,6 @@ function set(v){A.style.display=v==='A'?'':'none';B.style.display=v==='B'?'':'no
 sw.querySelectorAll('button').forEach(x=>x.onclick=()=>set(x.dataset.v));set('B');
 document.body.appendChild(sw);   // 화면 아래에 떠 있는 전환 버튼: 해당 섹션이 보일 때만 나타남
 const vis=new Set();const io=new IntersectionObserver(es=>{es.forEach(e=>e.isIntersecting?vis.add(e.target):vis.delete(e.target));sw.classList.toggle('show',vis.size>0)},{threshold:.15});io.observe(A);io.observe(B);}
-abSwitch('lpSwitch','planner','plannerB');   // 상자 적재: A 기존 / B 레퍼런스형
 abSwitch('ixSwitch','quickA','quick');        // 바로가기: A 인덱스 / B 퀵가이드
 
 /* ===== 길을 만든 사람들 + 현실의 거리 (waabi 스크롤 연출) ===== */
