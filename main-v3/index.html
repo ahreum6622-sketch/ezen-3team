@@ -979,6 +979,54 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
 
 /* 길을 만든 사람들: 사진 크기를 화면 높이에도 맞춤 → 어떤 화면에서도 사진 사이 여백이 사진의 약 2.4배 (작은 창에서 보던 공간감) */
 @media (min-width:821px){.rd{--ts:calc(min(calc(133/1440*100vw),13.4vh) + 10px)}}   /* 사진 가로세로 10px 키움 */
+/* ===== [시안] Connecting 첫 화면 C안: 왼쪽 소개 글 + 오른쪽 도착 보드 ===== */
+#arb{--cw:13px;--abl:#ebe6d6;--cell:#f6f2e6;--cell2:#efe9d8;width:min(calc(100% - clamp(24px,4.5vw,72px)),620px);padding:18px;background:linear-gradient(#fff,#fffdf6);border:1px solid var(--abl);border-radius:20px;box-shadow:0 1px 2px rgba(42,40,30,.05),0 10px 28px -14px rgba(160,120,20,.22);text-align:left}
+#arb .ab-bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;padding-bottom:14px;border-bottom:1px solid var(--abl)}
+#arb .ab-now{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:var(--ink);white-space:nowrap}
+#arb .ab-now i{width:7px;height:7px;border-radius:50%;background:var(--r);animation:abPing 1.6s infinite}
+@keyframes abPing{0%{box-shadow:0 0 0 0 rgba(212,5,17,.45)}70%,100%{box-shadow:0 0 0 7px rgba(212,5,17,0)}}
+#arb .ab-tabs{display:flex;padding:3px;gap:2px;border-radius:999px;background:#f3efe2}
+#arb .ab-tabs button{border:0;background:none;font:600 13px Pretendard,sans-serif;padding:0 12px;height:32px;border-radius:999px;cursor:pointer;color:#8d877a;white-space:nowrap}
+#arb .ab-tabs button.on{background:#fff;color:var(--ink);box-shadow:0 2px 8px -2px rgba(80,60,10,.18)}
+#arb .ab-rows{display:grid;gap:8px;padding-top:12px}
+#arb .ab-row{position:relative;display:grid;grid-template-columns:calc(11*(var(--cw) + 2px)) calc(5*(var(--cw) + 2px)) minmax(0,1fr) calc(10*(var(--cw) + 2px));gap:12px;align-items:center;padding:10px 12px;border-radius:14px;background:#fff;border:1px solid var(--abl)}
+#arb .ab-row.ab-hd{background:none;border:0;padding:0 13px;font:600 11px Pretendard,sans-serif;color:#9a958a}
+#arb .ab-ko{display:block;font:500 11px Pretendard,sans-serif;color:#9a958a;margin-top:4px}
+#arb .ab-fl{display:flex;gap:2px}
+#arb .ab-c{flex:none;position:relative;width:var(--cw);height:calc(var(--cw)*1.45);display:grid;place-items:center;background:linear-gradient(var(--cell) 50%,var(--cell2) 50%);border-radius:3px;font:700 calc(var(--cw)*.74) var(--mono);color:var(--ink)}
+#arb .ab-c::after{content:'';position:absolute;left:0;right:0;top:50%;height:1px;background:rgba(120,100,50,.18)}
+#arb .ab-c.flip{animation:abFl .09s linear}
+@keyframes abFl{50%{transform:scaleY(.2)}}
+#arb .ab-eta .ab-c{color:var(--r)}
+#arb .ab-svc{justify-self:start;font:700 10px var(--mono);letter-spacing:.05em;padding:4px 8px;border-radius:999px;background:#fff7d6;color:#8a6400;white-space:nowrap}
+#arb .ab-svc.eco{background:#f3efe2;color:#8d877a}
+#arb .ab-foot{display:flex;gap:12px;justify-content:space-between;align-items:center;margin-top:12px;font-size:12px;color:#8d877a}
+#arb .ab-go{flex:none;display:inline-flex;align-items:center;height:36px;padding:0 14px;border-radius:999px;background:var(--r);color:#fff;text-decoration:none;font-weight:700;font-size:13px}
+/* 오른쪽: 원래 제목 자리에 보드 (세로 가운데) */
+#scale .sc2-head.ab-head{top:50%;bottom:auto;transform:translateY(-50%)}
+#scale.st-list .sc2-head.ab-head{transform:translateY(calc(-50% - 70px))}
+/* 왼쪽: 원래 지도 자리에 소개 글 (사진 아래 깔림 → People 사진이 올라오며 덮음) */
+#scale .sc2-intro{position:absolute;inset:0;z-index:1;display:flex;flex-direction:column;justify-content:center;opacity:0;transition:opacity .5s}
+#scale .sc2-intro.on{opacity:1}
+#scale .sc2-intro h2{font-size:calc(36/1440*100vw);line-height:1.24;letter-spacing:-.02em;font-weight:700;margin:0 0 calc(16/1440*100vw)}
+#scale .sc2-intro h2 em{font-style:normal;color:var(--r)}
+#scale .sc2-intro p{font-size:calc(19/1900*100vw);line-height:1.5;color:#1d1d1b;margin:0}
+#scale #scA{display:none}
+#abMorph{position:fixed;z-index:30;pointer-events:none;overflow:hidden;visibility:hidden;background:#fffdf6;border:1px solid #ebe6d6}
+#abMorph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+
+#scale .ab-mt{display:none}
+@media (max-width:820px){
+ #scale .sc2-intro{display:none}
+ #scale .ab-mt{display:block;margin-bottom:20px}#scale .ab-mt h2{font-size:28px;line-height:1.2;font-weight:700;margin:0 0 10px}#scale .ab-mt h2 em{font-style:normal;color:var(--r)}#scale .ab-mt p{font-size:15px;line-height:1.5;margin:0}
+ #scale .sc2-head.ab-head,#scale.st-list .sc2-head.ab-head{top:auto;transform:none}
+ #arb{--cw:10px;width:100%;padding:14px}
+ #arb .ab-row{grid-template-columns:calc(11*(var(--cw) + 2px)) minmax(0,1fr) calc(10*(var(--cw) + 2px));gap:8px;padding:10px}
+ #arb .ab-row>div:nth-child(2),#arb .ab-row>div:nth-child(3){display:none}
+ #arb .ab-row>div:nth-child(4){grid-column:3}
+ #arb .ab-tabs button{padding:0 9px;font-size:12px}
+ #arb .ab-foot{flex-wrap:wrap}
+}
 </style>
 </head>
 <body>
@@ -1034,13 +1082,18 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
   <div class="sc2-wrap">
     <div class="sc2-l"><div class="sc2-stick"><div class="sc2-media" id="scMedia">
       <div class="sc2-a" id="scA"><div class="sc2-ai" id="scAi"><img src="img/road/sc0.webp" alt="DHL 네트워크 전체 지도"></div></div>
+      <div class="sc2-intro" id="scIntro"><h2>Connecting <em>People</em><br>Improving <em>Lives</em></h2><p>국경과 거리에 관계 없이 개인에게 필요한 물품을 전달하고,<br>안정적인 배송 서비스를 통해 사람들의 일상을 지원합니다.</p></div>
       <div class="sc2-ly" data-i="0"><img src="img/connect/c1.webp" alt="People to People — 문 앞에서 상자를 건네는 DHL 배송 기사"><i></i></div>
       <div class="sc2-ly" data-i="1"><img src="img/connect/c2.webp" alt="Businesses to Markets — DHL 담당자와 기업 고객의 악수"><i></i></div>
       <div class="sc2-ly" data-i="2"><img src="img/connect/c3.webp" alt="the World to Opportunities — DHL 화물기 상하역"><i></i></div>
     </div></div></div>
     <div class="sc2-r"><div class="sc2-rs">
-      <div class="sc2-head"><div><h2>Connecting <em>People</em><br>Improving <em>Lives</em></h2>
-        <p>국경과 거리에 관계 없이 개인에게 필요한 물품을 전달하고,<br>안정적인 배송 서비스를 통해 사람들의 일상을 지원합니다.</p></div></div>
+      <div class="sc2-head ab-head"><div class="ab-mt"><h2>Connecting <em>People</em><br>Improving <em>Lives</em></h2><p>국경과 거리에 관계 없이 개인에게 필요한 물품을 전달하고,<br>안정적인 배송 서비스를 통해 사람들의 일상을 지원합니다.</p></div><div id="arb">
+  <div class="ab-bar"><div class="ab-now"><i></i>오늘 보내면 언제 도착할까?</div>
+    <div class="ab-tabs" id="abTabs"><button class="on" data-r="asia">아시아</button><button data-r="eu">유럽</button><button data-r="am">미주</button><button data-r="oc">오세아니아</button></div></div>
+  <div class="ab-rows"><div class="ab-row ab-hd"><div>목적지</div><div>오늘 픽업 마감</div><div>서비스</div><div>도착 예정</div></div><div class="ab-rows" id="abRows" style="padding:0"></div></div>
+  <div class="ab-foot"><span>서울 출발 · 영업일 기준 예시 소요일</span><a class="ab-go" href="#">이 목적지로 보내기 →</a></div>
+</div></div>
       <div class="sc2-list" id="scList">
         <div class="sc2-it on" data-i="0"><p class="t"><span class="cnw"><span class="cn">Connecting</span></span><span class="tt">People to People</span></p><div class="d"><p>국경과 거리에 관계 없이 개인에게 필요한 물품을 전달하고,<br>안정적인 배송 서비스를 통해 사람들의 일상을 지원합니다.</p></div></div>
         <div class="sc2-it" data-i="1"><p class="t"><span class="cnw"><span class="cn">Connecting</span></span><span class="tt">Businesses to Markets</span></p><div class="d"><p>글로벌 물류 네트워크와 전문적인 운송 서비스를 기반으로<br>기업의 해외 시장 진출과 비즈니스 성장을 지원합니다.</p></div></div>
@@ -1933,6 +1986,17 @@ function frame(){mobile=innerWidth<=820;const vh=innerHeight,sy=scrollY;
   else{ph.style.visibility='hidden';const p=ss(cl((e+650)/650)),m=media.getBoundingClientRect(),t=ph.getBoundingClientRect();
     const s0=t.width/m.width,dx=(t.left+t.width/2)-(m.left+m.width/2),dy=(t.top+t.height/2)-(m.top+m.height/2);
     A.style.transform=`translate(${dx*(1-p)}px,${dy*(1-p)}px) scale(${s0+(1-s0)*p})`;
+    /* [시안] 사진 타일이 오른쪽 보드 자리로 커지며 흰 카드 → 보드 등장 / 왼쪽엔 소개 글 */
+    {const mo=document.getElementById('abMorph'),bd=document.getElementById('arb'),intro=document.getElementById('scIntro'),srcT=document.querySelector('#road .rd-col.c2 .rd-t:last-child');
+     if(srcT){srcT.style.visibility=p>0?'hidden':'';const im=srcT.querySelector('img');if(mo&&im&&mo.querySelector('img').src!==im.src)mo.querySelector('img').src=im.src;}
+     if(!mo||!bd||!intro||!srcT){}else if(p<=0){mo.style.visibility='hidden';bd.style.visibility='hidden';window.__abOn=false}
+     else if(p>=1){mo.style.visibility='hidden';bd.style.visibility='visible';if(!window.__abOn){window.__abOn=true;window.abShow&&window.abShow()}}
+     else{const b=bd.getBoundingClientRect();bd.style.visibility='hidden';window.__abOn=false;
+       const t=srcT.getBoundingClientRect();   /* 오른쪽 줄에 떠 있던 사진이 그대로 커짐 */
+       const L=t.left+(b.left-t.left)*p,T=t.top+(b.top-t.top)*p,W=t.width+(b.width-t.width)*p,Hh=t.height+(b.height-t.height)*p;
+       Object.assign(mo.style,{visibility:'visible',left:L+'px',top:T+'px',width:W+'px',height:Hh+'px',borderRadius:(12+8*p)+'px'});
+       mo.querySelector('img').style.opacity=(1-cl((p-.6)/.38)).toFixed(3)}
+     if(intro)intro.classList.toggle('on',p>.85);}
     /* 4) 첫 장면은 스크롤로 밀려 올라옴, 그다음은 목록을 눌러 전환 */
     sc.classList.toggle('st-list',e>=430);   /* 다음 그림이 다 올라온 뒤에 목록 등장 */
     const want=e>=STEP[2]?2:e>=STEP[1]?1:0;if(want!==act)setAct(want);
@@ -2117,5 +2181,25 @@ addEventListener('scroll',upd,{passive:true});upd();})();
 </script>
 
 
+<div id="abMorph"><img src="img/road/sc0.webp" alt=""></div>
+<script>/* [시안] 도착 보드 + 사진 타일 → 보드로 커지는 연결 */
+(()=>{const rowsEl=document.getElementById('abRows');if(!rowsEl)return;
+const D=[['TOKYO','도쿄','asia',1,'EXPRESS'],['SHANGHAI','상하이','asia',1,'EXPRESS'],['HONG KONG','홍콩','asia',1,'EXPRESS'],['SINGAPORE','싱가포르','asia',2,'EXPRESS'],
+ ['LONDON','런던','eu',3,'EXPRESS'],['PARIS','파리','eu',3,'EXPRESS'],['FRANKFURT','프랑크푸르트','eu',2,'EXPRESS'],['MADRID','마드리드','eu',4,'ECONOMY'],
+ ['LOS ANGELES','로스앤젤레스','am',2,'EXPRESS'],['NEW YORK','뉴욕','am',3,'EXPRESS'],['TORONTO','토론토','am',3,'EXPRESS'],['SAO PAULO','상파울루','am',5,'ECONOMY'],
+ ['SYDNEY','시드니','oc',3,'EXPRESS'],['MELBOURNE','멜버른','oc',3,'EXPRESS'],['AUCKLAND','오클랜드','oc',4,'ECONOMY'],['BRISBANE','브리즈번','oc',4,'ECONOMY']];
+const CUT=18,CH='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789',DAY=['SUN','MON','TUE','WED','THU','FRI','SAT'],MON=['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+const pad=(s,n)=>(s+' '.repeat(n)).slice(0,n),cells=n=>'<div class="ab-fl">'+'<span class="ab-c"> </span>'.repeat(n)+'</div>';
+function eta(days){const d=new Date();if(d.getHours()>=CUT)d.setDate(d.getDate()+1);while(d.getDay()%6===0)d.setDate(d.getDate()+1);let n=days;while(n>0){d.setDate(d.getDate()+1);if(d.getDay()%6!==0)n--}return DAY[d.getDay()]+' '+String(d.getDate()).padStart(2,'0')+' '+MON[d.getMonth()]}
+function flipTo(el,txt,delay){[...el.querySelectorAll('.ab-c')].forEach((c,i)=>{const t=txt[i]||' ';let k=0,steps=4+Math.floor(Math.random()*6);
+  setTimeout(function tick(){c.classList.remove('flip');void c.offsetWidth;c.classList.add('flip');if(k++<steps&&t!==' '){c.textContent=CH[Math.floor(Math.random()*CH.length)];setTimeout(tick,55)}else c.textContent=t},delay+i*26)})}
+let region='asia';
+function render(){const list=D.filter(r=>r[2]===region);
+  rowsEl.innerHTML=list.map(r=>`<div class="ab-row"><div>${cells(11)}<span class="ab-ko">${r[1]}</span></div><div>${cells(5)}</div><div><span class="ab-svc${r[4]==='ECONOMY'?' eco':''}">${r[4]}</span></div><div class="ab-eta">${cells(10)}</div></div>`).join('');
+  [...rowsEl.children].forEach((row,ri)=>{const r=list[ri],f=row.querySelectorAll('.ab-fl'),d=ri*90;flipTo(f[0],pad(r[0],11),d);flipTo(f[1],pad(new Date().getHours()>=CUT?'TMRW':'18:00',5),d+140);flipTo(f[2],pad(eta(r[3]),10),d+220)})}
+document.getElementById('abTabs').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;document.querySelectorAll('#abTabs button').forEach(x=>x.classList.toggle('on',x===b));region=b.dataset.r;render()});
+window.abShow=render;render();   /* 처음부터 행을 채워 둬야 보드 크기가 정해져서, 사진이 제 크기로 커짐 */
+})();
+</script>
 </body>
 </html>
