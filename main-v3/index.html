@@ -1086,9 +1086,9 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
     <div class="sc2-l"><div class="sc2-stick"><div class="sc2-media" id="scMedia">
       <div class="sc2-a" id="scA"><div class="sc2-ai" id="scAi"><img src="img/road/sc0.webp" alt="DHL 네트워크 전체 지도"></div></div>
       <div class="sc2-intro" id="scIntro"><h2>Connecting <em>People</em><br>Improving <em>Lives</em></h2><p>국경과 거리에 관계 없이 개인에게 필요한 물품을 전달하고,<br>안정적인 배송 서비스를 통해 사람들의 일상을 지원합니다.</p></div>
-      <div class="sc2-ly" data-i="0"><video id="scVid" src="img/connect/c1.mp4" poster="img/connect/c1_poster.webp" muted playsinline preload="auto" aria-label="People to People — 문 앞에서 상자를 건네는 DHL 배송 기사"></video><i></i></div>
-      <div class="sc2-ly" data-i="1"><img src="img/connect/c2.webp" alt="Businesses to Markets — DHL 담당자와 기업 고객의 악수"><i></i></div>
-      <div class="sc2-ly" data-i="2"><img src="img/connect/c3.webp" alt="the World to Opportunities — DHL 화물기 상하역"><i></i></div>
+      <div class="sc2-ly" data-i="0"><video id="scVid" class="scv" src="img/connect/c1.mp4" poster="img/connect/c1_poster.webp" muted playsinline preload="auto" aria-label="People to People — 문 앞에서 상자를 건네는 DHL 배송 기사"></video><i></i></div>
+      <div class="sc2-ly" data-i="1"><video class="scv" src="img/connect/c2.mp4" poster="img/connect/c2_poster.webp" muted playsinline preload="auto" aria-label="Businesses to Markets — DHL 담당자와 기업 고객의 악수"></video><i></i></div>
+      <div class="sc2-ly" data-i="2"><video class="scv" src="img/connect/c3.mp4" poster="img/connect/c3_poster.webp" muted playsinline preload="auto" aria-label="the World to Opportunities — DHL 화물기 상하역"></video><i></i></div>
     </div></div></div>
     <div class="sc2-r"><div class="sc2-rs">
       <div class="sc2-head ab-head"><div class="ab-mt"><h2>Connecting <em>People</em><br>Improving <em>Lives</em></h2><p>국경과 거리에 관계 없이 개인에게 필요한 물품을 전달하고,<br>안정적인 배송 서비스를 통해 사람들의 일상을 지원합니다.</p></div><div id="arb">
@@ -2205,9 +2205,11 @@ window.abShow=render;render();   /* 처음부터 행을 채워 둬야 보드 크
 })();
 </script>
 <script>
-/* Connecting 첫 장면 영상: 화면에 보일 때 처음부터 한 번 재생하고 마지막 장면에서 멈춤 */
-(()=>{const v=document.getElementById('scVid');if(!v)return;let seen=false;
-new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting&&e.intersectionRatio>.6){if(!seen){seen=true;v.currentTime=0;v.play().catch(()=>{})}}else if(!e.isIntersecting||e.intersectionRatio<.2){seen=false}}),{threshold:[0,.2,.6]}).observe(v);})();
+/* Connecting 영상 3개: 각자 화면 앞에 보일 때 처음부터 한 번 재생하고 마지막 장면에서 멈춤 */
+(()=>{document.querySelectorAll('#scale video.scv').forEach(v=>{const ly=v.closest('.sc2-ly');let seen=false;
+  const sec=document.getElementById('scale');const chk=()=>{const r=sec.getBoundingClientRect(),vis=r.top<innerHeight*.5&&r.bottom>innerHeight*.5,front=!ly||ly.classList.contains('cur');
+    if(vis&&front){if(!seen){seen=true;v.currentTime=0;v.play().catch(()=>{})}}else if(!vis||ly.classList.contains('past')||!front){if(seen&&!front){v.pause()}seen=false}};
+  addEventListener('scroll',chk,{passive:true});new MutationObserver(chk).observe(ly,{attributes:true,attributeFilter:['class']});chk();});})();
 </script>
 </body>
 </html>
