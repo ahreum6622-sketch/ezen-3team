@@ -2367,9 +2367,9 @@ window.abShow=render;render();   /* 처음부터 행을 채워 둬야 보드 크
 <script>
 /* Connecting 영상 3개: 각자 화면 앞에 보일 때 처음부터 한 번 재생하고 마지막 장면에서 멈춤 */
 (()=>{document.querySelectorAll('#scale video.scv').forEach(v=>{const ly=v.closest('.sc2-ly');let seen=false;
-  const sec=document.getElementById('scale');const chk=()=>{const r=sec.getBoundingClientRect(),vis=r.top<innerHeight*.5&&r.bottom>innerHeight*.5,front=!ly||ly.classList.contains('cur');
+  const sec=document.getElementById('scale');const chk=()=>{const r=sec.getBoundingClientRect(),vis=r.top<innerHeight*.5&&r.bottom>innerHeight*.5,front=(!ly||ly.classList.contains('cur'))&&sec.classList.contains('st-list');   /* 사진이 다 올라와 목록이 보일 때(st-list)부터 재생 → 첫 영상이 보드 화면 뒤에서 미리 끝나버리던 문제 수정 */
     if(vis&&front){if(!seen){seen=true;v.currentTime=0;v.play().catch(()=>{})}}else if(!vis||ly.classList.contains('past')||!front){if(seen&&!front){v.pause()}seen=false}};
-  addEventListener('scroll',chk,{passive:true});new MutationObserver(chk).observe(ly,{attributes:true,attributeFilter:['class']});chk();});})();
+  addEventListener('scroll',chk,{passive:true});new MutationObserver(chk).observe(ly,{attributes:true,attributeFilter:['class']});new MutationObserver(chk).observe(sec,{attributes:true,attributeFilter:['class']});chk();});})();
 </script>
 </body>
 </html>
