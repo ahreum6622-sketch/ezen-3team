@@ -1058,7 +1058,7 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
 .sc2-ly video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
 :root{--u:min(1vw,2vh);--en:'Inter','Pretendard',system-ui,sans-serif}
 /* ===== 팀원 시안(헤리티지·고객 약속·Connecting 글자 모션) 반영 ===== */
-.hd{position:relative;height:760vh;z-index:2;--ground:.66}
+.hd{position:relative;height:900vh;z-index:2;--ground:.66}
 .hd-stage{position:sticky;top:0;height:100vh;overflow:hidden;background:#fff}
 .hd-fade{position:absolute;left:0;right:0;top:0;height:200vh;z-index:6;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,0) 0%,rgba(255,255,255,.55) 20%,#fff 42%);transform:translateY(100vh);will-change:transform}
 .hd-out{position:absolute;left:0;bottom:calc(100% - var(--ground)*100vh - 3.2vw);white-space:nowrap;font-family:var(--en);font-size:24vw;line-height:.8;font-weight:800;letter-spacing:-.04em;color:#f0efeb;will-change:transform;user-select:none}
@@ -2262,11 +2262,11 @@ const WH=[{f:'wv0',x:360.1,y:727.4,w:68.2},{f:'wv1',x:451,y:727.4,w:68.2},{f:'wv
 const cl=(v,a=0,b=1)=>Math.min(b,Math.max(a,v)),sv=(p,a,b)=>cl((p-a)/(b-a)),eo=t=>1-Math.pow(1-t,3);
 const mix=(a,b,t)=>a.map((v,i)=>Math.round(v+(b[i]-v)*t));
 /* ── 자주 만질 값 ── */
-const DRIVE=.28;              // 트럭 속도(바퀴·뒤 글자·도로 점선). 연도가 천천히 올라오는 것에 맞춰 낮춤 (원본 느낌은 .5)
-const TITLE_OUT=[.093,.17];   /* 제목이 충분히 보인 뒤(앞 22%) 밀려 나감 */    // 트럭이 달리는 동안 제목이 천천히 뒤로 밀려 사라지는 구간 (길수록 은은함)
+const DRIVE=.17;              // 트럭 속도(바퀴·뒤 글자·도로 점선). 연도가 천천히 올라오는 것에 맞춰 낮춤 (원본 느낌은 .5)
+const TITLE_OUT=[.077,.14];   /* 제목이 충분히 보인 뒤(앞 22%) 밀려 나감 */    // 트럭이 달리는 동안 제목이 천천히 뒤로 밀려 사라지는 구간 (길수록 은은함)
 const FADE_EDGE=.38;          // 제목이 왼쪽으로 밀려 나갈 때 흐려지는 구간 폭(화면 폭 비율)    // 트럭이 조금 달린 뒤 제목이 사라지는 구간
-const FIRST_IN=[.161,.195];     // 제목이 사라진 뒤 1969가 나타나는 구간
-const START=.178,END=.86;      // 1969에서 출발해 TODAY가 LAST_AT 위치를 지나는 구간(섹션 스크롤 진행도)
+const FIRST_IN=[.1325,.161];     // 제목이 사라진 뒤 1969가 나타나는 구간
+const START=.147,END=.86;      // 1969에서 출발해 TODAY가 LAST_AT 위치를 지나는 구간(섹션 스크롤 진행도)
                               // END 뒤로도 같은 속도로 계속 달려서 TODAY가 왼쪽으로 빠져나가고, 빈 도로를 조금 달린 뒤 화면 전환
 const LAST_AT=.50;            // END 시점에 TODAY가 지나가는 화면 가로 위치(0=왼쪽, 1=오른쪽)
 const SHOW_FROM=.85,SHOW_LEN=.30; // 화면 85% 지점부터 들어와서, 화면 폭 30%만큼 오면 완전히 밝아짐
@@ -2292,7 +2292,7 @@ function frame(){
   const Kx=i=>items[i].offsetLeft-x0;   /* i번째 연도가 1969 자리(왼쪽)에 오는 위치 */
   let shift;   /* 연도마다 잠깐 멈춰 읽을 시간을 주고(구간의 55%), 다음 연도로 부드럽게 넘어감(45%) */
   if(u<=0)shift=0;else if(u>=1)shift=Kx(nI)+rate*(pp-END);
-  else{const sg=u*(nI+1),i=Math.min(nI,Math.floor(sg)),f=sg-i,HOLD=.6,m=f<HOLD?0:(t=>t*t*(3-2*t))((f-HOLD)/(1-HOLD));shift=i>=nI?Kx(nI):Kx(i)+(Kx(i+1)-Kx(i))*m;}   /* 마지막(TODAY)도 한 번 머문 뒤 흘러감 */             // 멈추지 않고 화면 전환 중에도 계속 흐름
+  else{const sg=u*(nI+1),i=Math.min(nI,Math.floor(sg)),f=sg-i,HOLD=.4,m=f<HOLD?0:(t=>t*t*(3-2*t))((f-HOLD)/(1-HOLD));shift=i>=nI?Kx(nI):Kx(i)+(Kx(i+1)-Kx(i))*m;}   /* 마지막(TODAY)도 한 번 머문 뒤 흘러감 */             // 멈추지 않고 화면 전환 중에도 계속 흐름
   cards.style.transform=`translateX(${-shift}px)`;
   // 제목: 처음부터 보이고, 왼쪽으로 밀리기 시작하면 서서히 사라짐
   // 제목 사라짐: 트럭이 앞으로 달리니 제목이 풍경처럼 뒤(왼쪽)로 밀려 나가고, 화면 왼쪽 끝에서 그라데이션으로 스르르 사라짐
