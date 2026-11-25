@@ -892,6 +892,7 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
 .rc-lane.is-winner .rc-badge{display:block}
 .rc-note{margin-top:16px;font-size:13px;color:#8d877a}
 @media(max-width:1000px){.rc-ctrl{grid-template-columns:1fr 1fr}.rc-slider{grid-column:1/-1}.rc-go{justify-self:end}.rc-lane{grid-template-columns:1fr;gap:8px;padding:14px}.rc-name{grid-auto-flow:column;justify-content:start;align-items:baseline;gap:10px;font-size:18px}.rc-veh{--vw:120px}}
+.rc-where{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;font-size:14px;color:var(--sub)}.rc-where select{border:1px solid #e3ddc9;border-radius:999px;padding:6px 12px;font:500 13px var(--sans);background:#fff}.rc-route b{color:var(--r);font-weight:600}
 @media(max-width:520px){.rc-ctrl{grid-template-columns:1fr}.rc-go{justify-self:stretch}.rc-seg{justify-content:space-between}.rc-seg button{flex:1 1 0}.rc-track{height:60px}.rc-veh{--vw:96px}.rc-label{flex-wrap:wrap}}
 /* [07 피드백] 빨강 톤 낮춤(#B8433B)·빨간 그림자(번짐) 제거 / Best pick = 노란 테두리와 같은 톤 / 모든 점선 = 육상 점선 색 */
 .rc-sec{--rcr:#D40511}
@@ -912,6 +913,49 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
 .rc-lane.is-winner{border:2px solid #F2C94C;box-shadow:none}
 /* [07 확정] 바깥 카드 테두리+그림자 유지, Best pick = 테두리만(B) */
 #services.rc-sec{background:#fff!important}
+/* ===== 레이스: 팀장 시안 그대로 (왼쪽 제목 · 베이지 뒷판 · 위 한 줄 조작 · 흰 줄 3개) — 1440 기준 px를 화면 폭에 비례 ===== */
+@media (min-width:1001px){
+ #services.rc-sec{--k:calc(100vw/1440)}
+ #services.rc-sec .wrap{max-width:none;width:calc(1173*var(--k));padding:0;margin:0 auto}
+ #services #dispatch.rc-head{max-width:none;margin:0 0 calc(82*var(--k));padding:0 0 0 calc(25*var(--k));text-align:left}
+ #services #dispatch.rc-head h2{font:700 calc(72*var(--k))/1.05 var(--sans);letter-spacing:-.035em;margin:0;color:#0b0b0b}
+ #services #dispatch.rc-head h2 em{font-style:normal;color:var(--r)}
+ #services #dispatch.rc-head p{margin:calc(30*var(--k)) 0 0;max-width:none;font-size:calc(15*var(--k));color:#1d1d1b}
+ #services #race.rc{padding:calc(42*var(--k)) calc(57*var(--k)) calc(50*var(--k));background:none;border:0;border-radius:calc(53*var(--k));box-shadow:none;
+   border-image:url(img/v3/board_back.webp) 140 fill / calc(87*var(--k)) / calc(30*var(--k)) calc(20*var(--k)) calc(29*var(--k)) calc(19*var(--k)) stretch}
+ .rc-ctrl{display:flex;align-items:center;gap:calc(14*var(--k));padding-bottom:calc(27*var(--k));border-bottom:1px solid #dedad1}
+ .rc-where{display:flex;align-items:center;gap:calc(18*var(--k));margin-right:auto}
+ .rc-where select{height:calc(38*var(--k));min-width:calc(165*var(--k));border:1px solid #e9e5dc;border-radius:999px;padding:0 calc(34*var(--k)) 0 calc(16*var(--k));font:400 calc(14*var(--k)) var(--sans);color:#555;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23666' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right calc(14*var(--k)) center;-webkit-appearance:none;appearance:none;cursor:pointer}
+ .rc-route{font-size:calc(14*var(--k));color:#7a766e;white-space:nowrap}
+ .rc-route b{font:400 calc(14*var(--k)) var(--sans);color:var(--r)}
+ .rc-toggle{gap:calc(10*var(--k));font-size:calc(14*var(--k));color:#6f6b63}
+ .rc-switch{width:calc(39*var(--k));height:calc(24*var(--k))}
+ .rc-switch::after{top:calc(3*var(--k));left:calc(3*var(--k));width:calc(18*var(--k));height:calc(18*var(--k))}
+ .rc-toggle input:checked+.rc-switch::after{transform:translateX(calc(15*var(--k)))}
+ .rc-seg{padding:calc(3*var(--k));gap:0;background:#f0ede6}
+ .rc-seg button{padding:0 calc(16*var(--k));height:calc(30*var(--k));font-size:calc(13*var(--k));color:#8d877a}
+ .rc-seg button.is-active{color:var(--ink)}
+ #services #raceAgain.rc-go{height:calc(40*var(--k));padding:0 calc(16*var(--k));font-size:calc(14*var(--k));margin-left:calc(10*var(--k))}
+ #services #lanes.rc-lanes{gap:calc(35*var(--k));padding-top:calc(40*var(--k))}
+ .rc-lane{grid-template-columns:calc(114*var(--k)) 1fr calc(289*var(--k));column-gap:0;padding:0 calc(13*var(--k)) 0 0;min-height:calc(85*var(--k));border-radius:calc(24*var(--k));border:2px solid transparent;background:#fff}
+ .rc-lane .rc-track{margin-right:calc(80*var(--k))}
+ .rc-lane.is-off{opacity:1}
+ .rc-lane.is-off .rc-veh img{filter:opacity(.5)}
+ .rc-lane.is-off .rc-name{color:#8c7f6e}
+ .rc-off,.rc-lane.is-off .rc-off,.rc-place,.rc-fin{display:none}
+ .rc-name{justify-items:center;font-size:calc(25*var(--k));font-weight:700}
+ .rc-track{height:calc(62*var(--k))}
+ .rc-road,.rc-lane[data-k="air"] .rc-road{bottom:calc(14*var(--k));height:2px;border-radius:0;background:repeating-linear-gradient(90deg,#cfc6b4 0 calc(6*var(--k)),transparent calc(6*var(--k)) calc(11*var(--k)))}
+ .rc-lane[data-k="sea"] .rc-road{height:3px;bottom:calc(14*var(--k));background:#cfe6f6}
+ .rc-veh,.rc-lane[data-k="sea"] .rc-veh{--vw:calc(160*var(--k));bottom:calc(14*var(--k))}
+ .rc-veh img{filter:none}
+ .rc-stats{gap:calc(8*var(--k))}
+ .rc-stats div,.rc-stats div.is-key{padding:calc(7*var(--k)) calc(10*var(--k));border-radius:calc(8*var(--k));border:2px solid #ebe7de;background:#fff}
+ .rc-stats dt{font-size:calc(10*var(--k));color:#9a958a}
+ .rc-stats dd{margin-top:calc(3*var(--k));font:500 calc(14*var(--k)) var(--mono)}
+ .rc-lane.is-winner{border:2px solid #F2C94C}
+ .rc-badge{top:calc(-12*var(--k));left:calc(16*var(--k));padding:calc(2*var(--k)) calc(8*var(--k));font:700 calc(11*var(--k)) var(--mono);letter-spacing:.02em;background:#F6CF4A!important;color:#3d2e00!important}
+}
 /* ===== OUR SERVICES · 1MILLION 'Dance Partner'형: 왼쪽 고정 + 오른쪽 두 줄 카드 ===== */
 .bd{position:relative;background:#fff;z-index:2;padding-bottom:40px}
 .bd-in{display:flex;justify-content:space-between;padding:clamp(120px,14vh,200px) clamp(20px,5.5vw,100px)}
@@ -1317,16 +1361,16 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
 
 <!-- 5. 도착 시간 레이스 (레퍼런스 MODES를 DHL식으로) -->
 <section class="sec ed rc-sec" id="services"><div class="wrap">
-  <header class="rc-head" id="dispatch"><div class="ed-cap"><b>07</b><span>SERVICE</span></div><h2>Same Box,<br>Who Arrives First?</h2><p>목적지와 거리, 무엇이 중요한지 고르면 트럭·배·비행기가 같은 화물 1톤을 싣고 경주해요.</p></header>
+  <header class="rc-head" id="dispatch"><h2>Who Arrives <em>First?</em></h2><p>같은 상자, 다른 길. 트럭·배·비행기 중 무엇이 가장 알맞은지 비교해 보세요.</p></header>
   <div class="rc" id="race">
     <div class="rc-ctrl">
-      <label class="rc-slider"><span class="rc-label">Distance <b id="rKm">1,160 km</b><select id="rDest" aria-label="Destination"></select></span><input type="range" id="rRange" min="100" max="12000" step="10" value="1160"></label>
+      <div class="rc-where"><select id="rDest" aria-label="Destination"></select><span class="rc-route"><span id="rRoute">서울 → 도쿄</span> · <b id="rKm">1,160 km</b></span><input type="range" id="rRange" min="100" max="12000" step="10" value="1160" hidden></div>
       <label class="rc-toggle"><input type="checkbox" id="rOcean"><span class="rc-switch" aria-hidden="true"></span>Crosses an ocean</label>
       <div class="rc-seg" id="rPrio" role="radiogroup" aria-label="What matters most"><button role="radio" aria-checked="true" class="is-active" data-p="fast">빠르게</button><button role="radio" aria-checked="false" data-p="cheap">저렴하게</button><button role="radio" aria-checked="false" data-p="green">탄소를 적게</button></div>
       <button class="rc-go" id="raceAgain">Race again ↻</button>
     </div>
     <div class="rc-lanes" id="lanes"></div>
-    <p class="rc-note">Illustrative figures per tonne of cargo sent from Seoul at the same time, including handling at both ends. Actual transit times and rates vary by route and cargo.</p>
+    
   </div>
 </div></section>
 
@@ -1575,7 +1619,7 @@ const RS=[
   {k:'road',n:'Road',img:'truck_side',land:1,time:km=>km/65+8,cost:km=>41+.13*km,co2:.062,px:.28},      // 시간(h), 요금(달러, 1t), CO₂ kg/t·km
   {k:'sea',n:'Sea',img:'ship_side2',land:0,time:km=>km/30+96,cost:km=>103+.0366*km,co2:.008,px:.16},
   {k:'air',n:'Air',img:'plane_side',land:0,time:km=>km/750+14,cost:km=>276+.566*km,co2:.6,px:1}];
-const DEST=[{k:'KR',n:'Korea · Busan',km:330,ocean:false},{k:'JP',n:'Japan · Tokyo',km:1160,ocean:true},{k:'CN',n:'China · Shanghai',km:870,ocean:true},{k:'SG',n:'SE Asia · Singapore',km:4640,ocean:true},{k:'US',n:'USA · Los Angeles',km:9590,ocean:true},{k:'EU',n:'Europe · Frankfurt',km:8560,ocean:true}];
+const DEST=[{k:'KR',n:'Korea · Busan',ko:'부산',km:330,ocean:false},{k:'JP',n:'Japan · Tokyo',ko:'도쿄',km:1160,ocean:true},{k:'CN',n:'China · Shanghai',ko:'상하이',km:870,ocean:true},{k:'SG',n:'SE Asia · Singapore',ko:'싱가포르',km:4640,ocean:true},{k:'US',n:'USA · Los Angeles',ko:'로스앤젤레스',km:9590,ocean:true},{k:'EU',n:'Europe · Frankfurt',ko:'프랑크푸르트',km:8560,ocean:true}];
 const DN={JP:'일본',US:'미국',EU:'유럽'};
 let rDest='JP',rPrio='fast',svcSel=null,KM=1160,OCEAN=true;
 const fmtT=h=>h<48?Math.round(h)+' h':(h/24).toFixed(1)+' days';
@@ -1610,10 +1654,10 @@ function race(){
 }
 buildLanes();
 const rr=$('#rRange'),ds=$('#rDest');
-ds.innerHTML=DEST.map(d=>`<option value="${d.k}">${d.n}</option>`).join('')+'<option value="custom">Custom</option>';ds.value='JP';
-const syncKm=()=>{KM=+rr.value;$('#rKm').textContent=KM.toLocaleString()+' km';rr.style.setProperty('--fill',((KM-100)/(11900)*100).toFixed(1)+'%');};
+ds.innerHTML=DEST.map(d=>`<option value="${d.k}">${d.n}</option>`).join('');ds.value='JP';
+const syncKm=()=>{KM=+rr.value;$('#rKm').textContent=KM.toLocaleString('en-US')+' km';rr.style.setProperty('--fill',((KM-100)/(11900)*100).toFixed(1)+'%');};
 rr.oninput=()=>{syncKm();ds.value='custom'};rr.onchange=()=>race();
-ds.onchange=()=>{const d=DEST.find(x=>x.k===ds.value);if(!d)return;rr.value=d.km;syncKm();OCEAN=d.ocean;$('#rOcean').checked=d.ocean;if(DN[d.k])rDest=d.k;race();};
+ds.onchange=()=>{const d=DEST.find(x=>x.k===ds.value);if(!d)return;rr.value=d.km;syncKm();$('#rRoute').textContent='서울 → '+d.ko;OCEAN=d.ocean;$('#rOcean').checked=d.ocean;if(DN[d.k])rDest=d.k;race();};
 $('#rOcean').checked=OCEAN;syncKm();
 $('#rOcean').onchange=e=>{OCEAN=e.target.checked;race()};
 $$('#rPrio button').forEach(b=>b.onclick=()=>{rPrio=b.dataset.p;$$('#rPrio button').forEach(x=>{x.classList.toggle('is-active',x===b);x.setAttribute('aria-checked',x===b)});race();});
