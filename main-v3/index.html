@@ -1486,13 +1486,17 @@ const CL=[['L',-.78,-.55,1.15,1],['M',.7,-.62,1,.8],['L',.82,.48,1.25,1.1],['S',
 let P=0,last=performance.now(),T=0;
 const crm=(a,b,c,d,t)=>{const t2=t*t;return .5*(2*b+(-a+c)*t+(2*a-5*b+4*c-d)*t2+(-a+3*b-3*c+d)*t2*t)};
 const io3=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2, smo=t=>t*t*(3-2*t);
-function cam(p){let k=0;while(k<KEY.length-2&&p>KEY[k+1][0])k++;
-  const a=KEY[k],b=KEY[k+1],u=KEY[Math.max(0,k-1)],m=KEY[Math.min(KEY.length-1,k+2)];
-  const t=clamp((p-a[0])/(b[0]-a[0])),x=t+(io3(t)-t)*.35,st=smo(t);
-  let cx=crm(u[1],a[1],b[1],m[1],x),cy=crm(u[2],a[2],b[2],m[2],x);
-  const z=Math.exp(Math.log(a[3])+(Math.log(b[3])-Math.log(a[3]))*st);
-  const f=(a[5]||0)+((b[5]||0)-(a[5]||0))*st;
-  if(f>0&&window.truckA){const q=truckA(p);cx+=(q[0]-cx)*f;cy+=(q[1]-cy)*f;}
+/* 카메라: 키 사이를 '단조 3차 보간'으로 한 줄로 이어 붙임 → 키마다 멈췄다 다시 출발하던 '깔짝' 제거, 머무는 구간에서 앞뒤로 흔들리는 오버슈트도 없음 */
+const KP=KEY.map(k=>k[0]),KCH=[KEY.map(k=>k[1]),KEY.map(k=>k[2]),KEY.map(k=>Math.log(k[3])),KEY.map(k=>k[5]||0)];
+const KMT=KCH.map(v=>{const n=v.length,d=[],m=new Array(n).fill(0);for(let i=0;i<n-1;i++)d.push((v[i+1]-v[i])/(KP[i+1]-KP[i]));
+  for(let i=1;i<n-1;i++){if(d[i-1]*d[i]<=0){m[i]=0;continue;}const h0=KP[i]-KP[i-1],h1=KP[i+1]-KP[i],w1=2*h1+h0,w2=h1+2*h0;m[i]=(w1+w2)/(w1/d[i-1]+w2/d[i]);}
+  m[0]=0;m[n-1]=0;return m;});
+function hermite(c,p){let k=0;while(k<KP.length-2&&p>KP[k+1])k++;const h=KP[k+1]-KP[k],t=clamp((p-KP[k])/h),v=KCH[c],m=KMT[c],t2=t*t,t3=t2*t;
+  return(2*t3-3*t2+1)*v[k]+(t3-2*t2+t)*h*m[k]+(-2*t3+3*t2)*v[k+1]+(t3-t2)*h*m[k+1];}
+function cam(p){let k=0;while(k<KEY.length-2&&p>KEY[k+1][0])k++;const a=KEY[k],b=KEY[k+1],t=clamp((p-a[0])/(b[0]-a[0]));
+  let cx=hermite(0,p),cy=hermite(1,p);const z=Math.exp(hermite(2,p)),f=clamp(hermite(3,p));
+  if(f>0&&window.truckA){let qx=0,qy=0;for(let i=-4;i<=4;i++){const q=truckA(p+i*.008);qx+=q[0];qy+=q[1];}qx/=9;qy/=9;   /* 트럭 위치를 앞뒤로 평균 → S자 길에서 카메라가 좌우로 흔들리지 않음 */
+    cx+=(qx-cx)*f;cy+=(qy-cy)*f;}
   return{x:cx,y:cy,z,s:(t>.5?b:a)[4]};}
 function frame(now){const dt=Math.min(50,now-last);last=now;T+=dt/1000;
   const r=story.getBoundingClientRect(),Pt=clamp(-r.top/(story.offsetHeight-innerHeight*1.6));P+=(Pt-P)*(1-Math.pow(1-.2,60*dt/1000));if(Math.abs(Pt-P)<5e-5)P=Pt;
