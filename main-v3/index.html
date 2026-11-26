@@ -1344,7 +1344,7 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
 <style>
 /* ── 로딩 화면 (HAULIX 로더 구조 · 트럭 대신 DHL 컨테이너선) ── */
 html.is-loading{overflow:hidden}
-.ld{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;background:radial-gradient(60% 50% at 50% 40%,#fff 0,transparent 70%),linear-gradient(180deg,#fff 0,#fff7d6 100%);clip-path:inset(0 0 0 0);transition:clip-path .85s cubic-bezier(.22,1,.36,1),opacity .6s ease .25s}
+.ld{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;background:#fff;clip-path:inset(0 0 0 0);transition:clip-path .85s cubic-bezier(.22,1,.36,1),opacity .6s ease .25s}
 .ld.out{clip-path:inset(0 0 100% 0);opacity:0;pointer-events:none}
 .ld-in{width:min(420px,calc(100vw - 48px));display:grid;justify-items:center;gap:30px;transition:transform .7s cubic-bezier(.22,1,.36,1),opacity .4s}
 .ld.out .ld-in{transform:translateY(-24px);opacity:0}
