@@ -1594,16 +1594,10 @@ function rs(p){
   put(V.ct,RSP[0],RSP[1],RSW);V.ct.style.opacity=cont;}
 function vehicles(p){
   truck(gA,dA(p),V.tac,V.tat);
-  { /* 마주 오는 트럭(C): 48초에 한 바퀴. 우리 트럭(A)과는 길에서 마주치지 않음:
-       A가 달리는 동안 C가 가려는 자리 근처(10m)에 A가 오거나 곧 올 거면 → 출발하지 않고 대기(아직 안 보이는 출발점) / 이미 길 위면 스르르 사라졌다가 처음부터 */
+  { /* 마주 오는 트럭(C): 주변 상관없이 48초에 한 바퀴 — 출발점에서 나타나 끝까지 간 뒤 다시 처음부터 */
     const dt=CT===null?0:Math.max(0,Math.min(.1,T-CT));CT=T;
-    const a=dA(p), act=p>.13&&p<.37, A0=act?Math.max(TLEN,a-10*TK):a, A1=act?Math.min(gA.T,a+45*TK):a, SAFE=10*TK;
-    const free=dc=>{const c=tPts(gC,dc);for(let x=A0;x<=A1;x+=TK)if(gapOf(tPts(gA,x),c)<SAFE)return false;return true;};
-    let kn=KC+dt/48;
-    if(kn>=1){KC=0;CF=1;}
-    else if(free(runD(gC,kn))){KC=kn;CF=Math.min(1,CF+dt*2);}
-    else if(KC>.001){CF-=dt*2.5;if(CF<=0){KC=0;CF=1;}}
-    truck(gC,runD(gC,KC),V.tcc,V.tct,(sv(KC,0,.03)*(1-sv(KC,.96,1))*CF).toFixed(3)); }
+    KC=(KC+dt/48)%1;
+    truck(gC,runD(gC,KC),V.tcc,V.tct,(sv(KC,0,.03)*(1-sv(KC,.96,1))).toFixed(3)); }
   truck(gB,runD(gB,sv(p,.58,.70)),V.tbc,V.tbt,(sv(p,.56,.585)*(1-sv(p,.70,.72))).toFixed(3));   // 야적장 장면에서만 보임 (그 전엔 숨김)   // 공항 앞에 도착하면 사라짐
   rs(p);
   const g=sv(p,.49,.555),c=sv(p,.555,.63);
