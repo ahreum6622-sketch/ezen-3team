@@ -1336,6 +1336,17 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
 .sh2-row.has-hover .sh2-c:not(.on) .sh2-t{left:calc(54*var(--u))}
 .sh2-row.has-hover .sh2-c:not(.on) .sh2-t svg{left:calc(-34*var(--u))}
 .sh2-row.has-hover .sh2-c:not(.on) .sh2-t span{font-size:calc(7.6*var(--u))}
+
+/* 푸터 상자 6개: 화면에 들어오면 위에서 하나씩 떨어져 하역대 위에 쌓임 */
+.ft-dock img.fb{position:absolute;margin-bottom:calc(-2*var(--u));left:calc(var(--x)*var(--u));bottom:calc(100% + var(--y)*var(--u));width:calc(var(--w)*var(--u));transform:translateY(-130vh) scaleX(var(--f,1)) rotate(var(--r));filter:drop-shadow(0 calc(2*var(--u)) calc(2*var(--u)) rgba(0,0,0,.25))}
+.ft-scene.drop .fb{animation:fbDrop .9s var(--d) both}
+@keyframes fbDrop{0%{transform:translateY(-130vh) scaleX(var(--f,1)) rotate(calc(var(--r)*4));animation-timing-function:cubic-bezier(.55,0,.85,.35)}
+ 62%{transform:translateY(0) scaleX(var(--f,1)) rotate(var(--r));animation-timing-function:cubic-bezier(.2,.6,.4,1)}
+ 76%{transform:translateY(calc(-9*var(--u))) scaleX(var(--f,1)) rotate(var(--r));animation-timing-function:cubic-bezier(.6,0,.8,.4)}
+ 88%{transform:translateY(0) scaleX(var(--f,1)) rotate(var(--r))}
+ 94%{transform:translateY(calc(-2*var(--u))) scaleX(var(--f,1)) rotate(var(--r))}
+ 100%{transform:translateY(0) scaleX(var(--f,1)) rotate(var(--r))}}
+@media (prefers-reduced-motion:reduce){.ft-dock img.fb{transform:scaleX(var(--f,1)) rotate(var(--r))}.ft-scene.drop .fb{animation:none}}
 </style>
 </head>
 <body>
@@ -1545,7 +1556,7 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
 <div id="tail">
 <footer class="ft">
   <div class="ft-scene" id="ftScene" aria-hidden="true">
-    <div class="ft-dock"><i class="ft-cap"></i><img class="b1" src="img/ft/boxes.webp" alt=""><img class="b2" src="img/ft/boxes.webp" alt=""><img class="b3" src="img/ft/boxes.webp" alt=""></div>
+    <div class="ft-dock"><i class="ft-cap"></i><img class="fb" src="img/ft/boxes.webp" alt="" style="--x:6;--y:0;--w:64;--r:-1deg;--d:0s"><img class="fb" src="img/ft/boxes.webp" alt="" style="--x:74;--y:0;--w:56;--r:1.5deg;--d:0.18s;--f:-1"><img class="fb" src="img/ft/boxes.webp" alt="" style="--x:134;--y:0;--w:70;--r:0deg;--d:0.36s"><img class="fb" src="img/ft/boxes.webp" alt="" style="--x:28;--y:40;--w:58;--r:-2deg;--d:0.62s;--f:-1"><img class="fb" src="img/ft/boxes.webp" alt="" style="--x:140;--y:43.5;--w:54;--r:2deg;--d:0.82s"><img class="fb" src="img/ft/boxes.webp" alt="" style="--x:50;--y:76;--w:44;--r:-1deg;--d:1.05s;--f:-1"></div>
     <div class="ft-road"></div>
     <img class="ft-lamp" src="img/ft/lamp.webp" alt="" style="left:calc(575*var(--u))"><img class="ft-lamp" src="img/ft/lamp.webp" alt="" style="left:calc(735*var(--u))"><img class="ft-lamp" src="img/ft/lamp.webp" alt="" style="left:calc(915*var(--u))">
     <div class="ft-truck" id="ftTruck"><img src="img/ft/truck.webp" alt=""><img class="fw" src="img/hd/wv0.webp" alt="" style="left:12.999%"><img class="fw" src="img/hd/wv1.webp" alt="" style="left:20.427%"><img class="fw" src="img/hd/wv2.webp" alt="" style="left:28.087%"><img class="fw" src="img/hd/wv3.webp" alt="" style="left:60.167%"><img class="fw" src="img/hd/wv4.webp" alt="" style="left:84.494%"></div>
@@ -2488,7 +2499,7 @@ const ws=[...tr.querySelectorAll('.fw')];let raf=0;
 function drive(){cancelAnimationFrame(raf);const from=-(tr.offsetLeft+tr.offsetWidth+40),t0=performance.now(),T=1800,wd=tr.offsetWidth*.05571;
   (function st(now){const k=Math.min(1,(now-t0)/T),e=1-Math.pow(1-k,3),x=from*(1-e);tr.style.transform=`translateX(${x.toFixed(1)}px)`;
     const rot=(x-from)/(Math.PI*wd)*360;ws.forEach(w=>w.style.setProperty('--rot',rot.toFixed(1)+'deg'));if(k<1)raf=requestAnimationFrame(st);})(t0);}
-let shown=false;new IntersectionObserver(es=>{const e=es[0];if(e.isIntersecting&&!shown){shown=true;drive();}else if(!e.isIntersecting&&e.boundingClientRect.top>0){shown=false;cancelAnimationFrame(raf);tr.style.transform=`translateX(${-(tr.offsetLeft+tr.offsetWidth+40)}px)`;}},{threshold:.35}).observe(sc);
+let shown=false;new IntersectionObserver(es=>{const e=es[0];if(e.isIntersecting&&!shown){shown=true;drive();sc.classList.remove('drop');void sc.offsetWidth;sc.classList.add('drop');}else if(!e.isIntersecting&&e.boundingClientRect.top>0){shown=false;sc.classList.remove('drop');cancelAnimationFrame(raf);tr.style.transform=`translateX(${-(tr.offsetLeft+tr.offsetWidth+40)}px)`;}},{threshold:.35}).observe(sc);
 tr.style.transform=`translateX(${-(tr.offsetLeft+tr.offsetWidth+40)}px)`;})();
 </script>
 </body>
