@@ -2488,53 +2488,72 @@ row.addEventListener('mouseleave',off);
 row.querySelectorAll('[aria-disabled]').forEach(c=>c.addEventListener('click',e=>e.preventDefault()));})();
 /* 푸터: 화면에 들어오면 트럭이 왼쪽에서 달려와 서고, 바퀴가 굴러감 */
 (()=>{const sc=document.getElementById('ftScene'),tr=document.getElementById('ftTruck');if(!sc||!tr)return;
-const ws=[...tr.querySelectorAll('.fw')];let raf=0;
-function drive(){cancelAnimationFrame(raf);const from=-(tr.offsetLeft+tr.offsetWidth+40),t0=performance.now(),T=1800,wd=tr.offsetWidth*.05571;
-  (function st(now){const k=Math.min(1,(now-t0)/T),e=1-Math.pow(1-k,3),x=from*(1-e);tr.style.transform=`translateX(${x.toFixed(1)}px)`;
-    const rot=(x-from)/(Math.PI*wd)*360;ws.forEach(w=>w.style.setProperty('--rot',rot.toFixed(1)+'deg'));if(k<1)raf=requestAnimationFrame(st);})(t0);}
-/* 상자 6개 — 옛 롤 섹션처럼 matter.js 물리: 위에서 툭툭 떨어져 튕기고 굴러 자연스럽게 쌓임, 잡아서 던질 수도 있음 */
-const BX=new Image();BX.src='img/ft/boxes.webp';const SRC=[3,26,482,310];
-const ANG=[.139,.111,.023,.013,.044,-.115];
-const SPEC=[[62,.64,0,38],[54,.72,1,102.4],[64,.6,0,162.9],[50,.78,1,53.5],[56,.66,0,158.9],[44,.74,1,92.7]]; // 너비(u), 높이비, 좌우반전, 하역대 안 x(u)
-let PHY=null;
-function phys(){if(PHY||!window.Matter)return PHY;const {Engine,Bodies,Body,Composite,Query,Constraint}=Matter;
+/* 푸터 하역장 — 메인 레퍼(HAULIX truckcta) 물리 그대로:
+   상자 6개가 하역대에 툭 떨어져 쌓이고, 잡아서(모바일은 탭) 트레일러 뒤로 던지면 실림 → 3개 실리면 트럭이 떠났다 돌아오고 상자 다시 채움 */
+const ws=[...tr.querySelectorAll('.fw')],BX=new Image();BX.src='img/ft/boxes.webp';const SRC=[3,26,482,310];
+const BW=[46,58,70],AR=[.66,.74,.62,.8,.7,.64];   // 레퍼 상자 폭 46/58/70 기준(트럭 대비 비율 맞춰 축소), 높이비 다양
+let M=null,go=null;
+function init(){M=window.Matter;const {Engine,Bodies,Body,Composite,Constraint,Vertices,Bounds}=M;
   const cv=document.createElement('canvas');cv.className='ft-cv';sc.appendChild(cv);const ctx=cv.getContext('2d');
-  const eng=Engine.create();eng.gravity.y=1.25;eng.positionIterations=8;
-  let W=0,H=0,dpr=1,statics=[],boxes=[],grab=null,run=0,last=0;
-  const U=()=>1440/1148,K=()=>sc.clientWidth/1440; // 물리는 1440px 기준 세계에서 계산 → 어떤 화면 폭이든 똑같이 쌓임
-  function build(){dpr=Math.min(2,devicePixelRatio||1);cv.width=sc.clientWidth*dpr;cv.height=sc.clientHeight*dpr;const k=K();W=sc.clientWidth/k;H=sc.clientHeight/k;
-    Composite.remove(eng.world,statics);const s=sc.getBoundingClientRect(),d=sc.querySelector('.ft-dock').getBoundingClientRect(),r=sc.querySelector('.ft-road').getBoundingClientRect(),u=U();
-    const o={isStatic:true,friction:.8,restitution:.2},dl=(d.left-s.left)/k-4*u,dr=(d.right-s.left)/k+4*u,dt=(d.top-s.top)/k;
-    statics=[Bodies.rectangle((dl+dr)/2,dt+(H-dt)/2,dr-dl,H-dt,o),Bodies.rectangle(W/2,(r.top-s.top)/k+30,W*3,60,o),
-      Bodies.rectangle(-30,H/2-400,60,H+800,o),Bodies.rectangle(W+30,H/2-400,60,H+800,o),Bodies.rectangle(dr-3,dt-8,6,16,o),Bodies.rectangle(dl+3,dt-8,6,16,o)];
-    Composite.add(eng.world,statics);PHY.dl=(d.left-s.left)/k;PHY.dt=dt}
-  function spawn(i,drop){const u=U(),[bw,ar,f,x]=SPEC[i],w=bw*u,h=bw*ar*u;
-    const y=drop?-h*.7-i*18*u:PHY.dt-h/2-(i>2?(i>4?2:1)*44*u:0);
-    const b=Bodies.rectangle(PHY.dl+x*u,y,w,h,{chamfer:{radius:2*u},friction:.6,frictionStatic:.9,frictionAir:.008,restitution:.22,density:.002});
-    Body.setInertia(b,b.inertia*.8);Body.setAngle(b,drop?ANG[i]:ANG[i]*.15);b.w0=w;b.h0=h;b.f=f;boxes.push(b);Composite.add(eng.world,b)}
-  function clear(){queue=[];boxes.forEach(b=>Composite.remove(eng.world,b));boxes=[];if(grab){Composite.remove(eng.world,grab);grab=null}}
-  function draw(){const k=K();ctx.setTransform(dpr*k,0,0,dpr*k,0,0);ctx.clearRect(0,0,W,H);if(!BX.complete)return;const u=U();
-    ctx.shadowColor='rgba(0,0,0,.28)';ctx.shadowBlur=3*u*dpr*k;ctx.shadowOffsetY=2*u;
-    for(const b of boxes){ctx.save();ctx.translate(b.position.x,b.position.y);ctx.rotate(b.angle);if(b.f)ctx.scale(-1,1);
-      ctx.drawImage(BX,SRC[0],SRC[1],SRC[2],SRC[3],-b.w0/2-.6*u,-b.h0/2-.6*u,b.w0+1.2*u,b.h0+1.2*u);ctx.restore()}}
-  let acc=0,step=0,queue=[];const STEP=1000/60;
-  function loop(now){acc+=Math.min(50,now-(last||now));last=now;while(acc>=STEP){acc-=STEP;while(queue.length&&queue[0][0]<=step)spawn(queue.shift()[1],true);Engine.update(eng,STEP);step++}draw();run=requestAnimationFrame(loop)}
-  const pt=e=>{const s=sc.getBoundingClientRect();const k=K();return{x:(e.clientX-s.left)/k,y:(e.clientY-s.top)/k}};
-  sc.addEventListener('pointermove',e=>{if(grab){grab.pointA=pt(e);return}sc.classList.toggle('grab',!!Query.point(boxes,pt(e))[0])});
-  sc.addEventListener('pointerdown',e=>{const p=pt(e),b=Query.point(boxes,p)[0];if(!b)return;e.preventDefault();sc.setPointerCapture(e.pointerId);
-    grab=Constraint.create({pointA:p,bodyB:b,pointB:Matter.Vector.rotate(Matter.Vector.sub(p,b.position),-b.angle),stiffness:.09,damping:.02,length:0});Composite.add(eng.world,grab);sc.classList.add('grabbing')});
-  const up=()=>{if(grab){Composite.remove(eng.world,grab);grab=null}sc.classList.remove('grabbing')};sc.addEventListener('pointerup',up);sc.addEventListener('pointercancel',up);
-  let rt=0;new ResizeObserver(()=>{clearTimeout(rt);rt=setTimeout(()=>{if(Math.abs(sc.clientWidth/K()-W)<1&&cv.width===Math.round(sc.clientWidth*dpr))return;const had=boxes.length;build();if(had){clear();for(let i=0;i<6;i++)spawn(i,false)}},120)}).observe(sc);
-  PHY={dl:0,dt:0,drop(){build();clear();const rm=matchMedia('(prefers-reduced-motion: reduce)').matches;
-      step=0;SPEC.forEach((_,i)=>rm?spawn(i,false):queue.push([i*13,i]))},
-    reset(){clear();draw()},start(){if(!run){last=0;run=requestAnimationFrame(loop)}},stop(){cancelAnimationFrame(run);run=0}};
-  build();return PHY}
+  const eng=Engine.create({gravity:{x:0,y:1,scale:.001}});
+  let K=1,W=1440,H=300,dpr=1,statics=[],v=[],n=0,mode='away',F=0,vis=false,raf=0,last=0,grab=null,held=null,wrot=0;
+  const g={x:-2000,vx:0,y:0,vy:0,rot:0,vr:0},S=.79;           // S: 우리 트럭(504px)/레퍼 트럭(640px)
+  const dock=()=>{const s=sc.getBoundingClientRect(),d=sc.querySelector('.ft-dock').getBoundingClientRect();return{x:(d.left-s.left)/K,w:d.width/K,top:(d.top-s.top)/K}};
+  const trk=()=>{const s=sc.getBoundingClientRect(),t=tr.getBoundingClientRect(),x=(t.left-s.left)/K-g.x,y=(t.top-s.top)/K-g.y,w=t.width/K,h=t.height/K;
+    return{x:x+.033*w,y:y+.2*h,w:.11*w,h:.55*h}};
+  const OFF=()=>-(tr.offsetLeft+tr.offsetWidth)/K-120;
+  function build(){K=sc.clientWidth/1440;dpr=Math.min(2,devicePixelRatio||1);W=1440;H=sc.clientHeight/K;cv.width=Math.round(sc.clientWidth*dpr);cv.height=Math.round(sc.clientHeight*dpr);
+    statics.length&&Composite.remove(eng.world,statics);const d=dock(),road=(sc.querySelector('.ft-road').getBoundingClientRect().top-sc.getBoundingClientRect().top)/K;
+    statics=[Bodies.rectangle(W/2,road+40,3*W,80,{isStatic:true,friction:.9}),Bodies.rectangle(d.x+d.w/2,d.top+60,d.w+8,120,{isStatic:true,friction:.9}),Bodies.rectangle(-40,H/2,80,3*H,{isStatic:true})];
+    Composite.add(eng.world,statics)}
+  function spawn(e,drop){const d=dock(),w=BW[17*e%3]*S,h=w*AR[e%6];
+    const x=d.x+d.w*[.15,.39,.65,.27,.53,.4][e%6],y=drop?-h-40*e:d.top-h/2-Math.floor(e/3)*h;
+    const b=Bodies.rectangle(x,y,w,h,{chamfer:{radius:3},friction:.8,restitution:.08,frictionAir:.004,density:.002});
+    Body.setAngle(b,drop?((e*37)%7-3)*.03:0);Composite.add(eng.world,b);v.push({b,w,h,f:e%2,flying:false,dead:false})}
+  const alive=()=>v.filter(o=>!o.dead);
+  function refill(drop){const have=alive().length;for(let i=have;i<6;i++)spawn(i,drop)}
+  function kill(o){o.dead=true;Composite.remove(eng.world,o.b)}
+  function toss(o){if(mode!=='parked')return;o=o||alive().filter(o=>!o.flying).sort((a,b)=>a.b.position.y-b.b.position.y)[0];if(!o)return;
+    const a=trk(),tx=a.x+.6*a.w,ty=a.y+.45*a.h,{x,y}=o.b.position;o.flying=true;o.b.frictionAir=0;o.b.isSensor=true;
+    Body.setVelocity(o.b,{x:(tx-x)/46,y:(ty-y-293.865378248)/46});Body.setAngularVelocity(o.b,.12)}
+  const pt=e=>{const r=sc.getBoundingClientRect();return{x:(e.clientX-r.left)/K,y:(e.clientY-r.top)/K}};
+  const hit=p=>alive().find(o=>Bounds.contains(o.b.bounds,p)&&Vertices.contains(o.b.vertices,p));
+  sc.addEventListener('pointerdown',e=>{const p=pt(e),o=hit(p);if(!o)return;e.preventDefault();if(e.pointerType!=='mouse')return toss(o);
+    held=o;grab=Constraint.create({pointA:p,bodyB:o.b,pointB:{x:p.x-o.b.position.x,y:p.y-o.b.position.y},stiffness:.12,damping:.05,length:0});
+    Composite.add(eng.world,grab);sc.setPointerCapture(e.pointerId);sc.classList.add('grabbing')});
+  sc.addEventListener('pointermove',e=>{if(grab)grab.pointA=pt(e);else sc.classList.toggle('grab',!!hit(pt(e)))});
+  const up=()=>{if(!grab)return;Composite.remove(eng.world,grab);grab=null;held&&(held.flying=true);held=null;sc.classList.remove('grabbing')};
+  window.addEventListener('pointerup',up);window.addEventListener('pointercancel',up);
+  function draw(){ctx.setTransform(dpr*K,0,0,dpr*K,0,0);ctx.clearRect(0,0,W,H);if(!BX.complete)return;
+    for(const o of v){if(o.dead)continue;const {x,y}=o.b.position;ctx.save();ctx.translate(x,y);ctx.rotate(o.b.angle);if(o.f)ctx.scale(-1,1);
+      ctx.shadowColor='rgba(0,0,0,.22)';ctx.shadowBlur=6*dpr*K;ctx.shadowOffsetY=3;ctx.drawImage(BX,SRC[0],SRC[1],SRC[2],SRC[3],-o.w/2-.5,-o.h/2-.5,o.w+1,o.h+1);ctx.restore()}}
+  function place(){const wd=tr.offsetWidth*.05571;tr.style.transform=`translate3d(${(g.x*K).toFixed(1)}px,${(g.y*K).toFixed(2)}px,0) rotate(${g.rot.toFixed(3)}deg)`;
+    ws.forEach(w=>w.style.setProperty('--rot',(wrot/(Math.PI*wd)*360).toFixed(1)+'deg'))}
+  function frame(now){raf=requestAnimationFrame(frame);const t=Math.min(.033,(now-(last||now))/1e3);last=now;if(!vis)return;
+    Engine.update(eng,1e3/60);const a=trk();
+    for(const o of v){if(o.dead)continue;const {x,y}=o.b.position;
+      const inT=(o.flying&&x>a.x-6&&y<a.y+a.h+30)||(x>a.x-24&&x<a.x+a.w+40&&y>a.y-10&&y<a.y+a.h+6);
+      if(inT&&mode==='parked'){if(o===held)up();kill(o);n++;g.vy+=90;g.vr+=.5;if(n>=3)mode='leaving';continue}
+      if(o.b.isSensor&&y>H-40&&!inT){o.b.isSensor=false;o.flying=false}
+      if(y>H+200||x>W+200)kill(o)}
+    const x0=g.x;g.vy+=(-260*g.y-14*g.vy)*t;g.y+=g.vy*t;g.vr+=(-220*g.rot-12*g.vr)*t;g.rot+=g.vr*t;
+    if(mode==='leaving'){g.vx+=900*t;g.x+=g.vx*t;if(g.x>W+200){mode='returning';F=now+1200;g.x=OFF();g.vx=0;v=v.filter(o=>!o.dead)}}
+    else if((mode==='returning'||mode==='arriving')&&now>F){g.vx+=(-14*g.x-7.5*g.vx)*t;g.x+=g.vx*t;
+      if(Math.abs(g.x)<1&&Math.abs(g.vx)<8){g.x=0;g.vx=0;if(mode==='returning'){const d=dock();alive().forEach(o=>{if(o.b.position.y>d.top+4||o.b.position.x>d.x+d.w+10)kill(o)});refill(true)}mode='parked';n=0}}
+    wrot+=(g.x-x0)*K;place();draw()}
+  new ResizeObserver(()=>{const k=sc.clientWidth/1440;if(Math.abs(k-K)<.001&&cv.height===Math.round(sc.clientHeight*dpr))return;build();
+    const live=alive().length;v.forEach(kill);v=[];if(mode!=='away')for(let i=0;i<live;i++)spawn(i,false)}).observe(sc);
+  build();g.x=OFF();place();raf=requestAnimationFrame(frame);
+  new IntersectionObserver(es=>{vis=es[0].isIntersecting;last=0},{rootMargin:'100px'}).observe(sc);
+  return{enter(){if(mode!=='away')return;build();v.forEach(kill);v=[];n=0;g.x=OFF();g.vx=0;mode='arriving';F=0;
+      const rm=matchMedia('(prefers-reduced-motion: reduce)').matches;refill(!rm);if(rm){g.x=0;mode='parked'}},
+    reset(){if(grab)up();v.forEach(kill);v=[];mode='away';g.x=OFF();g.vx=0;g.y=g.vy=g.rot=g.vr=0;place();draw()}}}
 function withM(fn){if(window.Matter)return fn();let js=document.getElementById('mjs');if(!js){js=document.createElement('script');js.id='mjs';js.src='https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js';document.head.appendChild(js)}js.addEventListener('load',fn,{once:true})}
+tr.style.transform=`translateX(${-(tr.offsetLeft+tr.offsetWidth+40)}px)`;
 let shown=false;
-new IntersectionObserver(es=>{const e=es[0];if(e.isIntersecting&&!shown){shown=true;drive();withM(()=>{const P=phys();if(P&&shown){P.start();P.drop()}});}
-  else if(!e.isIntersecting&&e.boundingClientRect.top>0){shown=false;PHY&&PHY.reset();cancelAnimationFrame(raf);tr.style.transform=`translateX(${-(tr.offsetLeft+tr.offsetWidth+40)}px)`;}},{threshold:.35}).observe(sc);
-new IntersectionObserver(es=>{if(!PHY)return;es[0].isIntersecting?PHY.start():PHY.stop()},{threshold:0}).observe(sc);
-tr.style.transform=`translateX(${-(tr.offsetLeft+tr.offsetWidth+40)}px)`;})();
+new IntersectionObserver(es=>{const e=es[0];if(e.isIntersecting&&!shown){shown=true;withM(()=>{go=go||init();shown&&go.enter()})}
+  else if(!e.isIntersecting&&e.boundingClientRect.top>0){shown=false;go&&go.reset()}},{threshold:.35}).observe(sc);
+})();
 </script>
 </body>
 </html>
