@@ -1220,6 +1220,57 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
 #plannerB .pb-btn.pri{background:#d40511;color:#fff;box-shadow:none}
 #plannerB .pb-parcel{border:1px solid rgba(200,160,60,.25);border-radius:7px;box-shadow:0 3px 0 rgba(200,160,60,.16)}
 #plannerB .pb-parcel i{background:#e8484f;opacity:1;width:7px;margin-left:-3.5px}
+
+/* ===== 2026-11-26 팀 고도화 시안: Start Here(영상 퀵가이드) · 새 푸터 · 레이스 크기 ===== */
+.sh{position:relative;height:max(60vw,640px);background:#d9d9d9;overflow:hidden}
+.sh-bg{position:absolute;inset:0}
+.sh-v{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .5s ease}
+.sh-v.on{opacity:1}
+.sh::after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,.55) 0%,rgba(255,255,255,.18) 34%,rgba(255,255,255,0) 52%,rgba(255,255,255,0) 72%,#fff 100%)}
+.sh-in{position:relative;z-index:1;padding-top:calc(270/1440*100vw);text-align:center}
+.sh h2{font:800 calc(56/1440*100vw)/1.05 var(--sans);letter-spacing:-.03em;color:#0b0b0b;margin:0}
+.sh h2 em{font-style:normal;color:var(--r)}
+.sh-cards{display:grid;grid-template-columns:repeat(4,calc(198/1440*100vw));justify-content:center;gap:calc(38/1440*100vw);margin-top:calc(66/1440*100vw)}
+.sh-c{position:relative;display:flex;flex-direction:column;align-items:flex-start;text-align:left;padding:calc(26/1440*100vw) calc(24/1440*100vw);min-height:calc(120/1440*100vw);background:#fff;border:1px solid #e3e3e3;border-radius:calc(14/1440*100vw);color:#111;text-decoration:none;transition:transform .3s,box-shadow .3s,border-color .3s}
+.sh-c svg{position:absolute;right:calc(20/1440*100vw);top:calc(20/1440*100vw);width:calc(20/1440*100vw);height:calc(20/1440*100vw);color:#222}
+.sh-c b{font:700 calc(19/1440*100vw)/1.2 var(--sans);letter-spacing:-.02em;margin-top:calc(4/1440*100vw)}
+.sh-c span{font-size:calc(11.5/1440*100vw);color:#555;margin-top:calc(12/1440*100vw)}
+.sh-c:hover,.sh-c:focus-visible{transform:translateY(-4px);box-shadow:0 14px 30px rgba(0,0,0,.12);border-color:var(--y)}
+@media (max-width:820px){.sh{height:auto;padding-bottom:40vw}.sh-in{padding:110px 20px 0}.sh h2{font-size:40px}.sh-cards{grid-template-columns:1fr 1fr;gap:12px;margin-top:32px}.sh-c{padding:18px 16px;min-height:96px;border-radius:12px}.sh-c b{font-size:17px}.sh-c span{font-size:12px}.sh-c svg{width:18px;height:18px;right:14px;top:14px}}
+
+.ft{--u:calc(100vw/1440);background:#fff;color:#fff;padding:calc(200*var(--u)) 0 0;overflow:hidden;position:relative}
+.ft-scene{position:relative;height:calc(380*var(--u))}
+.ft-road{position:absolute;left:calc(312*var(--u));right:0;bottom:0;height:calc(75*var(--u));background:#5b5b5b;border-top:calc(3*var(--u)) solid #d8d8d8}
+.ft-road::before{content:'';position:absolute;left:0;right:0;top:50%;height:calc(3*var(--u));margin-top:calc(-1*var(--u));background:repeating-linear-gradient(90deg,#fff 0 calc(38*var(--u)),transparent calc(38*var(--u)) calc(75*var(--u)))}
+.ft-dock{position:absolute;left:0;bottom:0;width:calc(325*var(--u));height:calc(130*var(--u));background:#2c2c2c}
+.ft-dock::before{content:'';position:absolute;left:0;right:calc(-12*var(--u));top:0;height:calc(17*var(--u));background:#2c2c2c}
+.ft-dock img{position:absolute;width:calc(92*var(--u))}
+.ft-dock .b1{left:calc(114*var(--u));bottom:100%}
+.ft-dock .b2{left:calc(206*var(--u));bottom:100%}
+.ft-dock .b3{left:calc(206*var(--u));bottom:calc(100% + 68*var(--u))}
+.ft-lamp{position:absolute;bottom:calc(72*var(--u));width:calc(80*var(--u))}
+.ft-truck{position:absolute;left:calc(448*var(--u));bottom:calc(4*var(--u));width:calc(645*var(--u));will-change:transform}
+.ft-truck>img:first-child{display:block;width:100%}
+.ft-truck .fw{position:absolute;top:73.894%;width:5.571%;transform:rotate(var(--rot,0deg))}
+.ft-body{background:#2c2c2c;padding:calc(104*var(--u)) calc(135*var(--u)) calc(70*var(--u))}
+.ft-top{display:flex;justify-content:space-between;align-items:flex-start}
+.ft-logo{width:calc(396*var(--u));filter:brightness(0) invert(1);margin-top:calc(8*var(--u))}
+.ft-cols{display:flex;gap:calc(84*var(--u));text-align:right}
+.ft-cols h4{font:600 calc(18*var(--u))/1 var(--sans);letter-spacing:0;color:#fff;margin:0 0 calc(14*var(--u))}
+.ft-cols ul{list-style:none;margin:0;padding:0;display:grid;gap:calc(9*var(--u))}
+.ft-cols a{color:#b9b9b9;text-decoration:none;font-size:calc(15*var(--u))}
+.ft-cols a:hover{color:#fff}
+.ft-legal{display:flex;justify-content:space-between;margin-top:calc(70*var(--u));font-size:calc(14*var(--u));color:#9a9a9a}
+.ft-legal a{color:inherit;text-decoration:none;margin-right:calc(54*var(--u))}
+.ft-legal a:hover{color:#fff}
+@media (max-width:820px){.ft{--u:calc(100vw/700)}.ft-body{padding:48px 22px 36px}.ft-top{flex-direction:column;gap:32px}.ft-logo{width:180px}.ft-cols{gap:48px;text-align:left}.ft-cols h4{font-size:15px}.ft-cols a{font-size:14px}.ft-legal{flex-direction:column;gap:12px;font-size:12px;margin-top:36px}.ft-legal a{margin-right:18px}}
+
+@media (min-width:1001px){
+ #services.rc-sec{--k:calc(100vw/1440*.74);padding:calc(230/1440*100vw) 0 calc(240/1440*100vw)}
+ #services #dispatch.rc-head{padding-left:0;margin-bottom:calc(60/1440*100vw)}
+ #services #dispatch.rc-head h2{font-size:calc(58/1440*100vw)}
+ #services #dispatch.rc-head p{font-size:calc(15/1440*100vw);margin-top:calc(22/1440*100vw)}
+}
 </style>
 </head>
 <body>
@@ -1413,54 +1464,40 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
 
 <!-- 11. 퀵가이드 (팀 푸터 시안 A/B의 메뉴를 카드로 · FAQ 자리를 대체) -->
 
-<section class="sec" id="quick"><div class="wrap">
-  <div class="sec-head"><div><div class="tag rv"><b>10</b> QUICK GUIDE</div><h2 class="rv d1">필요한 곳으로,<br><span class="hl">바로</span>.</h2></div><p class="lead rv d2">찾는 게 있다면 여기서 바로 가세요. 그래도 모르겠으면 고객센터 <b class="qg-tel">1588-0001</b>로 전화 주세요. (월–금 08:30–19:30 · 토 09:00–16:00)</p></div>
-  <div class="qg">
-    <article class="qg-c rv d1">
-      <div class="qg-h"><b>01</b><svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg></div>
-      <h3>배송조회</h3><p>내 택배가 지금 어디쯤인지</p>
-      <ul><li><a href="track.html">운송장 조회</a></li><li><a href="track.html?awb=1234567890">조회 결과 <small>예시</small></a></li><li><a href="track.html#faq">조회할 때 자주 묻는 질문</a></li></ul>
-    </article>
-    <article class="qg-c rv d2">
-      <div class="qg-h"><b>02</b><svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7l9-4 9 4v10l-9 4-9-4z"/><path d="M3 7l9 4 9-4"/><path d="M12 11v10"/></svg></div>
-      <h3>발송하기</h3><p>요금 확인부터 픽업까지</p>
-      <ul><li><a href="#services">서비스 고르기</a></li><li><a href="quote.html">요금산출 · 운송장 작성</a></li><li><a href="quote.html">픽업 예약</a></li></ul>
-    </article>
-    <article class="qg-c rv d3">
-      <div class="qg-h"><b>03</b><svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/></svg></div>
-      <h3>가이드</h3><p>보내기 전에 챙길 4가지</p>
-      <ul><li><a href="guide.html#g1">포장하기</a></li><li><a href="guide.html#g2">서류 챙기기</a></li><li><a href="guide.html#g3">관세 확인하기</a></li><li><a href="guide.html#g4">받는 분께 알리기</a></li></ul>
-    </article>
-    <article class="qg-c rv d4">
-      <div class="qg-h"><b>04</b><svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg></div>
-      <h3>마이페이지</h3><p>내 계정과 보낸 기록</p>
-      <ul><li><a href="#" aria-disabled="true">계정 <small>준비 중</small></a></li><li><a href="#" aria-disabled="true">배송 기록 <small>준비 중</small></a></li><li><a href="#" aria-disabled="true">MyDHL+ 관리 <small>준비 중</small></a></li></ul>
-    </article>
+<section class="sh" id="quick" aria-label="Start Here">
+  <div class="sh-bg" aria-hidden="true"><video class="sh-v on" data-k="track" src="img/qg/track.mp4" poster="img/qg/track.jpg" muted loop playsinline preload="auto"></video><video class="sh-v" data-k="send" src="img/qg/send.mp4" poster="img/qg/send.jpg" muted loop playsinline preload="metadata"></video><video class="sh-v" data-k="guide" src="img/qg/guide.mp4" poster="img/qg/guide.jpg" muted loop playsinline preload="metadata"></video></div>
+  <div class="sh-in">
+    <h2>Start <em>Here!</em></h2>
+    <div class="sh-cards">
+      <a class="sh-c" href="track.html" data-k="track"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><b>배송조회</b><span>실시간 배송 현황 확인</span></a>
+      <a class="sh-c" href="quote.html" data-k="send"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7l9-4 9 4v10l-9 4-9-4z"/><path d="M3 7l9 4 9-4"/><path d="M12 11v10"/></svg><b>발송하기</b><span>요금 확인부터 픽업 예약까지</span></a>
+      <a class="sh-c" href="guide.html" data-k="guide"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/></svg><b>가이드</b><span>국제배송에 필요한 모든 정보</span></a>
+      <a class="sh-c" href="#" data-k="my" aria-disabled="true"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg><b>마이페이지</b><span>발송 내역 및 계정 관리</span></a>
+    </div>
   </div>
-</div></section>
+</section>
 
 <!-- 10. 마무리 (레퍼런스 READY TO ROLL → 트럭에 상자 싣고 출발) -->
 </main>
 <div id="tail">
-<section class="roll ed-roll" id="roll">
-  <div class="roll-stage" id="rollStage">
-    <div class="roll-road" aria-hidden="true"></div>
-    <div class="roll-dock" aria-hidden="true"><div class="roll-pile" id="rollPile"></div></div>
-    <div class="roll-truck" id="rollTruck" data-fx="drive"><img src="img/roll-truck-body.webp" alt="상자를 기다리는 DHL 트럭" draggable="false"><img class="rw" src="img/hd/wh0.webp" alt="" draggable="false" style="left:10.621%;top:73.700%"><img class="rw" src="img/hd/wh1.webp" alt="" draggable="false" style="left:17.974%;top:73.700%"><img class="rw" src="img/hd/wh2.webp" alt="" draggable="false" style="left:25.327%;top:73.700%"><img class="rw" src="img/hd/wh3.webp" alt="" draggable="false" style="left:59.641%;top:73.700%"><img class="rw" src="img/hd/wh4.webp" alt="" draggable="false" style="left:85.458%;top:73.700%"></div>
+<footer class="ft">
+  <div class="ft-scene" id="ftScene" aria-hidden="true">
+    <div class="ft-dock"><img class="b1" src="img/ft/boxes.webp" alt=""><img class="b2" src="img/ft/boxes.webp" alt=""><img class="b3" src="img/ft/boxes.webp" alt=""></div>
+    <div class="ft-road"></div>
+    <img class="ft-lamp" src="img/ft/lamp.webp" alt="" style="left:38.6%"><img class="ft-lamp" src="img/ft/lamp.webp" alt="" style="left:56.4%"><img class="ft-lamp" src="img/ft/lamp.webp" alt="" style="left:76.4%">
+    <div class="ft-truck" id="ftTruck"><img src="img/ft/truck.webp" alt=""><img class="fw" src="img/hd/wv0.webp" alt="" style="left:12.999%"><img class="fw" src="img/hd/wv1.webp" alt="" style="left:20.427%"><img class="fw" src="img/hd/wv2.webp" alt="" style="left:28.087%"><img class="fw" src="img/hd/wv3.webp" alt="" style="left:60.167%"><img class="fw" src="img/hd/wv4.webp" alt="" style="left:84.494%"></div>
   </div>
-</section>
-
-<!-- 11. 푸터 -->
-<footer><div class="wrap">
-  <div class="cols">
-    <div class="brand"><img src="img/dhl-logo-red.png" alt="DHL"><p>보이는 물류, 이어지는 사람.<br>Connecting People, Improving Lives</p></div>
-    <nav><h4>서비스</h4><ul><li><a href="track.html">배송 조회</a></li><li><a href="quote.html">발송하기</a></li><li><a href="quote.html">요금산출</a></li><li><a href="#services">서비스 비교</a></li><li><a href="#planner">적재 체험</a></li><li><a href="guide.html#g3">통관 안내</a></li></ul></nav>
-    <nav><h4>회사</h4><ul><li><a href="#top">회사 소개</a></li><li><a href="#top">지속가능경영</a></li><li><a href="#top">채용</a></li><li><a href="#support">문의</a></li></ul></nav>
-    <nav><h4>도움말</h4><ul><li><a href="#index">퀵가이드</a></li><li id="support"><a href="tel:15880001">고객센터 1588-0001</a></li><li><a href="guide.html">보내기 전 가이드</a></li></ul></nav>
-    <form class="news" onsubmit="return false"><h4>한 달에 한 번, 물류 소식</h4><div class="nl"><input type="email" placeholder="이메일 주소" aria-label="이메일 주소"><button type="button">구독</button></div></form>
+  <div class="ft-body">
+    <div class="ft-top">
+      <img class="ft-logo" src="img/dhl-logo-red.png" alt="DHL">
+      <div class="ft-cols">
+        <nav><h4>Services</h4><ul><li><a href="track.html">배송조회</a></li><li><a href="quote.html">발송하기</a></li><li><a href="guide.html">가이드</a></li><li><a href="#" aria-disabled="true">마이페이지</a></li></ul></nav>
+        <nav><h4>Explore</h4><ul><li><a href="#story">Shipment Journey</a></li><li><a href="#scale">Our Purpose</a></li><li><a href="#heritage">Our Heritage</a></li><li><a href="#promise">Customer Promise</a></li><li><a href="#services">Our Services</a></li><li><a href="#quick">Quick Guide</a></li></ul></nav>
+      </div>
+    </div>
+    <div class="ft-legal"><span><a href="#top">개인정보처리방침</a><a href="#top">이용약관</a><a href="#top">쿠키 설정</a></span><span>© 2026 DHL Express. All rights reserved.</span></div>
   </div>
-  <div class="legal"><span>이젠 3조 · 물류 웹 리뉴얼 포트폴리오 시안 (비공식 학습용 데모 · 실제 서비스 아님)</span><span><a href="#top">개인정보처리방침</a><a href="#top">이용약관</a></span></div>
-</div><div class="wordmark" aria-hidden="true">DHL EXPRESS</div></footer>
+</footer>
 </div>
 
 <script>
@@ -2022,7 +2059,7 @@ function frame(){mobile=innerWidth<=820;const vh=innerHeight,sy=scrollY;
 setAct(0);requestAnimationFrame(frame);})();
 
 /* 마지막 섹션이 위로 올라가는 동안 트럭+푸터는 화면에 고정된 듯 아래에서 드러남 */
-(()=>{const tail=document.getElementById('tail');if(!tail)return;
+(()=>{const tail=null;if(!tail)return;   // 새 푸터: 위로 겹쳐 올라오는 연출 없음
 function f(){const last=[document.getElementById('quick'),document.getElementById('quickA')].find(e=>e&&getComputedStyle(e).display!=='none');
   if(last){const b=last.getBoundingClientRect().bottom,vh=innerHeight;tail.style.transform=b>0&&b<vh?`translateY(${-b}px)`:'';}
   requestAnimationFrame(f);}requestAnimationFrame(f);})();
@@ -2373,6 +2410,23 @@ window.abShow=render;render();   /* 처음부터 행을 채워 둬야 보드 크
     if(vis&&front){if(!seen){seen=true;v.currentTime=0;v.play().catch(()=>{})}}else if(!vis||ly.classList.contains('past')||!front){if(seen&&!front){v.pause()}seen=false}};
   addEventListener('scroll',chk,{passive:true});new MutationObserver(chk).observe(ly,{attributes:true,attributeFilter:['class']});new MutationObserver(chk).observe(sec,{attributes:true,attributeFilter:['class']});chk();});})();
 
+
+/* Start Here: 기본은 배송조회 영상, 카드에 마우스를 올리면 그 영상으로 (마이페이지는 회색) */
+(()=>{const sec=document.getElementById('quick');if(!sec||!sec.classList.contains('sh'))return;
+const vs=[...sec.querySelectorAll('.sh-v')];let cur='track',vis=false;
+function show(k){cur=k;vs.forEach(v=>{const on=v.dataset.k===k;v.classList.toggle('on',on);if(on&&vis){v.currentTime=0;v.play().catch(()=>{});}else if(!on)setTimeout(()=>{if(!v.classList.contains('on'))v.pause()},500);});}
+sec.querySelectorAll('.sh-c').forEach(c=>{c.addEventListener('mouseenter',()=>show(c.dataset.k));c.addEventListener('focus',()=>show(c.dataset.k));});
+sec.querySelector('.sh-cards').addEventListener('mouseleave',()=>show('track'));
+sec.querySelectorAll('.sh-c[aria-disabled]').forEach(c=>c.addEventListener('click',e=>e.preventDefault()));
+new IntersectionObserver(es=>{vis=es[0].isIntersecting;vs.forEach(v=>{if(vis&&v.dataset.k===cur)v.play().catch(()=>{});else v.pause();});},{threshold:.15}).observe(sec);})();
+/* 푸터: 화면에 들어오면 트럭이 왼쪽에서 달려와 서고, 바퀴가 굴러감 */
+(()=>{const sc=document.getElementById('ftScene'),tr=document.getElementById('ftTruck');if(!sc||!tr)return;
+const ws=[...tr.querySelectorAll('.fw')];let raf=0;
+function drive(){cancelAnimationFrame(raf);const from=-(tr.offsetLeft+tr.offsetWidth+40),t0=performance.now(),T=1800,wd=tr.offsetWidth*.05571;
+  (function st(now){const k=Math.min(1,(now-t0)/T),e=1-Math.pow(1-k,3),x=from*(1-e);tr.style.transform=`translateX(${x.toFixed(1)}px)`;
+    const rot=(x-from)/(Math.PI*wd)*360;ws.forEach(w=>w.style.setProperty('--rot',rot.toFixed(1)+'deg'));if(k<1)raf=requestAnimationFrame(st);})(t0);}
+let shown=false;new IntersectionObserver(es=>{const e=es[0];if(e.isIntersecting&&!shown){shown=true;drive();}else if(!e.isIntersecting&&e.boundingClientRect.top>0){shown=false;cancelAnimationFrame(raf);tr.style.transform=`translateX(${-(tr.offsetLeft+tr.offsetWidth+40)}px)`;}},{threshold:.35}).observe(sc);
+tr.style.transform=`translateX(${-(tr.offsetLeft+tr.offsetWidth+40)}px)`;})();
 </script>
 </body>
 </html>
