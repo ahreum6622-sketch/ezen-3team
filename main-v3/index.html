@@ -2222,7 +2222,7 @@ function frame(now){const dt=Math.min(.05,(now-last)/1000);last=now;
       el.style.visibility=landed||(gx>=1&&j>LAY)?'hidden':'visible';});}   // 안착하면 날아온 카드는 전부 숨기고 진짜 사진 자리(한 장)만 → 겹친 모양 없음
   pimg.style.visibility=landed?'visible':'hidden';
   fog.style.opacity=(1-fl).toFixed(3);
-  sec.classList.toggle('in',t>1.2&&e<.02);
+  sec.classList.toggle('in',t>1.2);   /* 내려가는 중에 'in'이 풀리면 제목이 60px 툭 떨어졌음(덜컹) → 계속 유지, 내려가는 건 아래 inline으로만 */
   tin.style.transition=e>0?'none':'';
   tin.style.opacity=e>0?String(1-tOut):'';tin.style.translate=e>0?`0 ${(tOut*vh*.1).toFixed(1)}px`:'';
   // 아래 섹션(여섯 가지 가치)은 밑에서 올라오며 날아오는 카드들을 받아 줌
