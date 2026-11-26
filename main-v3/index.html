@@ -1261,7 +1261,7 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
 
 @media (min-width:1001px){
  #services.rc-sec{--k:calc(100vw/1440*.74);padding:calc(230/1440*100vw) 0 calc(240/1440*100vw)}
- #services #dispatch.rc-head{padding-left:0;margin-bottom:calc(60/1440*100vw)}
+ #services #dispatch.rc-head{padding-left:0;margin-bottom:calc(26/1440*100vw)}
  #services #dispatch.rc-head h2{font-size:calc(46/1440*100vw)}
  #services #dispatch.rc-head p{font-size:calc(15/1440*100vw);margin-top:calc(14/1440*100vw)}
 }
@@ -2562,7 +2562,8 @@ window.abShow=render;render();   /* 처음부터 행을 채워 둬야 보드 크
 /* 도착하면 멈춤: 내용 높이를 재서 화면 가운데에 고정되도록 sticky 위치 계산 */
 (()=>{const T=[['services','.wrap'],['quick','.qs-in']].map(([id,s])=>{const sec=document.getElementById(id);return sec&&sec.querySelector(':scope>'+s)}).filter(Boolean);
 function set(){T.forEach(el=>{if(innerWidth<=820){el.style.position='';el.style.top='';return}
-  const h=el.offsetHeight;el.style.position='sticky';el.style.top=Math.max(64,(innerHeight-h)/2)+'px';});}
+  const nv=document.getElementById('nav'),H=nv?nv.getBoundingClientRect().bottom:64,h=el.offsetHeight;   // 헤더 아래 남은 공간의 가운데에 고정
+  el.style.position='sticky';el.style.top=(H+Math.max(16,(innerHeight-H-h)/2))+'px';});}
 addEventListener('resize',set);addEventListener('load',set);set();})();
 /* Start Here: 카드에 호버하면 미니어처에서 그 공간만 불이 켜지고 사람들이 움직임 (영상은 한 번 재생 후 마지막 장면에서 멈춤) */
 (()=>{const row=document.getElementById('qsRow'),st=document.getElementById('qsStage');if(!row||!st)return;
