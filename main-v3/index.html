@@ -2171,10 +2171,10 @@ function frame(now){const dt=Math.min(.05,(now-last)/1000);last=now;
      사진 모서리는 처음부터 끝까지 같은 둥글기 */
   E+=(ef-E)*.14;if(Math.abs(ef-E)<.003)E=ef;const e=E<.001?0:E;   // 끝에 가서는 정확히 맞춤 (안 그러면 마지막 단계가 영영 안 끝나서 사진이 안 바뀜)
   const eio=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
-  const tOut=ss(sv(e,0,.16)),fl=eio(sv(e,.18,.30)),up=eio(sv(e,.30,.56)),ls=ss(sv(e,.86,1)),landed=e>=.86;
+  const tOut=ss(sv(e,0,.24)),fl=eio(sv(e,.02,.16)),up=eio(sv(e,.16,.48)),ls=ss(sv(e,.86,1)),landed=e>=.86;   /* 타이틀이 내려가는 동시에 카드가 돌아서고 모이기 시작 */
   cam.style.transform='';cam.style.opacity='1';hero.style.visibility='hidden';
   floor.style.opacity=((t<0?0:oc(cl((t-.1)/1.2)))*(1-fl)).toFixed(3);
-  const flying=e>=.30;
+  const flying=e>=.16;
   cards.forEach((c,i)=>{
     const th0=i*STEP-180+STEP/2;
     let phi=((th0+spin)%360+540)%360-180;
@@ -2195,7 +2195,7 @@ function frame(now){const dt=Math.min(.05,(now-last)/1000);last=now;
   // 날아가기 시작하는 순간: 화면에 보이는 카드들의 위치를 재서 평면 카드로 바꿈 (왼쪽 → 오른쪽 순서)
   if(flying&&!deal){
     const vis=cards.filter(c=>c._front<=66&&c._op>.05).map(c=>{const b=c.getBoundingClientRect();return{x:b.left,y:b.top,w:b.width,h:b.height,src:c.querySelector('img').src,op:c._op}}).sort((a,b)=>a.x-b.x);
-    vis[vis.length-1].src=hB.src;                           // 마지막에 내려앉는 한 장 = SPEED 사진
+    vis[vis.length-1].src=hB.src;if(vis.length>1)vis[vis.length-2].src=ims[cueOrder[1]].src;   // 바로 뒤 한 장 = 안착 후 뒤에 보일 카드와 같은 사진 → 바뀌지 않음                           // 마지막에 내려앉는 한 장 = SPEED 사진
     deal=vis.map((v,k)=>{const d=document.createElement('div');d.className='pr-deal';d.innerHTML=`<img src="${v.src}" alt="">`;stage.appendChild(d);return Object.assign(v,{el:d,k})});
   }
   if(!flying&&deal){deal.forEach(d=>d.el.remove());deal=null;}
@@ -2203,9 +2203,11 @@ function frame(now){const dt=Math.min(.05,(now-last)/1000);last=now;
   const pr={left:pr0.left-sr.left,top:pr0.top-sr.top,width:pr0.width,height:pr0.height};   // 무대 기준 좌표
   // 겹쳐 쌓인 모양: 맨 앞 사진 뒤로 두 장이 위로 살짝 삐져나옴 (뒤로 갈수록 조금씩 좁아짐)
   const LAY=STACK_LAYERS,STEP_Y=pr.height*STACK_UP,NARROW=STACK_NARROW;
-  const dyG=eio(sv(e,.58,.86));                           // 내려가는 진행도: 내려가면서 겹친 층이 점점 한 장으로 합쳐짐 → 안착하면 사진 한 장만 남음
-  const slot=j=>{j=Math.min(j,LAY)*(1-dyG);const w=pr.width*(1-j*NARROW);return{x:pr.left+(pr.width-w)/2,y:pr.top-j*STEP_Y,w,h:pr.height}};
-  if(deal){const n=deal.length,gx=eio(sv(e,.30,.56)),dy=eio(sv(e,.58,.86));
+  const dyG=eio(sv(e,.52,.86));                           // 내려가는 진행도: 내려가면서 겹친 층이 점점 한 장으로 합쳐짐 → 안착하면 사진 한 장만 남음
+  const slot=j=>{const a=Math.min(j,LAY),wA=pr.width*(1-a*NARROW),yA=pr.top-a*STEP_Y,hA=pr.height;
+    const b=Math.min(j,1),wB=pr.width*(1-.04*b),hB2=pr.height*(1-.04*b),yB=pr.top-pr.height*.09*b+(pr.height-hB2)/2;   /* 내려가며 '앞 사진 + 뒤 카드 한 장' 모양(안착 후와 같은 모양)으로 바뀜 */
+    const w=wA+(wB-wA)*dyG,h=hA+(hB2-hA)*dyG;return{x:pr.left+(pr.width-w)/2,y:yA+(yB-yA)*dyG,w,h}};
+  if(deal){const n=deal.length,gx=eio(sv(e,.16,.48)),dy=eio(sv(e,.52,.86));
     const rowY=vh/2-sr.top-pr.height/2;                     // 옆으로 모이는 줄의 높이(화면 가운데)
     deal.forEach(d=>{const j=n-1-d.k,to=slot(j),x0=d.x-sr.left,y0=d.y-sr.top;   // j: 앞에서 몇 번째 층 (오른쪽 끝 카드 = SPEED가 맨 앞)
       // ① 옆으로: 각 카드가 가로로만 미끄러져 사진 자리 바로 위 줄에서 겹쳐짐 (크기도 사진 자리 크기로)
@@ -2215,8 +2217,8 @@ function frame(now){const dt=Math.min(.05,(now-last)/1000);last=now;
       const yRow=y0+(ry-y0)*gx;                             // 줄로 맞춰질 때(가로 이동과 함께) 살짝 높이 정렬
       const y=yRow+(to.y-ry)*dy;
       const el=d.el;el.style.left=x+'px';el.style.top=y+'px';el.style.width=w+'px';el.style.height=h+'px';el.style.borderRadius=rad+'px';
-      el.style.transform='none';el.style.opacity=(d.op+(1-d.op)*gx).toFixed(3);el.style.zIndex=String(1+d.k);
-      el.style.filter=j>0?`brightness(${(1-Math.min(j,LAY)*STACK_DARK*gx*(1-dyG)).toFixed(3)})`:'none';
+      el.style.transform='none';el.style.opacity=((d.op+(1-d.op)*gx)*(j>=2?1-dyG:1)).toFixed(3);el.style.zIndex=String(1+d.k);   // 세 번째부터는 내려가며 사라짐
+      el.style.filter=j>0?`brightness(${((1-Math.min(j,LAY)*STACK_DARK*gx)*(1-dyG)+.88*dyG).toFixed(3)})`:'none';
       el.style.visibility=landed||(gx>=1&&j>LAY)?'hidden':'visible';});}   // 안착하면 날아온 카드는 전부 숨기고 진짜 사진 자리(한 장)만 → 겹친 모양 없음
   pimg.style.visibility=landed?'visible':'hidden';
   fog.style.opacity=(1-fl).toFixed(3);
