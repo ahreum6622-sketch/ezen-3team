@@ -2208,7 +2208,7 @@ function frame(now){const dt=Math.min(.05,(now-last)/1000);last=now;
   const dyG=eio(sv(e,.52,.86));                           // 내려가는 진행도: 내려가면서 겹친 층이 점점 한 장으로 합쳐짐 → 안착하면 사진 한 장만 남음
   const slot=j=>{const a=Math.min(j,LAY),wA=pr.width*(1-a*NARROW),yA=pr.top-a*STEP_Y,hA=pr.height;
     const b=Math.min(j,1),wB=pr.width*(1-.04*b),hB2=pr.height*(1-.04*b),yB=pr.top-pr.height*.09*b+(pr.height-hB2)/2;   /* 내려가며 '앞 사진 + 뒤 카드 한 장' 모양(안착 후와 같은 모양)으로 바뀜 */
-    const w=wA+(wB-wA)*dyG,h=hA+(hB2-hA)*dyG;return{x:pr.left+(pr.width-w)/2,y:yA+(yB-yA)*dyG,w,h}};
+    return{x:pr.left+(pr.width-wB)/2,y:yB,w:wB,h:hB2}};   /* 처음부터 '앞 사진 + 뒤 카드 한 장' 모양으로 모임 (3장→2장 단계 없음) */
   if(deal){const n=deal.length,gx=eio(sv(e,.16,.48)),dy=eio(sv(e,.52,.86));
     const rowY=vh/2-sr.top-pr.height/2;                     // 옆으로 모이는 줄의 높이(화면 가운데)
     deal.forEach(d=>{const j=n-1-d.k,to=slot(j),x0=d.x-sr.left,y0=d.y-sr.top;   // j: 앞에서 몇 번째 층 (오른쪽 끝 카드 = SPEED가 맨 앞)
@@ -2219,8 +2219,8 @@ function frame(now){const dt=Math.min(.05,(now-last)/1000);last=now;
       const yRow=y0+(ry-y0)*gx;                             // 줄로 맞춰질 때(가로 이동과 함께) 살짝 높이 정렬
       const y=yRow+(to.y-ry)*dy;
       const el=d.el;el.style.left=x+'px';el.style.top=y+'px';el.style.width=w+'px';el.style.height=h+'px';el.style.borderRadius=rad+'px';
-      el.style.transform='none';el.style.opacity=((d.op+(1-d.op)*gx)*(j>=2?1-dyG:1)).toFixed(3);el.style.zIndex=String(1+d.k);   // 세 번째부터는 내려가며 사라짐
-      el.style.filter=j>0?`brightness(${((1-Math.min(j,LAY)*STACK_DARK*gx)*(1-dyG)+.88*dyG).toFixed(3)})`:'none';
+      el.style.transform='none';el.style.opacity=(d.op+(1-d.op)*gx).toFixed(3);el.style.zIndex=String(1+d.k);   // 세 번째부터는 내려가며 사라짐
+      el.style.filter=j>0?`brightness(${(1-.12*gx).toFixed(3)})`:'none';
       el.style.visibility=landed||(gx>=1&&j>LAY)?'hidden':'visible';});}   // 안착하면 날아온 카드는 전부 숨기고 진짜 사진 자리(한 장)만 → 겹친 모양 없음
   pimg.style.visibility=landed?'visible':'hidden';
   fog.style.opacity=(1-fl).toFixed(3);
