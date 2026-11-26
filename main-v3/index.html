@@ -1058,10 +1058,7 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
 .sc2-ly video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
 :root{--u:min(1vw,2vh);--en:'Inter','Pretendard',system-ui,sans-serif}
 /* ===== 팀원 시안(헤리티지·고객 약속·Connecting 글자 모션) 반영 ===== */
-.hd-skip{position:fixed;right:24px;bottom:24px;z-index:60;padding:10px 16px;border-radius:999px;border:1px solid rgba(255,255,255,.25);background:rgba(17,17,17,.72);color:#fff;font:600 13px var(--sans);letter-spacing:.02em;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .4s;backdrop-filter:blur(6px)}
-.hd-skip.on{opacity:1;pointer-events:auto}
-.hd-skip:hover{background:#111}
-.hd{position:relative;height:900vh;z-index:2;--ground:.66}
+.hd{position:relative;height:430vh;z-index:2;--ground:.66}
 .hd-stage{position:sticky;top:0;height:100vh;overflow:hidden;background:#fff}
 .hd-fade{position:absolute;left:0;right:0;top:0;height:200vh;z-index:6;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,0) 0%,rgba(255,255,255,.55) 20%,#fff 42%);transform:translateY(100vh);will-change:transform}
 .hd-out{position:absolute;left:0;bottom:calc(100% - var(--ground)*100vh - 3.2vw);white-space:nowrap;font-family:var(--en);font-size:24vw;line-height:.8;font-weight:800;letter-spacing:-.04em;color:#f0efeb;will-change:transform;user-select:none}
@@ -2266,7 +2263,7 @@ const WH=[{f:'wv0',x:360.1,y:727.4,w:68.2},{f:'wv1',x:451,y:727.4,w:68.2},{f:'wv
 const cl=(v,a=0,b=1)=>Math.min(b,Math.max(a,v)),sv=(p,a,b)=>cl((p-a)/(b-a)),eo=t=>1-Math.pow(1-t,3);
 const mix=(a,b,t)=>a.map((v,i)=>Math.round(v+(b[i]-v)*t));
 /* ── 자주 만질 값 ── */
-const DRIVE=.17;              // 트럭 속도(바퀴·뒤 글자·도로 점선). 연도가 천천히 올라오는 것에 맞춰 낮춤 (원본 느낌은 .5)
+const DRIVE=.30;              // 트럭 속도(바퀴·뒤 글자·도로 점선). 연도가 천천히 올라오는 것에 맞춰 낮춤 (원본 느낌은 .5)
 const TITLE_OUT=[.077,.14];   /* 제목이 충분히 보인 뒤(앞 22%) 밀려 나감 */    // 트럭이 달리는 동안 제목이 천천히 뒤로 밀려 사라지는 구간 (길수록 은은함)
 const FADE_EDGE=.38;          // 제목이 왼쪽으로 밀려 나갈 때 흐려지는 구간 폭(화면 폭 비율)    // 트럭이 조금 달린 뒤 제목이 사라지는 구간
 const FIRST_IN=[.1325,.161];     // 제목이 사라진 뒤 1969가 나타나는 구간
@@ -2284,7 +2281,7 @@ function frame(){
   const drive=(P*7+F*3)*DRIVE,tw=truck.offsetWidth;      // 원본(600vh)과 같은 스크롤 대비 속도
   const tx=(1-enter)*-W*.9+Math.pow(F,1.6)*W*.9;        // 트럭이 가운데에서 벗어난 거리
   truck.style.transform=`translate(${-tw/2+tx}px,0px)`;
-  const k=tw/1600,roll=((drive*900)+(1-enter)*-W*.9)/(44*k)*57.2958;   // 바퀴가 도로와 같은 속도로 굴러감 (이동 거리 ÷ 바퀴 반지름)
+  const k=tw/1600,roll=((drive*900)+(1-enter)*-W*.9)/(44*k)*57.2958*1.8;   /* 바퀴는 1.8배 더 빨리 돌게(속도감) */   // 바퀴가 도로와 같은 속도로 굴러감 (이동 거리 ÷ 바퀴 반지름)
   WH.forEach(w=>{w.e.style.width=w.w*k+'px';w.e.style.transform=`translate(${w.x*k}px,${w.y*k}px) rotate(${roll.toFixed(1)}deg)`});
   out.style.transform=`translateX(${-drive*18}vw)`;
   dash.style.transform=`translateX(${-((drive*900)%150)}px)`;
@@ -2378,25 +2375,6 @@ window.abShow=render;render();   /* 처음부터 행을 채워 둬야 보드 크
     if(vis&&front){if(!seen){seen=true;v.currentTime=0;v.play().catch(()=>{})}}else if(!vis||ly.classList.contains('past')||!front){if(seen&&!front){v.pause()}seen=false}};
   addEventListener('scroll',chk,{passive:true});new MutationObserver(chk).observe(ly,{attributes:true,attributeFilter:['class']});new MutationObserver(chk).observe(sec,{attributes:true,attributeFilter:['class']});chk();});})();
 
-/* 우리의 역사(트럭) 섹션: 위에서 들어오면 스크롤을 잠그고 모션을 자동 재생 → 끝나면 다음 섹션으로 풀어줌.
-   (아래에서 위로 올라올 때는 예전처럼 스크롤로 움직임 / '건너뛰기'로 바로 넘어갈 수 있음) */
-(()=>{const sec=document.getElementById('heritage');if(!sec)return;
-const DUR=13000;   // 자동 재생 전체 길이(ms) — 예전 트럭 섹션 참고 영상 속도에 맞춤
-const btn={classList:{add(){},remove(){}}};   // 건너뛰기 버튼 없음
-let ap=null,done=false,lastY=scrollY;
-const block=e=>{if(ap){e.preventDefault();}};
-const keys=e=>{if(ap&&[' ','PageDown','PageUp','ArrowDown','ArrowUp','Home','End'].includes(e.key))e.preventDefault();};
-addEventListener('wheel',block,{passive:false});addEventListener('touchmove',block,{passive:false});addEventListener('keydown',keys);
-const go=y=>window.scrollTo({top:y,behavior:'instant'});
-function stop(jumpEnd){if(!ap)return;const y1=ap.y1;ap=null;done=true;btn.classList.remove('on');if(jumpEnd)go(y1+2);}
-function tick(now){if(ap){const k=Math.min(1,(now-ap.t0)/DUR);go(ap.y0+(ap.y1-ap.y0)*k);if(k>=1)stop(false);}requestAnimationFrame(tick);}
-requestAnimationFrame(tick);
-addEventListener('scroll',()=>{const y=scrollY,down=y>lastY;lastY=y;if(ap)return;
-  const top=sec.getBoundingClientRect().top+y,end=top+sec.offsetHeight-innerHeight;
-  if(y<top-innerHeight*.3)done=false;                       // 섹션 위로 다시 올라가면 다음에 또 자동 재생
-  if(!done&&down&&y>=top-2&&y<top+innerHeight*.6){ap={t0:performance.now()-Math.max(0,(y-top)/(end-top))*DUR,y0:top,y1:end};btn.classList.add('on');}
-},{passive:true});
-})();
 </script>
 </body>
 </html>
