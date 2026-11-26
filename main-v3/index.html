@@ -1060,6 +1060,7 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
 /* ===== 팀원 시안(헤리티지·고객 약속·Connecting 글자 모션) 반영 ===== */
 .hd{position:relative;height:430vh;z-index:2;--ground:.66}
 .hd-stage{position:sticky;top:0;height:100vh;overflow:hidden;background:#fff}
+.hd-gap{height:35vh;background:#fff;position:relative;z-index:3}   /* Connecting 섹션과 트럭 섹션 사이 흰 여백 */
 .hd-fade{position:absolute;left:0;right:0;top:0;height:200vh;z-index:6;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,0) 0%,rgba(255,255,255,.55) 20%,#fff 42%);transform:translateY(100vh);will-change:transform}
 .hd-out{position:absolute;left:0;bottom:calc(100% - var(--ground)*100vh - 3.2vw);white-space:nowrap;font-family:var(--en);font-size:24vw;line-height:.8;font-weight:800;letter-spacing:-.04em;color:#f0efeb;will-change:transform;user-select:none}
 .hd-ground{position:absolute;left:0;right:0;top:calc(var(--ground)*100vh);bottom:0;background:#111}
@@ -1308,6 +1309,7 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
 </div></section>
 
 <!-- OUR HERITAGE: 세로 스크롤 → 가로로 흐르는 연혁 (레퍼런스 151 horizontal slider + progress marker) -->
+<div class="hd-gap" aria-hidden="true"></div>
 <section class="hd" id="heritage">
   <div class="hd-stage">
     <div class="hd-out" id="hdOut" aria-hidden="true">OUR HERITAGE · SINCE 1969 · OUR HERITAGE · SINCE 1969 · </div>
