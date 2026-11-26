@@ -1335,7 +1335,10 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
 .qs-stage{position:relative;width:calc(755*var(--u));aspect-ratio:4/1;margin:calc(46*var(--u)) auto 0;overflow:hidden}
 .qs-base,.qs-lit{display:block;width:100%;height:100%;object-fit:cover}
 .qs-lit{position:absolute;inset:0;display:none}   /* 모바일·움직임 줄이기 설정에서만: 불 켜진 그림 */
-#quick.qs{background:#fff;border-radius:0;box-shadow:none}   /* 옛 #quick 둥근 카드 모양 끄기 → 푸터와 하나로 이어짐 */
+#quick.qs{background:#fff;border-radius:0;box-shadow:none}
+/* Who Arrives First · Start Here: 화면 가운데 도착하면 잠깐 멈춰 있다가 넘어감 (위 섹션들처럼). 멈추는 길이 = .hold-sp 높이 */
+.hold-sp{height:42vh}
+@media (max-width:820px){.hold-sp{display:none}}   /* 옛 #quick 둥근 카드 모양 끄기 → 푸터와 하나로 이어짐 */
 .qs-z{position:absolute;top:0;height:100%;object-fit:cover;opacity:0;pointer-events:none;transition:opacity .35s ease;
   -webkit-mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.08) 4%,rgba(0,0,0,.3) 9%,rgba(0,0,0,.62) 15%,rgba(0,0,0,.88) 20%,#000 25%,#000 75%,rgba(0,0,0,.88) 80%,rgba(0,0,0,.62) 85%,rgba(0,0,0,.3) 91%,rgba(0,0,0,.08) 96%,transparent 100%);mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.08) 4%,rgba(0,0,0,.3) 9%,rgba(0,0,0,.62) 15%,rgba(0,0,0,.88) 20%,#000 25%,#000 75%,rgba(0,0,0,.88) 80%,rgba(0,0,0,.62) 85%,rgba(0,0,0,.3) 91%,rgba(0,0,0,.08) 96%,transparent 100%)}   /* 밝아진 구역 양옆이 옆 공간으로 서서히 번지도록 긴 그라데이션 */
 .qs-z[data-k="track"]{-webkit-mask-image:linear-gradient(90deg,#000 0%,#000 72%,rgba(0,0,0,.88) 80%,rgba(0,0,0,.62) 85%,rgba(0,0,0,.3) 91%,rgba(0,0,0,.08) 96%,transparent 100%);mask-image:linear-gradient(90deg,#000 0%,#000 72%,rgba(0,0,0,.88) 80%,rgba(0,0,0,.62) 85%,rgba(0,0,0,.3) 91%,rgba(0,0,0,.08) 96%,transparent 100%)}
@@ -1572,7 +1575,7 @@ function render(v){const k=v/100;wb.style.transform=`translateY(${(-100+100*Math
     <div class="rc-lanes" id="lanes"></div>
     
   </div>
-</div></section>
+</div><div class="hold-sp" aria-hidden="true"></div></section>
 
 <!-- 감성: 화면 꽉 찬 그림 한 장 -->
 
@@ -1612,9 +1615,9 @@ function render(v){const k=v/100;wb.style.transform=`translateY(${(-100+100*Math
 <!-- 11. 퀵가이드 (팀 푸터 시안 A/B의 메뉴를 카드로 · FAQ 자리를 대체) -->
 
 <section class="qs" id="quick" aria-label="Start Here">
-  <h2>Start <em>Here!</em></h2>
+  <div class="qs-in"><h2>Start <em>Here!</em></h2>
   <div class="qs-stage" id="qsStage"><img class="qs-base" src="img/qs/stage_off.webp?v=2" alt="DHL 배송조회·발송·포장·고객지원 공간을 담은 미니어처" decoding="async"><img class="qs-lit" src="img/qs/stage.webp?v=2" alt="" aria-hidden="true" decoding="async"><video class="qs-z" data-k="track" src="img/qs/track.mp4?v=3" muted playsinline preload="auto" aria-hidden="true" style="left:0.0%;width:36.51%"></video><video class="qs-z" data-k="send" src="img/qs/send.mp4?v=3" muted playsinline preload="auto" aria-hidden="true" style="left:24.479%;width:34.01%"></video><video class="qs-z" data-k="guide" src="img/qs/guide.mp4?v=4" muted playsinline preload="auto" aria-hidden="true" style="left:46.51%;width:34.01%"></video><video class="qs-z" data-k="my" src="img/qs/my.mp4?v=3" muted playsinline preload="auto" aria-hidden="true" style="left:68.49%;width:31.51%"></video></div>
-  <div class="qs-row" id="qsRow"><a class="qs-c" href="track.html" data-k="track"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><b>배송조회</b><span>실시간 배송 현황 확인</span></a><a class="qs-c" href="quote.html" data-k="send"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7l9-4 9 4v10l-9 4-9-4z"/><path d="M3 7l9 4 9-4"/><path d="M12 11v10"/></svg><b>발송하기</b><span>요금 확인부터 픽업 예약까지</span></a><a class="qs-c" href="guide.html" data-k="guide"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/></svg><b>가이드</b><span>국제배송에 필요한 모든 정보</span></a><a class="qs-c" href="mypage.html" data-k="my"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg><b>마이페이지</b><span>발송 내역 및 계정 관리</span></a></div>
+  <div class="qs-row" id="qsRow"><a class="qs-c" href="track.html" data-k="track"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><b>배송조회</b><span>실시간 배송 현황 확인</span></a><a class="qs-c" href="quote.html" data-k="send"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7l9-4 9 4v10l-9 4-9-4z"/><path d="M3 7l9 4 9-4"/><path d="M12 11v10"/></svg><b>발송하기</b><span>요금 확인부터 픽업 예약까지</span></a><a class="qs-c" href="guide.html" data-k="guide"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/></svg><b>가이드</b><span>국제배송에 필요한 모든 정보</span></a><a class="qs-c" href="mypage.html" data-k="my"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg><b>마이페이지</b><span>발송 내역 및 계정 관리</span></a></div></div><div class="hold-sp" aria-hidden="true"></div>
 </section>
 
 <!-- 10. 마무리 (레퍼런스 READY TO ROLL → 트럭에 상자 싣고 출발) -->
@@ -2555,6 +2558,11 @@ window.abShow=render;render();   /* 처음부터 행을 채워 둬야 보드 크
   addEventListener('scroll',chk,{passive:true});new MutationObserver(chk).observe(ly,{attributes:true,attributeFilter:['class']});new MutationObserver(chk).observe(sec,{attributes:true,attributeFilter:['class']});chk();});})();
 
 
+/* 도착하면 멈춤: 내용 높이를 재서 화면 가운데에 고정되도록 sticky 위치 계산 */
+(()=>{const T=[['services','.wrap'],['quick','.qs-in']].map(([id,s])=>{const sec=document.getElementById(id);return sec&&sec.querySelector(':scope>'+s)}).filter(Boolean);
+function set(){T.forEach(el=>{if(innerWidth<=820){el.style.position='';el.style.top='';return}
+  const h=el.offsetHeight;el.style.position='sticky';el.style.top=Math.max(64,(innerHeight-h)/2)+'px';});}
+addEventListener('resize',set);addEventListener('load',set);set();})();
 /* Start Here: 카드에 호버하면 미니어처에서 그 공간만 불이 켜지고 사람들이 움직임 (영상은 한 번 재생 후 마지막 장면에서 멈춤) */
 (()=>{const row=document.getElementById('qsRow'),st=document.getElementById('qsStage');if(!row||!st)return;
 const cs=[...row.querySelectorAll('.qs-c')],vs=Object.fromEntries([...st.querySelectorAll('.qs-z')].map(v=>[v.dataset.k,v]));
