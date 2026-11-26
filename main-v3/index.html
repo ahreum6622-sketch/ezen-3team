@@ -1679,7 +1679,7 @@ function truck(g,d,cab,trl,vis=1,ex=0){
   cab.style.zIndex=base+(cabFront?1:0);trl.style.zIndex=base+(cabFront?0:1);   // 같은 트럭 안: 짐칸이 머리 뒤 차대(바퀴)를 덮음. 정면으로 다가올 때만 머리가 앞
   cab.style.opacity=trl.style.opacity=vis;}
 const gA=gPath(PAB), gC=gPath({o:PA.o.slice().reverse()}), gB=gPath(PB);
-let KC=0,CF=1,CT=null;
+let KC=0,CT=null,CS='run';
 const runD=(g,k)=>TLEN+(g.T-TLEN)*k, dA=p=>runD(gA,ez(sv(p,.16,.34)));   // 카메라가 다가간 뒤(.13~) 주차된 트럭이 출발
 window.truckA=p=>{const K=gAt(gA,dA(p));return[K.x,K.y*SE]};
 /* 리치스태커: 다가가서 → 붐을 내려 컨테이너를 잡고 → 들어 올린 채 후진 */
@@ -1700,10 +1700,15 @@ function rs(p){
   put(V.ct,RSP[0],RSP[1],RSW);V.ct.style.opacity=cont;}
 function vehicles(p){
   truck(gA,dA(p),V.tac,V.tat);
-  { /* 마주 오는 트럭(C): 주변 상관없이 48초에 한 바퀴 — 출발점에서 나타나 끝까지 간 뒤 다시 처음부터 */
+  { /* 마주 오는 트럭(C): 48초 동안 항구→물류센터. 화면 안에서는 절대 서서히 나타나거나 사라지지 않음(유령 방지)
+       끝에 도착하면 주차장에 그대로 서 있다가, 화면 밖으로 벗어났을 때만 출발점으로 순간이동 → 출발점이 화면 밖일 때 바로 출발 */
     const dt=CT===null?0:Math.max(0,Math.min(.1,T-CT));CT=T;
-    KC=(KC+dt/48)%1;
-    truck(gC,runD(gC,KC),V.tcc,V.tct,(sv(KC,0,.03)*(1-sv(KC,.96,1))).toFixed(3)); }
+    const r=V.tct.getBoundingClientRect(),off=r.right<-60||r.left>innerWidth+60||r.bottom<-60||r.top>innerHeight+60||!r.width;
+    let vis=1;
+    if(CS==='run'){KC+=dt/48;if(KC>=1){KC=1;CS='park'}}
+    else if(CS==='park'){if(off){CS='wait';KC=0;vis=0}}
+    else{vis=0;if(off)CS='run'}   // 출발점이 화면 밖일 때만 출발 → 항상 화면 밖에서 들어옴
+    truck(gC,runD(gC,KC),V.tcc,V.tct,vis.toFixed(3)); }
   truck(gB,runD(gB,sv(p,.58,.70)),V.tbc,V.tbt,(sv(p,.56,.585)*(1-sv(p,.70,.72))).toFixed(3));   // 야적장 장면에서만 보임 (그 전엔 숨김)   // 공항 앞에 도착하면 사라짐
   rs(p);
   const g=sv(p,.49,.555),c=sv(p,.555,.63);
