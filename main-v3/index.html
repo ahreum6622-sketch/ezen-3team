@@ -1271,6 +1271,19 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
  #services #dispatch.rc-head h2{font-size:calc(58/1440*100vw)}
  #services #dispatch.rc-head p{font-size:calc(15/1440*100vw);margin-top:calc(22/1440*100vw)}
 }
+
+/* ===== 헤더 (2026-11-26 시안): 가운데 떠 있는 둥근 바 · 메뉴 4개 · 운송장 조회 ===== */
+#nav{left:50%;right:auto;top:calc(23/1288*100vw);transform:translateX(-50%);width:max(760px,calc(773/1288*100vw));border-radius:999px;border:1px solid rgba(255,255,255,.6);background:rgba(232,234,222,.82);-webkit-backdrop-filter:blur(18px) saturate(120%);backdrop-filter:blur(18px) saturate(120%);box-shadow:0 6px 24px -14px rgba(30,30,20,.25)}
+#nav.solid{background:rgba(240,240,234,.9);box-shadow:0 6px 24px -14px rgba(30,30,20,.3)}
+#nav .wrap{height:max(52px,calc(37/1288*100vw));padding:0 max(10px,calc(8/1288*100vw)) 0 max(26px,calc(28/1288*100vw));gap:0}
+#nav .logo{margin-right:max(26px,calc(22/1288*100vw))}
+#nav .logo img{height:auto;width:max(80px,calc(90/1288*100vw))}
+#nav ul{gap:max(22px,calc(22/1288*100vw));font-weight:500;font-size:max(15px,calc(12/1288*100vw))}
+#nav ul a{color:#1d1d1b}
+#nav .nav-track{height:max(38px,calc(23/1288*100vw));width:max(230px,calc(180/1288*100vw));padding:0 3px 0 max(14px,calc(11/1288*100vw));background:#f3f3ef;border-color:transparent}
+#nav .nav-track input{flex:1;width:auto;min-width:0;font-size:max(13px,calc(8.5/1288*100vw))}
+#nav .nav-track button{height:calc(100% - 6px);padding:0 max(14px,calc(10/1288*100vw));font-weight:500;font-size:max(13px,calc(8.5/1288*100vw))}
+@media (max-width:820px){#nav{width:calc(100vw - 24px);top:12px}#nav ul{display:none}}
 </style>
 </head>
 <body>
@@ -1281,8 +1294,8 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
 <!-- 2. 내비 -->
 <header class="nav" id="nav"><div class="wrap">
   <a class="logo" href="#top"><img src="img/dhl-logo-red.png" alt="DHL"></a>
-  <ul><li><a href="track.html">배송조회</a></li><li><a href="quote.html">요금산출</a></li><li><a href="guide.html">가이드</a></li><li><a href="#support">고객지원</a></li></ul>
-  <form class="nav-track" style="margin-left:auto" action="track.html" method="get" role="search"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input name="awb" inputmode="numeric" placeholder="운송장 번호 조회" aria-label="운송장 번호"><button type="submit">조회</button></form>
+  <ul><li><a href="track.html">배송조회</a></li><li><a href="quote.html">요금산출</a></li><li><a href="guide.html">가이드</a></li><li><a href="#" aria-disabled="true">마이페이지</a></li></ul>
+  <form class="nav-track" style="margin-left:auto" action="track.html" method="get" role="search"><input name="awb" inputmode="numeric" placeholder="운송장 조회하기" aria-label="운송장 번호"><button type="submit">조회</button></form>
 </div></header>
 
 
