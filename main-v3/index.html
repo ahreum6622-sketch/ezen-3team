@@ -1257,6 +1257,45 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
 .ft-legal a{color:inherit;text-decoration:none;margin-right:calc(54*var(--u))}
 .ft-legal a:hover{color:#fff}
 @media (max-width:820px){.ft{--u:calc(100vw/700)}.ft-body{padding:48px 22px 36px}.ft-top{flex-direction:column;gap:32px}.ft-logo{width:180px}.ft-cols{gap:48px;text-align:left}.ft-cols h4{font-size:15px}.ft-cols a{font-size:14px}.ft-legal{flex-direction:column;gap:12px;font-size:12px;margin-top:36px}.ft-legal a{margin-right:18px}}
+.ft{--u:calc(100vw/1148);padding-top:0}
+.ft-scene{height:calc(367*var(--u))}
+.ft-road{left:0;right:0;height:calc(48.5*var(--u));background:#585858;border-top:calc(2*var(--u)) solid #d6d6d6;border-bottom:calc(2*var(--u)) solid #cfcfcf}
+.ft-road::before{height:calc(2*var(--u));background:repeating-linear-gradient(90deg,#e8e8e8 0 calc(24*var(--u)),transparent calc(24*var(--u)) calc(48*var(--u)))}
+.ft-dock{left:calc(99*var(--u));width:calc(221*var(--u));height:calc(79*var(--u));background:#2c2c2c;z-index:2}
+.ft-dock::before{display:none}
+.ft-cap{position:absolute;left:calc(-4*var(--u));right:calc(-4*var(--u));top:0;height:calc(12*var(--u));background:#3a3a3a}
+.ft-dock img{width:calc(57*var(--u))}
+.ft-dock .b1{left:calc(93*var(--u));bottom:100%}
+.ft-dock .b2{left:calc(151*var(--u));bottom:100%}
+.ft-dock .b3{left:calc(151*var(--u));bottom:calc(100% + 42*var(--u))}
+.ft-lamp{bottom:calc(43.6*var(--u));width:calc(58*var(--u))}
+.ft-truck{left:calc(389*var(--u));width:calc(424*var(--u));bottom:calc(17*var(--u));z-index:1}
+.ft-body{padding:calc(45*var(--u)) calc(132*var(--u)) calc(27.2*var(--u)) calc(132*var(--u))}
+.ft-logo{width:calc(189*var(--u));margin-top:0}
+.ft-brand p{margin:calc(8*var(--u)) 0 0;font-size:max(11px,calc(9.2*var(--u)));line-height:1.49;color:#9d9d9d}
+.ft-cols{gap:calc(54*var(--u))}
+.ft-cols h4{font-size:max(13px,calc(11.6*var(--u)));margin-bottom:calc(7.8*var(--u))}
+.ft-cols ul{gap:calc(4.6*var(--u))}
+.ft-cols a{font-size:max(11px,calc(9.1*var(--u)))}
+.ft-legal{margin-top:calc(28*var(--u));padding-top:calc(7.8*var(--u));border-top:1px solid #8f8f8f;font-size:max(11px,calc(9.1*var(--u)))}
+.ft-legal a{margin-right:calc(34*var(--u))}
+@media (max-width:820px){.ft-brand p{font-size:12px}}
+/* 푸터 상자 6개: matter.js 물리로 떨어져 쌓임 (JS는 파일 끝) */
+.ft-cv{position:absolute;left:0;top:0;width:100%;height:100%;z-index:3;pointer-events:none}
+.ft-scene.grab{cursor:grab}.ft-scene.grabbing{cursor:grabbing}
+/* ── 푸터 위 문구 ── */
+.ft-scene{height:calc(686*var(--u))}   /* 문구가 들어갈 만큼 위쪽을 늘림 (아래 장면은 367u 시안 기준) */
+.ft-cta{position:absolute;left:0;right:0;top:calc(240*var(--u));z-index:5;text-align:center;color:var(--ink);pointer-events:none;padding:0 20px}
+.ft-pt{font-style:normal;color:#D40511}
+.ft-h{margin:0;font:700 max(32px,calc(65/1920*100vw))/1.05 var(--en,'Inter',var(--sans));letter-spacing:-.03em;color:var(--ink)}
+.ft-ds{margin:calc(14*var(--u)) 0 0;font-size:max(13px,calc(16/1920*100vw));line-height:1.6;color:#6b6b6b}
+/* 하역대 조작 패널 — 상자 넣기 + 표시등 3개(실을 때마다 노랗게 켜짐) */
+.ft-panel{position:absolute;left:50%;top:calc(30*var(--u));transform:translateX(-50%);z-index:3;display:inline-flex;align-items:center;gap:calc(9*var(--u));height:max(28px,calc(24*var(--u)));padding:0 max(12px,calc(11*var(--u)));border:1px solid #4a4a4a;border-radius:calc(5*var(--u));background:#383838;box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 2px 6px rgba(0,0,0,.35);font:600 max(12px,calc(8.6*var(--u)))/1 var(--sans);letter-spacing:-.01em;color:#e9e9e9;white-space:nowrap;cursor:pointer;transition:border-color .25s,color .25s}
+.ft-panel:hover,.ft-panel:focus-visible{border-color:#FFCC00;color:#fff;outline:none}
+.ft-pip{display:flex;gap:max(4px,calc(4*var(--u)))}
+.ft-pip i{width:max(6px,calc(5.5*var(--u)));height:max(6px,calc(5.5*var(--u)));border-radius:50%;background:#1f1f1f;box-shadow:inset 0 1px 1px rgba(0,0,0,.6),0 0 0 1px #4d4d4d;transition:background .3s,box-shadow .3s}
+.ft-pip i.on{background:#FFCC00;box-shadow:0 0 0 1px #e0b300,0 0 calc(7*var(--u)) rgba(255,204,0,.75)}
+@media (max-width:820px){.ft-scene{height:calc(900*var(--u))}.ft-h br{display:none}}
 
 @media (min-width:1001px){
  #services.rc-sec{--k:calc(100vw/1440*.74);padding:calc(230/1440*100vw) 0 calc(120/1440*100vw)}
@@ -1303,29 +1342,6 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
 .sh2-c.on[data-k="my"] .sh2-t{color:#111}.sh2-c.on[data-k="my"] .sh2-t span{color:#444}.sh2-c.on[data-k="my"]::after{opacity:0}
 @media (max-width:820px){.sh2{--u:calc(100vw/600)}.sh2-row{flex-wrap:wrap;height:auto;gap:12px;padding:0 20px}.sh2-c,.sh2-row.has-hover .sh2-c,.sh2-row.has-hover .sh2-c.on{width:calc(50% - 6px);height:96px}.sh2-c video,.sh2-c::after{display:none}.sh2-c.on .sh2-t{top:50%;transform:translateY(-50%);color:#111}.sh2-t{left:48px}.sh2-t svg{left:-30px;width:18px;height:18px}.sh2-t b{font-size:16px}.sh2-t span{font-size:12px;color:#555!important}}
 
-.ft{--u:calc(100vw/1148);padding-top:0}
-.ft-scene{height:calc(560*var(--u))}   /* 위쪽 여백 넉넉히 — 나중에 큰 타이틀 들어갈 자리 */
-.ft-road{left:0;right:0;height:calc(47*var(--u));background:#585858;border-top:calc(2*var(--u)) solid #d6d6d6;border-bottom:calc(2*var(--u)) solid #cfcfcf}
-.ft-road::before{height:calc(2*var(--u));background:repeating-linear-gradient(90deg,#e8e8e8 0 calc(24*var(--u)),transparent calc(24*var(--u)) calc(48*var(--u)))}
-.ft-dock{left:calc(99*var(--u));width:calc(221*var(--u));height:calc(79*var(--u));background:#2c2c2c;z-index:2}
-.ft-dock::before{display:none}
-.ft-cap{position:absolute;left:calc(-4*var(--u));right:calc(-4*var(--u));top:0;height:calc(12*var(--u));background:#3a3a3a}
-.ft-dock img{width:calc(57*var(--u))}
-.ft-dock .b1{left:calc(93*var(--u));bottom:100%}
-.ft-dock .b2{left:calc(151*var(--u));bottom:100%}
-.ft-dock .b3{left:calc(151*var(--u));bottom:calc(100% + 42*var(--u))}
-.ft-lamp{bottom:calc(43.6*var(--u));width:calc(58*var(--u))}
-.ft-truck{left:calc(400*var(--u));width:calc(402*var(--u));bottom:calc(10*var(--u));z-index:1}
-.ft-body{padding:calc(80*var(--u)) calc(130*var(--u)) calc(26*var(--u)) calc(126*var(--u))}
-.ft-logo{width:calc(240*var(--u));margin-top:0}
-.ft-brand p{margin:calc(10*var(--u)) 0 0;font-size:max(11px,calc(9*var(--u)));line-height:1.42;color:#9d9d9d}
-.ft-cols{gap:calc(54*var(--u))}
-.ft-cols h4{font-size:max(13px,calc(11*var(--u)));margin-bottom:calc(9*var(--u))}
-.ft-cols ul{gap:calc(5*var(--u))}
-.ft-cols a{font-size:max(11px,calc(8.5*var(--u)))}
-.ft-legal{margin-top:calc(34.6*var(--u));padding-top:calc(13.2*var(--u));border-top:1px solid #8f8f8f;font-size:max(11px,calc(8.5*var(--u)))}
-.ft-legal a{margin-right:calc(34*var(--u))}
-@media (max-width:820px){.ft-brand p{font-size:12px}}
 #quick.sh2{background:#fff;border-radius:0 0 clamp(24px,3vw,48px) clamp(24px,3vw,48px);box-shadow:0 40px 60px -30px rgba(40,32,10,.28)}   /* 마지막 섹션이 위로 열리며 푸터가 드러남 (그림자는 아래로만 — 위 섹션과 경계에 회색 줄 안 생기게) */
 .sh2-row.has-hover .sh2-c:not(.on) .sh2-t{left:calc(54*var(--u))}
 /* ===== Start Here (2026-11-26 미니어처): 평소엔 모든 공간 불 꺼짐 → 아래 카드에 호버하면 그 공간만 불 켜지며 움직임 ===== */
@@ -1372,23 +1388,6 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
 .sh2-row.has-hover .sh2-c:not(.on) .sh2-t svg{left:calc(-34*var(--u))}
 .sh2-row.has-hover .sh2-c:not(.on) .sh2-t span{font-size:calc(7.6*var(--u))}
 
-/* 푸터 상자 6개: matter.js 물리로 떨어져 쌓임 (JS는 파일 끝) */
-.ft-cv{position:absolute;left:0;top:0;width:100%;height:100%;z-index:3;pointer-events:none}
-.ft-scene.grab{cursor:grab}.ft-scene.grabbing{cursor:grabbing}
-/* ── 푸터 위 문구 ── */
-.ft-scene{height:calc(767*var(--u))}   /* 문구가 들어갈 만큼 위쪽을 늘림 */
-.ft-cta{position:absolute;left:0;right:0;top:calc(240*var(--u));z-index:5;text-align:center;color:var(--ink);pointer-events:none;padding:0 20px}
-.ft-pt{font-style:normal;color:#D40511}
-.ft-h{margin:0;font:700 max(32px,calc(65/1920*100vw))/1.05 var(--en,'Inter',var(--sans));letter-spacing:-.03em;color:var(--ink)}
-.ft-ds{margin:calc(14*var(--u)) 0 0;font-size:max(13px,calc(16/1920*100vw));line-height:1.6;color:#6b6b6b}
-/* 캡슐 버튼 — 상자 넣기 + 실은 개수(3칸) */
-.ft-pips{display:flex;justify-content:center;margin-top:calc(22*var(--u))}
-.ft-cap2{pointer-events:auto;display:inline-flex;align-items:center;gap:calc(7*var(--u));height:max(30px,calc(25*var(--u)));padding:0 max(13px,calc(13*var(--u)));border:1px solid #e3e3e3;border-radius:999px;background:#fff;font:600 max(12px,calc(9*var(--u)))/1 var(--sans);color:var(--ink);cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,.05);transition:transform .25s,box-shadow .25s}
-.ft-cap2:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(0,0,0,.1)}
-.ft-pip{display:flex;gap:2px}
-.ft-pip i{width:max(9px,calc(8*var(--u)));height:max(3px,calc(3.4*var(--u)));border-radius:99px;background:#e6e6e6;transition:background .3s}
-.ft-pip i.on{background:#FFCC00}
-@media (max-width:820px){.ft-scene{height:calc(900*var(--u))}.ft-h br{display:none}}
 
 /* 목적지 고르기: 기본 select 대신 국기 달린 드롭다운 (기본 select는 숨겨서 로직만 사용) */
 .rc-dd{position:relative;flex:none}
@@ -1467,7 +1466,7 @@ function render(v){const k=v/100;wb.style.transform=`translateY(${(-100+100*Math
 <!-- 2. 내비 -->
 <header class="nav" id="nav"><div class="wrap">
   <a class="logo" href="#top"><img src="img/dhl-logo-red.png" alt="DHL"></a>
-  <ul><li><a href="track.html">배송조회</a></li><li><a href="quote.html">요금산출</a></li><li><a href="guide.html">가이드</a></li><li><a href="mypage.html">마이페이지</a></li></ul>
+  <ul><li><a href="track.html">배송조회</a></li><li><a href="quote.html">발송하기</a></li><li><a href="guide.html">가이드</a></li><li><a href="mypage.html">마이페이지</a></li></ul>
   <form class="nav-track" style="margin-left:auto" action="track.html" method="get" role="search"><input name="awb" inputmode="numeric" placeholder="운송장 조회하기" aria-label="운송장 번호"><button type="submit">조회</button></form>
 </div></header>
 
@@ -1660,17 +1659,16 @@ function render(v){const k=v/100;wb.style.transform=`translateY(${(-100+100*Math
 </main>
 <div id="tail">
 <footer class="ft">
-  <!-- 푸터 위 문구 + 상자 넣기 캡슐 -->
+  <!-- 푸터 위 문구 -->
   <div class="ft-cta">
     <h2 class="ft-h">We'll take it from here.<br><em class="ft-pt">Load up.</em></h2>
     <p class="ft-ds">상자를 트레일러에 던져 넣어 보세요. 세 개가 모이면 바로 출발합니다.<br>여러분의 화물도 똑같이, 끝까지 책임지고 배송합니다.</p>
-    <div class="ft-pips"><button type="button" class="ft-cap2" id="ftLoad">상자 넣기<span class="ft-pip" aria-label="실은 상자 수"><i></i><i></i><i></i></span></button></div>
   </div>
-  <div class="ft-scene" id="ftScene" aria-hidden="true">
-    <div class="ft-dock"><i class="ft-cap"></i></div>
-    <div class="ft-road"></div>
-    <img class="ft-lamp" src="img/ft/lamp.webp" alt="" style="left:calc(444*var(--u));width:calc(66.7*var(--u));opacity:.4;bottom:calc(38.6*var(--u))"><img class="ft-lamp" src="img/ft/lamp.webp" alt="" style="left:calc(649*var(--u));width:calc(70.9*var(--u));opacity:.55;bottom:calc(38.4*var(--u))"><img class="ft-lamp" src="img/ft/lamp.webp" alt="" style="left:calc(877*var(--u));width:calc(76.7*var(--u));opacity:.7;bottom:calc(38.1*var(--u))">
-    <div class="ft-truck" id="ftTruck"><img src="img/ft/truck.webp" alt=""><img class="fw" src="img/hd/wv0.webp" alt="" style="left:12.999%"><img class="fw" src="img/hd/wv1.webp" alt="" style="left:20.427%"><img class="fw" src="img/hd/wv2.webp" alt="" style="left:28.087%"><img class="fw" src="img/hd/wv3.webp" alt="" style="left:60.167%"><img class="fw" src="img/hd/wv4.webp" alt="" style="left:84.494%"></div>
+  <div class="ft-scene" id="ftScene">
+    <div class="ft-dock"><i class="ft-cap" aria-hidden="true"></i><button type="button" class="ft-panel" id="ftLoad">상자 넣기<span class="ft-pip" aria-label="실은 상자 수"><i></i><i></i><i></i></span></button></div>
+    <div class="ft-road" aria-hidden="true"></div>
+    <img class="ft-lamp" src="img/ft/lamp.webp" alt="" style="left:calc(382*var(--u));width:calc(48.1*var(--u));filter:invert(1) brightness(.3) invert(1);bottom:calc(38.8*var(--u))"><img class="ft-lamp" src="img/ft/lamp.webp" alt="" style="left:calc(541*var(--u));width:calc(53.4*var(--u));filter:invert(1) brightness(.4) invert(1);bottom:calc(38.6*var(--u))"><img class="ft-lamp" src="img/ft/lamp.webp" alt="" style="left:calc(737*var(--u));width:calc(56.4*var(--u));filter:invert(1) brightness(.65) invert(1);bottom:calc(38.4*var(--u))"><img class="ft-lamp" src="img/ft/lamp.webp" alt="" style="left:calc(913*var(--u));width:calc(63.4*var(--u));bottom:calc(38.1*var(--u))">
+    <div class="ft-truck" id="ftTruck" aria-hidden="true"><img src="img/ft/truck.webp" alt=""><img class="fw" src="img/hd/wv0.webp" alt="" style="left:12.999%"><img class="fw" src="img/hd/wv1.webp" alt="" style="left:20.427%"><img class="fw" src="img/hd/wv2.webp" alt="" style="left:28.087%"><img class="fw" src="img/hd/wv3.webp" alt="" style="left:60.167%"><img class="fw" src="img/hd/wv4.webp" alt="" style="left:84.494%"></div>
   </div>
   <div class="ft-body">
     <div class="ft-top">
