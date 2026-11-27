@@ -584,15 +584,15 @@ textarea.field { resize: vertical; line-height: 1.6; }
 .ft-legal a:hover{color:#fff}
 @media (max-width:820px){.ft{--u:calc(100vw/700)}.ft-body{padding:48px 22px 36px}.ft-top{flex-direction:column;gap:32px}.ft-logo{width:180px}.ft-cols{gap:48px;text-align:left}.ft-cols h4{font-size:15px}.ft-cols a{font-size:14px}.ft-legal{flex-direction:column;gap:12px;font-size:12px;margin-top:36px}.ft-legal a{margin-right:18px}}
 /* ===== 헤더 (2026-11-26 시안): 가운데 떠 있는 둥근 바 · 메뉴 4개 · 운송장 조회 ===== */
-#nav{left:50%;right:auto;top:calc(23/1288*100vw);transform:translateX(-50%);width:max(760px,calc(773/1288*100vw));border-radius:999px;border:1px solid rgba(255,255,255,.6);background:rgba(232,234,222,.82);-webkit-backdrop-filter:blur(18px) saturate(120%);backdrop-filter:blur(18px) saturate(120%);box-shadow:0 6px 24px -14px rgba(30,30,20,.25)}
-#nav.solid{background:rgba(240,240,234,.9);box-shadow:0 6px 24px -14px rgba(30,30,20,.3)}
+#nav{left:50%;right:auto;top:calc(23/1288*100vw);transform:translateX(-50%);width:max(760px,calc(773/1288*100vw));border-radius:999px;border:1px solid transparent;background:rgba(255,255,255,.64);-webkit-backdrop-filter:blur(11px) saturate(140%);backdrop-filter:blur(11px) saturate(140%);box-shadow:inset 1.5px 1.5px 0 -.5px rgba(255,255,255,.95),inset -1px -1px 0 -.5px rgba(0,0,0,.08),0 6px 24px -14px rgba(30,30,20,.25)}
+#nav.solid{background:rgba(255,255,255,.64);box-shadow:inset 1.5px 1.5px 0 -.5px rgba(255,255,255,.95),inset -1px -1px 0 -.5px rgba(0,0,0,.08),0 6px 24px -14px rgba(30,30,20,.3)}   /* Figma Glass: 흰색 64% · frost 11 · light -45° · splay 0 */
 #nav .wrap{height:max(52px,calc(37/1288*100vw));padding:0 max(10px,calc(8/1288*100vw)) 0 max(26px,calc(28/1288*100vw));gap:0}
 #nav .logo{margin-right:max(26px,calc(22/1288*100vw))}
 #nav .logo img{height:auto;width:max(80px,calc(90/1288*100vw))}
 #nav ul{gap:max(22px,calc(22/1288*100vw));font-weight:500;font-size:max(13px,calc(8.5/1288*100vw))}
 /* 조회 버튼 글자와 같은 크기 */
 #nav ul a{color:#1d1d1b}
-#nav .nav-track{height:max(38px,calc(23/1288*100vw));width:max(230px,calc(180/1288*100vw));padding:0 3px 0 max(14px,calc(11/1288*100vw));background:#f3f3ef;border-color:transparent}
+#nav .nav-track{height:max(38px,calc(23/1288*100vw));width:max(230px,calc(180/1288*100vw));padding:0 3px 0 max(14px,calc(11/1288*100vw));background:rgba(255,255,255,.55);border-color:transparent}
 #nav .nav-track input{flex:1;width:auto;min-width:0;font-size:max(13px,calc(8.5/1288*100vw))}
 #nav .nav-track button{height:calc(100% - 6px);padding:0 max(14px,calc(10/1288*100vw));font-weight:500;font-size:max(13px,calc(8.5/1288*100vw))}
 @media (max-width:820px){#nav{width:calc(100vw - 24px);top:12px}#nav ul{display:none}}
