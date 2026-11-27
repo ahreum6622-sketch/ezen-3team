@@ -2224,14 +2224,15 @@ const list=document.getElementById('scList'),STEP=[0,1500,2500],SCHOLD=900;   /*
 its.forEach((e,k)=>e.addEventListener('click',()=>{const st=sc.getBoundingClientRect().top+scrollY;scrollTo({top:st+(STEP[k]+(k?60:500)+SCHOLD)*innerHeight/900,behavior:'smooth'});}));
 function frame(){mobile=innerWidth<=820;const vh=innerHeight,sy=scrollY;
   /* 0) 히어로 미니어처 지도가 작아지며 사진 기둥 가운데 타일 자리로 */
-  if(pin){const sr=story.getBoundingClientRect(),u=vh-sr.bottom,q=ss(cl((u+.5*vh)/(.55*vh)));
+  if(pin){const sr=story.getBoundingClientRect(),u=vh-sr.bottom;let q=ss(cl((u+.5*vh)/(.55*vh)));
     if(q<=0){pin.style.transform='';pin.style.clipPath='';pin.style.visibility='';mid.style.visibility='hidden';fadeEls.forEach(e=>e.style.setProperty('--hf','1'));}
-    else if(q>=1){pin.style.visibility='hidden';mid.style.visibility='';fadeEls.forEach(e=>e.style.setProperty('--hf','0'));}
-    else{const W=innerWidth,H=vh,m=mid.getBoundingClientRect(),T=m.width,s=1-(1-T/H)*q,pinTop=Math.min(0,sr.bottom-H);
+    else{q=Math.min(q,1);   /* 다 작아진 뒤에도 사진으로 바꾸지 않고 작아진 히어로를 그대로 타일 자리에 붙여 둠 (바뀌는 순간 튀던 문제) */
+      const W=innerWidth,H=vh,m=mid.getBoundingClientRect(),T=m.width,s=1-(1-T/H)*q,pinTop=Math.min(0,sr.bottom-H);
+      if(m.bottom<-50||m.top>H+50){pin.style.visibility='hidden';mid.style.visibility='hidden';}else{
       const dx=(m.left+T/2-W/2)*q,dy=(m.top+T/2-(pinTop+H/2))*q,side=Math.max(0,(W-H)/2)*q,rad=(12/(T/H))*q;
       pin.style.visibility='';mid.style.visibility='hidden';
       pin.style.transform=`translate(${dx}px,${dy}px) scale(${s})`;pin.style.clipPath=`inset(0px ${side}px round ${rad}px)`;
-      fadeEls.forEach(e=>e.style.setProperty('--hf',String(cl(1-q*5))));}}
+      fadeEls.forEach(e=>e.style.setProperty('--hf',String(cl(1-q*5))));}}}
   /* 1) 사진 기둥: 바깥 두 줄은 스크롤보다 빠르게 올라감 */
   const rt=rd.getBoundingClientRect().top+sy,d=(sy-rt)*900/vh;
   par.forEach(c=>c.style.transform=`translateY(${(120-0.5333*d)*vh/900}px)`);
