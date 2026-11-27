@@ -2617,7 +2617,14 @@ function on(k){clearTimeout(tm);if(cur===k)return;cur=k;
   Object.entries(vs).forEach(([key,v])=>{if(key===k){try{v.currentTime=0}catch(e){}v.play().catch(()=>{});v.classList.add('on')}else{v.classList.remove('on');setTimeout(()=>{if(!v.classList.contains('on'))v.pause()},400)}});}
 function off(){tm=setTimeout(()=>{cur=null;cs.forEach(c=>c.classList.remove('on'));Object.values(vs).forEach(v=>{v.classList.remove('on');setTimeout(()=>{if(!v.classList.contains('on'))v.pause()},400)})},60);}
 cs.forEach(c=>{c.addEventListener('mouseenter',()=>on(c.dataset.k));c.addEventListener('focus',()=>on(c.dataset.k));c.addEventListener('blur',off);});
-row.addEventListener('mouseleave',off);})();
+row.addEventListener('mouseleave',off);
+/* 미니어처 공간에 마우스를 올려도 그 공간 불이 켜지고 아래 버튼의 노란 게이지가 차오름 (가로 위치로 공간 판단), 클릭하면 해당 페이지로 */
+const Z=[['track',29.75],['send',52.5],['guide',73.75],['my',101]];
+const zoneAt=e=>{const r=st.getBoundingClientRect(),x=(e.clientX-r.left)/r.width*100;return (Z.find(z=>x<z[1])||Z[3])[0]};
+st.addEventListener('mousemove',e=>{if(innerWidth>820)on(zoneAt(e))});
+st.addEventListener('mouseleave',off);
+st.addEventListener('click',e=>{if(innerWidth<=820)return;const c=cs.find(c=>c.dataset.k===zoneAt(e));if(c)location.href=c.href});
+st.style.cursor='pointer';})();
 /* 푸터: 화면에 들어오면 트럭이 왼쪽에서 달려와 서고, 바퀴가 굴러감 */
 (()=>{const sc=document.getElementById('ftScene'),tr=document.getElementById('ftTruck');if(!sc||!tr)return;
 /* 푸터 하역장 — 메인 레퍼(HAULIX truckcta) 물리 그대로:
