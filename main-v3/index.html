@@ -1263,7 +1263,7 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
  #services.rc-sec{--k:calc(100vw/1440*.74);padding:calc(230/1440*100vw) 0 calc(240/1440*100vw)}
  #services #dispatch.rc-head{padding-left:0;margin-bottom:calc(26/1440*100vw)}
  #services #dispatch.rc-head h2{font-size:calc(46/1440*100vw)}
- #services #dispatch.rc-head p{font-size:calc(15/1440*100vw);margin-top:calc(14/1440*100vw)}
+ #services #dispatch.rc-head p{font-size:calc(15/1440*100vw);margin-top:16px}
 }
 
 /* ===== 헤더 (2026-11-26 시안): 가운데 떠 있는 둥근 바 · 메뉴 4개 · 운송장 조회 ===== */
@@ -1369,6 +1369,21 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
 /* 푸터 상자 6개: matter.js 물리로 떨어져 쌓임 (JS는 파일 끝) */
 .ft-cv{position:absolute;left:0;top:0;width:100%;height:100%;z-index:3;pointer-events:none}
 .ft-scene.grab{cursor:grab}.ft-scene.grabbing{cursor:grabbing}
+
+/* 목적지 고르기: 기본 select 대신 국기 달린 드롭다운 (기본 select는 숨겨서 로직만 사용) */
+.rc-dd{position:relative;flex:none}
+.rc-where select.rc-dd-src{display:none}
+.rc-dd-btn{display:flex;align-items:center;gap:8px;height:calc(38*var(--k,1px));min-height:34px;min-width:calc(190*var(--k,1px));border:1px solid #e9e5dc;border-radius:999px;padding:0 calc(34*var(--k,1px)) 0 calc(14*var(--k,1px));padding-right:34px;font:400 max(13px,calc(14*var(--k,1px))) var(--sans);color:#555;cursor:pointer;text-align:left;
+  background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23666' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right 14px center}
+.rc-dd-btn[aria-expanded="true"]{border-color:#121212}
+.rc-dd-list{position:absolute;left:0;top:calc(100% + 6px);z-index:30;min-width:100%;margin:0;padding:6px;list-style:none;background:#fff;border:1px solid #e9e5dc;border-radius:14px;box-shadow:0 14px 30px -12px rgba(30,25,10,.25)}
+.rc-dd-list[hidden]{display:none}
+.rc-dd-list li{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:9px;font:400 max(13px,calc(14*var(--k,1px))) var(--sans);color:#333;white-space:nowrap;cursor:pointer}
+.rc-dd-list li:hover,.rc-dd-list li.act{background:#f6f3ea}
+.rc-dd-list li[aria-selected="true"]{font-weight:600;color:#121212}
+.rc-dd-list li[aria-selected="true"]::after{content:'';margin-left:auto;width:6px;height:6px;border-radius:50%;background:var(--r)}
+.rc-flag{flex:none;width:22px;height:15px;border-radius:3px;overflow:hidden;box-shadow:0 0 0 1px rgba(0,0,0,.12)}
+.rc-flag svg{display:block;width:100%;height:100%}
 </style>
 <style>
 /* ── 로딩 화면 (E안: 운송장 출력) — 노란 화면에서 운송장이 뽑혀 나오고 바코드·번호가 찍힌 뒤 READY 도장 → 화면이 위로 올라감 ── */
@@ -1843,6 +1858,35 @@ const syncKm=()=>{KM=+rr.value;$('#rKm').textContent=KM.toLocaleString('en-US')+
 rr.oninput=()=>{syncKm();ds.value='custom'};rr.onchange=()=>race();
 ds.onchange=()=>{const d=DEST.find(x=>x.k===ds.value);if(!d)return;rr.value=d.km;syncKm();$('#rRoute').textContent='서울 → '+d.ko;OCEAN=d.ocean;$('#rOcean').checked=d.ocean;if(DN[d.k])rDest=d.k;race();};
 $('#rOcean').checked=OCEAN;syncKm();
+/* 목적지 드롭다운에 국기 달기 (윈도우는 국기 이모지가 안 나와서 SVG로 그림) */
+(()=>{const st=(cx,cy,r,f)=>{let d='';for(let i=0;i<10;i++){const a=-Math.PI/2+i*Math.PI/5,rr=i%2?r*.4:r;d+=(i?'L':'M')+(cx+rr*Math.cos(a)).toFixed(2)+' '+(cy+rr*Math.sin(a)).toFixed(2)}return `<path d="${d}Z" fill="${f}"/>`};
+const tri=(x,y,rot,bars)=>`<g transform="translate(${x} ${y}) rotate(${rot})">${bars.map((b,i)=>b?`<rect x="-3" y="${-2.2+i*1.6}" width="6" height="1" />`:`<rect x="-3" y="${-2.2+i*1.6}" width="2.6" height="1"/><rect x=".4" y="${-2.2+i*1.6}" width="2.6" height="1"/>`).join('')}</g>`;
+const F={
+ KR:`<svg viewBox="0 0 30 20"><rect width="30" height="20" fill="#fff"/><path d="M11.5 10a3.5 3.5 0 0 1 7 0a1.75 1.75 0 0 1-3.5 0a1.75 1.75 0 0 0-3.5 0" fill="#cd2e3a"/><path d="M18.5 10a3.5 3.5 0 0 1-7 0a1.75 1.75 0 0 1 3.5 0a1.75 1.75 0 0 0 3.5 0" fill="#0047a0"/><g fill="#000">${tri(7.2,5.4,-56,[1,1,1])}${tri(22.8,14.6,-56,[0,0,0])}${tri(22.8,5.4,56,[1,0,1])}${tri(7.2,14.6,56,[0,1,0])}</g></svg>`,
+ JP:`<svg viewBox="0 0 30 20"><rect width="30" height="20" fill="#fff"/><circle cx="15" cy="10" r="6" fill="#bc002d"/></svg>`,
+ CN:`<svg viewBox="0 0 30 20"><rect width="30" height="20" fill="#de2910"/>${st(5,5,3,'#ffde00')}${st(10,2,1,'#ffde00')}${st(12,4,1,'#ffde00')}${st(12,7,1,'#ffde00')}${st(10,9,1,'#ffde00')}</svg>`,
+ SG:`<svg viewBox="0 0 30 20"><rect width="30" height="20" fill="#fff"/><rect width="30" height="10" fill="#ef3340"/><circle cx="6.2" cy="5" r="3.4" fill="#fff"/><circle cx="7.6" cy="5" r="3.4" fill="#ef3340"/>${st(9.2,3.1,.75,'#fff')}${st(11.4,4.4,.75,'#fff')}${st(10.6,6.8,.75,'#fff')}${st(7.8,6.8,.75,'#fff')}${st(7,4.4,.75,'#fff')}</svg>`,
+ US:`<svg viewBox="0 0 30 20"><rect width="30" height="20" fill="#fff"/>${[0,2,4,6,8,10,12].map(i=>`<rect y="${(i*20/13).toFixed(2)}" width="30" height="${(20/13).toFixed(2)}" fill="#b22234"/>`).join('')}<rect width="12" height="${(7*20/13).toFixed(2)}" fill="#3c3b6e"/><g fill="#fff">${[1.5,4,6.5,9].flatMap(y=>[2,5,8,11].map(x=>`<circle cx="${x-.5}" cy="${y}" r=".55"/>`)).join('')}</g></svg>`,
+ EU:`<svg viewBox="0 0 30 20"><rect width="30" height="20" fill="#003399"/>${Array.from({length:12},(_,i)=>{const a=i*Math.PI/6;return st(15+6*Math.cos(a),10+6*Math.sin(a),1,'#ffcc00')}).join('')}</svg>`};
+const sel=document.getElementById('rDest');if(!sel)return;sel.classList.add('rc-dd-src');
+const box=document.createElement('div');box.className='rc-dd';
+const btn=document.createElement('button');btn.type='button';btn.className='rc-dd-btn';btn.setAttribute('aria-haspopup','listbox');btn.setAttribute('aria-expanded','false');btn.setAttribute('aria-label','목적지 선택');
+const ul=document.createElement('ul');ul.className='rc-dd-list';ul.setAttribute('role','listbox');ul.hidden=true;
+const item=d=>`<span class="rc-flag" aria-hidden="true">${F[d.k]||''}</span><span>${d.n}</span>`;
+ul.innerHTML=DEST.map(d=>`<li role="option" data-k="${d.k}">${item(d)}</li>`).join('');
+box.append(btn,ul);sel.after(box);
+const lis=[...ul.children];let act=-1;
+function sync(){const d=DEST.find(x=>x.k===sel.value);btn.innerHTML=d?item(d):'<span>직접 입력</span>';lis.forEach(l=>l.setAttribute('aria-selected',l.dataset.k===sel.value))}
+function open(o){ul.hidden=!o;btn.setAttribute('aria-expanded',o);if(o){act=Math.max(0,lis.findIndex(l=>l.dataset.k===sel.value));mark()}}
+function mark(){lis.forEach((l,i)=>l.classList.toggle('act',i===act))}
+function pick(k){sel.value=k;sel.dispatchEvent(new Event('change'));sync();open(false);btn.focus()}
+btn.onclick=()=>open(ul.hidden);
+ul.onclick=e=>{const l=e.target.closest('li');if(l)pick(l.dataset.k)};
+btn.onkeydown=e=>{if(['ArrowDown','ArrowUp'].includes(e.key)){e.preventDefault();if(ul.hidden)return open(true);act=(act+(e.key==='ArrowDown'?1:-1)+lis.length)%lis.length;mark()}
+  else if(e.key==='Enter'&&!ul.hidden){e.preventDefault();pick(lis[act].dataset.k)}else if(e.key==='Escape')open(false)};
+document.addEventListener('click',e=>{if(!box.contains(e.target))open(false)});
+sel.addEventListener('change',sync);const rr2=document.getElementById('rRange');rr2&&rr2.addEventListener('input',sync);sync();})();
+
 $('#rOcean').onchange=e=>{OCEAN=e.target.checked;race()};
 $$('#rPrio button').forEach(b=>b.onclick=()=>{rPrio=b.dataset.p;$$('#rPrio button').forEach(x=>{x.classList.toggle('is-active',x===b);x.setAttribute('aria-checked',x===b)});race();});
 $('#raceAgain').onclick=race;
