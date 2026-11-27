@@ -1316,14 +1316,14 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
 .ft-dock .b3{left:calc(151*var(--u));bottom:calc(100% + 42*var(--u))}
 .ft-lamp{bottom:calc(43.6*var(--u));width:calc(58*var(--u))}
 .ft-truck{left:calc(400*var(--u));width:calc(402*var(--u));bottom:calc(10*var(--u));z-index:1}
-.ft-body{padding:calc(78*var(--u)) calc(133*var(--u)) calc(26*var(--u)) calc(130*var(--u))}
-.ft-logo{width:calc(248*var(--u));margin-top:0}
-.ft-brand p{margin:calc(16*var(--u)) 0 0;font-size:max(11px,calc(9*var(--u)));line-height:1.5;color:#9d9d9d}
+.ft-body{padding:calc(80*var(--u)) calc(130*var(--u)) calc(26*var(--u)) calc(126*var(--u))}
+.ft-logo{width:calc(240*var(--u));margin-top:0}
+.ft-brand p{margin:calc(10*var(--u)) 0 0;font-size:max(11px,calc(9*var(--u)));line-height:1.42;color:#9d9d9d}
 .ft-cols{gap:calc(54*var(--u))}
 .ft-cols h4{font-size:max(13px,calc(11*var(--u)));margin-bottom:calc(9*var(--u))}
 .ft-cols ul{gap:calc(5*var(--u))}
 .ft-cols a{font-size:max(11px,calc(8.5*var(--u)))}
-.ft-legal{margin-top:calc(48*var(--u));font-size:max(11px,calc(8.5*var(--u)))}
+.ft-legal{margin-top:calc(34.6*var(--u));padding-top:calc(13.2*var(--u));border-top:1px solid #8f8f8f;font-size:max(11px,calc(8.5*var(--u)))}
 .ft-legal a{margin-right:calc(34*var(--u))}
 @media (max-width:820px){.ft-brand p{font-size:12px}}
 #quick.sh2{background:#fff;border-radius:0 0 clamp(24px,3vw,48px) clamp(24px,3vw,48px);box-shadow:0 40px 60px -30px rgba(40,32,10,.28)}   /* 마지막 섹션이 위로 열리며 푸터가 드러남 (그림자는 아래로만 — 위 섹션과 경계에 회색 줄 안 생기게) */
@@ -1370,6 +1370,20 @@ footer .wordmark{font:900 italic clamp(50px,14.5vw,250px)/.78 var(--sans);letter
 /* 푸터 상자 6개: matter.js 물리로 떨어져 쌓임 (JS는 파일 끝) */
 .ft-cv{position:absolute;left:0;top:0;width:100%;height:100%;z-index:3;pointer-events:none}
 .ft-scene.grab{cursor:grab}.ft-scene.grabbing{cursor:grabbing}
+/* ── 푸터 위 문구 ── */
+.ft-scene{height:calc(767*var(--u))}   /* 문구가 들어갈 만큼 위쪽을 늘림 */
+.ft-cta{position:absolute;left:0;right:0;top:calc(240*var(--u));z-index:5;text-align:center;color:var(--ink);pointer-events:none;padding:0 20px}
+.ft-pt{font-style:normal;color:#D40511}
+.ft-h{margin:0;font:700 max(32px,calc(65/1920*100vw))/1.05 var(--en,'Inter',var(--sans));letter-spacing:-.03em;color:var(--ink)}
+.ft-ds{margin:calc(14*var(--u)) 0 0;font-size:max(13px,calc(16/1920*100vw));line-height:1.6;color:#6b6b6b}
+/* 캡슐 버튼 — 상자 넣기 + 실은 개수(3칸) */
+.ft-pips{display:flex;justify-content:center;margin-top:calc(22*var(--u))}
+.ft-cap2{pointer-events:auto;display:inline-flex;align-items:center;gap:calc(7*var(--u));height:max(30px,calc(25*var(--u)));padding:0 max(13px,calc(13*var(--u)));border:1px solid #e3e3e3;border-radius:999px;background:#fff;font:600 max(12px,calc(9*var(--u)))/1 var(--sans);color:var(--ink);cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,.05);transition:transform .25s,box-shadow .25s}
+.ft-cap2:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(0,0,0,.1)}
+.ft-pip{display:flex;gap:2px}
+.ft-pip i{width:max(9px,calc(8*var(--u)));height:max(3px,calc(3.4*var(--u)));border-radius:99px;background:#e6e6e6;transition:background .3s}
+.ft-pip i.on{background:#FFCC00}
+@media (max-width:820px){.ft-scene{height:calc(900*var(--u))}.ft-h br{display:none}}
 
 /* 목적지 고르기: 기본 select 대신 국기 달린 드롭다운 (기본 select는 숨겨서 로직만 사용) */
 .rc-dd{position:relative;flex:none}
@@ -1641,10 +1655,16 @@ function render(v){const k=v/100;wb.style.transform=`translateY(${(-100+100*Math
 </main>
 <div id="tail">
 <footer class="ft">
+  <!-- 푸터 위 문구 + 상자 넣기 캡슐 -->
+  <div class="ft-cta">
+    <h2 class="ft-h">We'll take it from here.<br><em class="ft-pt">Load up.</em></h2>
+    <p class="ft-ds">상자를 트레일러에 던져 넣어 보세요. 세 개가 모이면 바로 출발합니다.<br>여러분의 화물도 똑같이, 끝까지 책임지고 배송합니다.</p>
+    <div class="ft-pips"><button type="button" class="ft-cap2" id="ftLoad">상자 넣기<span class="ft-pip" aria-label="실은 상자 수"><i></i><i></i><i></i></span></button></div>
+  </div>
   <div class="ft-scene" id="ftScene" aria-hidden="true">
     <div class="ft-dock"><i class="ft-cap"></i></div>
     <div class="ft-road"></div>
-    <img class="ft-lamp" src="img/ft/lamp.webp" alt="" style="left:calc(444*var(--u));width:calc(66.7*var(--u));bottom:calc(38.6*var(--u))"><img class="ft-lamp" src="img/ft/lamp.webp" alt="" style="left:calc(649*var(--u));width:calc(70.9*var(--u));bottom:calc(38.4*var(--u))"><img class="ft-lamp" src="img/ft/lamp.webp" alt="" style="left:calc(877*var(--u));width:calc(76.7*var(--u));bottom:calc(38.1*var(--u))">
+    <img class="ft-lamp" src="img/ft/lamp.webp" alt="" style="left:calc(444*var(--u));width:calc(66.7*var(--u));opacity:.4;bottom:calc(38.6*var(--u))"><img class="ft-lamp" src="img/ft/lamp.webp" alt="" style="left:calc(649*var(--u));width:calc(70.9*var(--u));opacity:.55;bottom:calc(38.4*var(--u))"><img class="ft-lamp" src="img/ft/lamp.webp" alt="" style="left:calc(877*var(--u));width:calc(76.7*var(--u));opacity:.7;bottom:calc(38.1*var(--u))">
     <div class="ft-truck" id="ftTruck"><img src="img/ft/truck.webp" alt=""><img class="fw" src="img/hd/wv0.webp" alt="" style="left:12.999%"><img class="fw" src="img/hd/wv1.webp" alt="" style="left:20.427%"><img class="fw" src="img/hd/wv2.webp" alt="" style="left:28.087%"><img class="fw" src="img/hd/wv3.webp" alt="" style="left:60.167%"><img class="fw" src="img/hd/wv4.webp" alt="" style="left:84.494%"></div>
   </div>
   <div class="ft-body">
@@ -2631,6 +2651,7 @@ st.style.cursor='pointer';})();
 (()=>{const sc=document.getElementById('ftScene'),tr=document.getElementById('ftTruck');if(!sc||!tr)return;
 /* 푸터 하역장 — 메인 레퍼(HAULIX truckcta) 물리 그대로:
    상자 6개가 하역대에 툭 떨어져 쌓이고, 잡아서(모바일은 탭) 트레일러 뒤로 던지면 실림 → 3개 실리면 트럭이 떠났다 돌아오고 상자 다시 채움 */
+const pips=[...document.querySelectorAll('.ft-pip i')],setN=k=>pips.forEach((e,i)=>e.classList.toggle('on',i<k));
 const ws=[...tr.querySelectorAll('.fw')],BX=new Image();BX.src='img/ft/boxes.webp';const SRC=[3,26,482,310];
 const BW=[46,58,70],AR=[.66,.74,.62,.8,.7,.64];   // 레퍼 상자 폭 46/58/70 기준(트럭 대비 비율 맞춰 축소), 높이비 다양
 let M=null,go=null;
@@ -2644,7 +2665,7 @@ function init(){M=window.Matter;const {Engine,Bodies,Body,Composite,Constraint,V
     return{x:x+.033*w,y:y+.2*h,w:.11*w,h:.55*h}};
   const OFF=()=>-(tr.offsetLeft+tr.offsetWidth)/K-120;
   function build(){K=sc.clientWidth/1440;dpr=Math.min(2,devicePixelRatio||1);W=1440;H=sc.clientHeight/K;cv.width=Math.round(sc.clientWidth*dpr);cv.height=Math.round(sc.clientHeight*dpr);
-    statics.length&&Composite.remove(eng.world,statics);const d=dock(),road=(sc.querySelector('.ft-road').getBoundingClientRect().top-sc.getBoundingClientRect().top)/K;
+    statics.length&&Composite.remove(eng.world,statics);const d=dock(),road=H;   /* 바닥 = 도로 윗선이 아니라 검정 푸터 윗선 */
     statics=[Bodies.rectangle(W/2,road+40,3*W,80,{isStatic:true,friction:.9}),Bodies.rectangle(d.x+d.w/2,d.top+60,d.w+8,120,{isStatic:true,friction:.9}),Bodies.rectangle(-40,H/2,80,3*H,{isStatic:true})];
     Composite.add(eng.world,statics)}
   function spawn(e,drop){const d=dock(),w=BW[17*e%3]*S,h=w*AR[e%6];
@@ -2674,13 +2695,13 @@ function init(){M=window.Matter;const {Engine,Bodies,Body,Composite,Constraint,V
     Engine.update(eng,1e3/60);const a=trk();
     for(const o of v){if(o.dead)continue;const {x,y}=o.b.position;
       const inT=(o.flying&&x>a.x-6&&y<a.y+a.h+30)||(x>a.x-24&&x<a.x+a.w+40&&y>a.y-10&&y<a.y+a.h+6);
-      if(inT&&mode==='parked'){if(o===held)up();kill(o);n++;g.vy+=90;g.vr+=.5;if(n>=3)mode='leaving';continue}
+      if(inT&&mode==='parked'){if(o===held)up();kill(o);n++;setN(n);g.vy+=90;g.vr+=.5;if(n>=3)mode='leaving';continue}
       if(o.b.isSensor&&y>H-40&&!inT){o.b.isSensor=false;o.flying=false}
       if(y>H+200||x>W+200)kill(o)}
     const x0=g.x;g.vy+=(-260*g.y-14*g.vy)*t;g.y+=g.vy*t;g.vr+=(-220*g.rot-12*g.vr)*t;g.rot+=g.vr*t;
     if(mode==='leaving'){g.vx+=900*t;g.x+=g.vx*t;if(g.x>W+200){mode='returning';F=now+1200;g.x=OFF();g.vx=0;v=v.filter(o=>!o.dead)}}
     else if((mode==='returning'||mode==='arriving')&&now>F){g.vx+=(-14*g.x-7.5*g.vx)*t;g.x+=g.vx*t;
-      if(Math.abs(g.x)<1&&Math.abs(g.vx)<8){g.x=0;g.vx=0;if(mode==='returning'){const d=dock();alive().forEach(o=>{if(o.b.position.y>d.top+4||o.b.position.x>d.x+d.w+10)kill(o)});refill(true)}mode='parked';n=0}}
+      if(Math.abs(g.x)<1&&Math.abs(g.vx)<8){g.x=0;g.vx=0;if(mode==='returning'){const d=dock();alive().forEach(o=>{if(o.b.position.y>d.top+4||o.b.position.x>d.x+d.w+10)kill(o)});refill(true)}mode='parked';n=0;setN(0)}}
     wrot+=(g.x-x0)*K;place();draw()}
   new ResizeObserver(()=>{const k=sc.clientWidth/1440;if(Math.abs(k-K)<.001&&cv.height===Math.round(sc.clientHeight*dpr))return;build();
     const live=alive().length;v.forEach(kill);v=[];if(mode!=='away')for(let i=0;i<live;i++)spawn(i,false)}).observe(sc);
@@ -2688,12 +2709,14 @@ function init(){M=window.Matter;const {Engine,Bodies,Body,Composite,Constraint,V
   new IntersectionObserver(es=>{vis=es[0].isIntersecting;last=0},{rootMargin:'100px'}).observe(sc);
   return{enter(){if(mode!=='away')return;build();v.forEach(kill);v=[];n=0;g.x=OFF();g.vx=0;mode='arriving';F=0;
       const rm=matchMedia('(prefers-reduced-motion: reduce)').matches;refill(!rm);if(rm){g.x=0;mode='parked'}},
-    reset(){if(grab)up();v.forEach(kill);v=[];mode='away';g.x=OFF();g.vx=0;g.y=g.vy=g.rot=g.vr=0;place();draw()}}}
+    toss(){toss()},
+    reset(){if(grab)up();setN(0);v.forEach(kill);v=[];mode='away';g.x=OFF();g.vx=0;g.y=g.vy=g.rot=g.vr=0;place();draw()}}}
 function withM(fn){if(window.Matter)return fn();let js=document.getElementById('mjs');if(!js){js=document.createElement('script');js.id='mjs';js.src='https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js';document.head.appendChild(js)}js.addEventListener('load',fn,{once:true})}
 tr.style.transform=`translateX(${-(tr.offsetLeft+tr.offsetWidth+40)}px)`;
 let shown=false;
 new IntersectionObserver(es=>{const e=es[0];if(e.isIntersecting&&!shown){shown=true;withM(()=>{go=go||init();shown&&go.enter()})}
   else if(!e.isIntersecting&&e.boundingClientRect.top>0){shown=false;go&&go.reset()}},{threshold:.35}).observe(sc);
+document.getElementById('ftLoad')?.addEventListener('click',()=>go&&go.toss());   // '상자 넣기' 누르면 맨 위 상자를 트레일러로 던짐
 })();
 </script>
 </body>
