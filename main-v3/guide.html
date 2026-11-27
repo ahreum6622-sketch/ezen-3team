@@ -180,7 +180,7 @@ h1{font-size:clamp(48px,6.6vw,104px)}
   <a class="logo" href="index.html"><img src="img/dhl-logo.png" alt="DHL"></a>
   <ul><li><a href="track.html">배송조회</a></li><li><a href="quote.html">발송하기</a></li><li><a class="on" aria-current="page" href="guide.html">가이드</a></li><li><a href="mypage.html">마이페이지</a></li></ul>
   <div class="sp"></div>
-  <div class="mini"><a href="#">로그인</a><a href="#">KR</a></div>
+  <div class="mini"><a href="#" id="navUser" role="button">로그인</a><a href="#">KR</a></div>
   <a class="btn pri" href="index.html#ship" style="padding:11px 18px;font-size:14px">발송하기 →</a>
 </div></header>
 
@@ -359,5 +359,12 @@ $('#mCopy').onclick=()=>{const st=$('#mSt');if(!msg()){st.classList.add('err');s
 })();
 </script>
 
+<script>
+/* 헤더 로그인 데모: 로그인 전엔 '로그인' → 누르면 로그인된 것으로 기억, 이후 '임자영님'을 누르면 마이페이지 */
+(()=>{const K='dhl-user',NAME='임자영',el=document.getElementById('navUser');if(!el)return;
+let u=null;try{u=localStorage.getItem(K)}catch(e){}
+const draw=()=>{if(u){el.textContent=u+'님';el.href='mypage.html';el.removeAttribute('role')}else{el.textContent='로그인';el.href='#';el.setAttribute('role','button')}};
+el.addEventListener('click',e=>{if(u)return;e.preventDefault();u=NAME;try{localStorage.setItem(K,u)}catch(_){}draw()});draw();})();
+</script>
 </body>
 </html>
